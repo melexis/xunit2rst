@@ -1,4 +1,4 @@
-include *.txt
+include requirements.txt
 include LICENSE
 recursive-include doc *.py
 recursive-include doc *.robot
@@ -6,3 +6,7 @@ recursive-include doc *.rst
 recursive-include doc Makefile
 include tox.ini
 recursive-include mlx *.mako
+
+exclude mlx/__xunit2rst_version__.py
+exclude .pylintrc
+exclude  doc/source/itest_plan.rst
