@@ -14,6 +14,7 @@ setup(
     author_email='jce@melexis.com',
     description='Python script for converting xUnit/JUnit XML format to reStructuredText format',
     long_description=open("README.rst").read(),
+    long_description_content_type='text/x-rst',
     zip_safe=False,
     classifiers=[
         # How mature is this project? Common values are
