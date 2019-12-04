@@ -34,9 +34,9 @@ Installation
 
     python3 -m pip install mlx.xunit2rst
 
--------------
-Example usage
--------------
+-----
+Usage
+-----
 
 Unit test report
 ================
