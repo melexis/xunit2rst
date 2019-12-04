@@ -36,12 +36,12 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'doc']),
     package_data={'mlx.xunit2rst': ['mlx/*.mako']},
     include_package_data=True,
     install_requires=requires,
     namespace_packages=['mlx'],
-    keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'RST', 'rst', 'testing', 'traceability', 'documentation'],
+    keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'sphinx', 'rst', 'testing', 'traceability', 'documentation'],
     entry_points={
         'console_scripts': ['xunit2rst = mlx.xunit2rst.xunit2rst:main']
     },
