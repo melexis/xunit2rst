@@ -108,6 +108,5 @@ venv.bak/
 doc/source/robot/*.xml
 doc/source/robot/*.html
 doc/source/robot/*.log
-doc/source/input/
 doc/source/itest_plan.rst
 doc/_build/
