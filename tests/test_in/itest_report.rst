@@ -30,8 +30,8 @@ Traceability matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these integration test reports to integration test cases
-    :source: REPORT_ITEST_ITEST-
-    :target: ITEST_ITEST-
+    :source: REPORT_ITEST-
+    :target: ITEST-
     :sourcetitle: Integration test report
     :targettitle: Integration test specification
     :type: fails passes
