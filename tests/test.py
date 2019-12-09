@@ -16,6 +16,7 @@ TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
 TEST_IN_DIR = Path(__file__).parent / 'test_in'
 
+
 def setup():
     ''' Setup function
 
