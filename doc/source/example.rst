@@ -6,5 +6,5 @@ Example usage of mlx.xunit2rst
     :maxdepth: 2
 
     requirements
-    itest_plan
-    itest_report
+    generated/itest_plan
+    generated/itest_report
