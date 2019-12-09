@@ -8,9 +8,9 @@ SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 ROBOTDIR      = $(SOURCEDIR)/robot
 BUILDDIR      = _build
-PYTHON		  = python3
+PYTHON        = python3
 XUNIT2RST     = $(PYTHON) -m mlx.xunit2rst
-ROBOT2RST	  = $(PYTHON) -m mlx.robot2rst
+ROBOT2RST     = $(PYTHON) -m mlx.robot2rst
 ROBOT         = $(PYTHON) -m robot
 RM            := rm -rf
 MKDIR         := mkdir -p
@@ -29,7 +29,7 @@ clean:
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
+html: Makefile
 	@$(RM) $(ROBOT_XUNIT)
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
