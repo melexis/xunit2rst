@@ -14,4 +14,4 @@ exclude  doc/source/itest_plan.rst
 recursive-include tests *.py
 recursive-include tests *.rst
 recursive-include tests *.xml
-recursive-exclude tests test_out *
+exclude tests/test_out/*
