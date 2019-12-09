@@ -110,4 +110,3 @@ doc/source/robot/*.html
 doc/source/robot/*.log
 doc/source/itest_plan.rst
 doc/_build/
-tests/test_out/
