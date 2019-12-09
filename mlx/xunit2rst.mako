@@ -19,12 +19,9 @@ ${"=" * len(title)}
 
 <%
 if info.unit_or_integration == 'unit':
-    module_name = list(test_suites)[0].attrib['name']
+    target_prefix = info.matrix_prefix + list(test_suites)[0].attrib['name']
 else:
-    if prefix.startswith(info.matrix_prefix):
-        module_name = prefix[len(info.matrix_prefix):]
-    else:
-        module_name = prefix
+    target_prefix = prefix
 %>\
 
 % for suite in test_suites:
@@ -51,8 +48,8 @@ Traceability matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these ${info.unit_or_integration} test reports to ${info.unit_or_integration} test cases
-    :source: REPORT_${info.matrix_prefix}${module_name}
-    :target: ${info.matrix_prefix}${module_name}
+    :source: REPORT_${target_prefix}
+    :target: ${target_prefix}
     :sourcetitle: ${info.unit_or_integration.capitalize()} test report
     :targettitle: ${info.unit_or_integration.capitalize()} test specification
     :type: fails passes

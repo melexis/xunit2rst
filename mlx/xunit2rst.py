@@ -48,6 +48,8 @@ def generate_xunit_to_rst(input_file, rst_file, prefix):
         prefix (str): Prefix to add to item IDs.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
+    if not prefix and prefix_set is ITEST:
+        prefix = ITEST.matrix_prefix.replace('_', '-')
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
