@@ -7,6 +7,7 @@ SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 ROBOTDIR      = $(SOURCEDIR)/robot
+OUTDIR        = $(SOURCEDIR)/generated
 BUILDDIR      = _build
 PYTHON        = python3
 XUNIT2RST     = $(PYTHON) -m mlx.xunit2rst
@@ -16,7 +17,7 @@ RM            := rm -rf
 MKDIR         := mkdir -p
 
 ROBOT_XUNIT = $(ROBOTDIR)/report.xml
-ITEST_PLAN = $(SOURCEDIR)/itest_plan.rst
+ITEST_PLAN = $(OUTDIR)/itest_plan.rst
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -34,6 +35,6 @@ html: Makefile
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
 	@$(XUNIT2RST) -v
-	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o source/itest_report.rst -p ITEST_- --trim-suffix
+	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix
 	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) --tags ^RQT-$
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
