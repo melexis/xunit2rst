@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+    <testsuite errors="0" failures="0" name="MY_LIB" skipped="0" tests="0" timestamp="2019-11-29T09:58:22" />
+    <testsuite errors="0" failures="0" name="MY_LIB.UTEST_MY_LIB-MY_FUNCTION_SUCCESS" skipped="0" tests="1" time="0.0" timestamp="2019-11-29T09:58:22">
+        <testcase classname="MY_LIB.UTEST_MY_LIB-MY_FUNCTION_SUCCESS" name="UTEST_MY_LIB-MY_FUNCTION_SUCCESS" time="0.0" />
+    </testsuite>
+    <testsuite errors="0" failures="0" name="MY_LIB.UTEST_MY_LIB-MY_FUNCTION_LOCKED" skipped="0" tests="2" time="0.0" timestamp="2019-11-29T09:58:22">
+        <testcase classname="MY_LIB.UTEST_MY_LIB-MY_FUNCTION_LOCKED" name="UTEST_MY_LIB-test_my_function_not_erased" time="0.0" />
+        <testcase classname="MY_LIB.UTEST_MY_LIB-MY_FUNCTION_LOCKED" name="UTEST_MY_LIB-test_my_function_not_unlocked" time="0.0" />
+    </testsuite>
+    <testsuite errors="0" failures="1" name="MY_LIB.UTEST_MY_LIB-SOME_FUNCTION" skipped="0" tests="1" time="0.0" timestamp="2019-11-29T09:59:30">
+        <testcase classname="MY_LIB.UTEST_MY_LIB-SOME_FUNCTION" name="UTEST_MY_LIB-SOME_FUNCTION" time="0.0">
+            <failure message="File: ./unit_test/my_functions.c&#10;Line: 49&#10;Message: exp &quot;12 34 56 &quot; was &quot;12 34 99 &quot;&#10;" />
+        </testcase>
+    </testsuite>
+</testsuites>
