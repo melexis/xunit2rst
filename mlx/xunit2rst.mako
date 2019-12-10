@@ -55,3 +55,4 @@ The below table traces the test report to test cases.
     :type: fails passes
     :stats:
     :group:
+    :nocaptions:
