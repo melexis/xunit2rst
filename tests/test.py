@@ -110,19 +110,5 @@ def test_xunit_trim_suffix_not_needed():
     assert filecmp.cmp(output_rst, reference_rst)
 
 
-@with_setup(setup)
-def test_junit():
-    '''Tests based on utest reports in JUnit format '''
-    file_name = 'utest_my_lib_report'
-    rst_file_name = '{}.rst'.format(file_name)
-    xml_file_name = '{}.xml'.format(file_name)
-    input_xml = str(TEST_IN_DIR / xml_file_name)
-    output_rst = str(TEST_OUT_DIR / rst_file_name)
-    xunit2rst_check(input_xml, output_rst)
-
-    reference_rst = str(TEST_IN_DIR / rst_file_name)
-    assert filecmp.cmp(output_rst, reference_rst)
-
-
 if __name__ == '__main__':
     nose.main()
