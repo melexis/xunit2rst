@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+mlx/__pycache__/
 *.py[cod]
 *$py.class
 
@@ -24,6 +24,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+mlx/__xunit2rst_version__.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -40,6 +41,7 @@ htmlcov/
 .tox/
 .coverage
 .coverage.*
+cover/
 .cache
 nosetests.xml
 coverage.xml
@@ -102,3 +104,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# generated files
+doc/source/robot/*.xml
+doc/source/robot/*.html
+doc/source/robot/*.log
+doc/source/generated/*.rst
+doc/_build/
+tests/test_out/

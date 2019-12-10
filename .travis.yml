@@ -1,0 +1,45 @@
+language: python
+sudo: false
+cache: pip
+dist: xenial
+matrix:
+  include:
+  - python: 3.7
+before_install:
+- python --version
+- uname -a
+- lsb_release -a
+install:
+- pip install tox
+- virtualenv --version
+- easy_install --version
+- tox --version
+script:
+- tox -v
+after_failure:
+- more .tox/log/* | cat
+- more .tox/*/log/* | cat
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+before_deploy:
+- mkdir -p doc/_build/html/
+- touch doc/_build/html/.nojekyll
+deploy:
+  - provider: pypi
+    distributions: sdist bdist_wheel
+    user: "__token__"
+    password:
+      secure: CFaMjHV9SlQsouEVWaHD6NbaPI2d5bwbdFXTNIeIT0Tx6sGdyVVPODDqEtJzK9y3tWWXHXP02m64xyqtjnSgZNM4QIm6JLql/2N8zTi/pSe0UAtfuZ7iHh6VXoSPMVKzKbF1HK0c0Gd+wg+gVzQyCdqBJXnlaL6GcWydqX4qfHjpdItejmu/5PJDV7o3S/GqEaHuBWssqaSiY4Ka4178Y/qZv7aYnFRNhdNq+odqJgFrivMBEPdlLl4znTNbgXfpQMKLpjScA3zaimhEj/4z25vLXigF35hJPZtnjPJyGNHSYGJ7Ou31cU/+IEjCyYEU2WhzzrznnpmCSERIo9bXhRdDje9dM6e2gNKASsMkKwntMpW8OVOtBkpCGSb3VOyT7xcH9SA2sI4qCU/XRLH9TqyV41fNQKlab1W8w6QYISJcSd5qElRZCMaAHX/5T77h+14pq8C9L++1uzSnxrak7YKXYrqNR9kb19gqhmNc/5nngDI97Mdu6SXuHo+ieS5BolD4ji7z7Yp2qd5JcClb292BSGfbyme1/429aHZLVfuu1r6S3fS+brBbGCdfLi/21DDMR/Z92TOYEE/aWkJjSa9B4eSpgvD9zIe5n3CPmQwIvx+zVaWdVyAUY+YiLR3IJwDNDypXDxEfAnK5jhObNZZ68yxRS5TCxl7dYdvBvyI=
+    on:
+      branch: master
+      python: 3.7
+      tags: true
+  - provider: pages
+    skip_cleanup: true
+    local_dir: doc/_build/html/
+    github_token: "$GITHUB_TOKEN"
+    on:
+      branch: master
+      python: 3.7

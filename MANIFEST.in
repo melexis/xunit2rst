@@ -1,0 +1,17 @@
+include requirements.txt
+include LICENSE
+recursive-include doc *.py
+recursive-include doc *.robot
+recursive-include doc *.rst
+recursive-include doc Makefile
+include tox.ini
+recursive-include mlx *.mako
+
+exclude mlx/__xunit2rst_version__.py
+exclude .pylintrc
+exclude  doc/source/generated/*
+
+recursive-include tests *.py
+recursive-include tests *.rst
+recursive-include tests *.xml
+exclude tests/test_out/*
