@@ -32,7 +32,7 @@ Installation
 
 .. code-block:: console
 
-    python3 -m pip install mlx.xunit2rst
+    pip3 install mlx.xunit2rst
 
 -----
 Usage
@@ -43,13 +43,13 @@ Unit test report
 
 .. code-block:: console
 
-    python3 -m mlx.xunit2rst -i utest_report.xml -o utest_report.rst
+    mlx.xunit2rst -i utest_report.xml -o utest_report.rst
 
 Integration test report
 =======================
 
 .. code-block:: console
 
-    python3 -m mlx.xunit2rst -i itest_report.xml -o lib_lin_itest_report.rst --prefix ITEST_LIB_LIN-
+    mlx.xunit2rst -i itest_report.xml -o lib_lin_itest_report.rst --prefix ITEST_LIB_LIN-
 
 .. _`mlx.traceability`: https://pypi.org/project/mlx.traceability/
