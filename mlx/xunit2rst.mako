@@ -1,7 +1,7 @@
 <%
 import xml.etree.ElementTree as ET
 
-title = f"{info.unit_or_integration.capitalize()} test report for {report_name}"
+title = "{} test report for {}".format(info.unit_or_integration.capitalize(), report_name)
 
 
 def _convert_name(name, prefix=""):

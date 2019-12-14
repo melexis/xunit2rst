@@ -27,7 +27,7 @@ def render_template(destination, **kwargs):
         ERROR: Error is raised by Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with open(destination, 'w', newline='\n') as rst_file:
+    with open(str(destination), 'w', newline='\n') as rst_file:
         template = Template(filename=str(TEMPLATE_FILE), output_encoding='utf-8', input_encoding='utf-8')
         try:
             template.render_context(Context(rst_file, **kwargs))
@@ -58,7 +58,6 @@ def generate_xunit_to_rst(input_file, rst_file, prefix):
     render_template(
         rst_file,
         test_suites=test_suites,
-        rst_file=rst_file,
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
@@ -71,13 +70,13 @@ def parse_xunit_root(input_file):
     to use.
 
     Args:
-        input_file (str): Path to the input XML file.
+        input_file (Path): Path to the input file (.xml).
 
     Returns:
         xml.etree.ElementTree.Element: root element with testsuites as tag
         namedtuple: Set of prefixes to use for building traceability output
     '''
-    tree = ET.parse(input_file)
+    tree = ET.parse(str(input_file))
     root_input = tree.getroot()
     if root_input.tag != 'testsuites':
         test_suites = ET.Element("testsuites")
