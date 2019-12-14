@@ -12,7 +12,7 @@ matrix:
         - TOXENV=py36,test,doc
     - python: 3.7
       env:
-        - TOXENV=py37,check,test,doc
+        - TOXENV=py37,check,test,codecov,doc
 before_install:
   - python --version
   - uname -a
