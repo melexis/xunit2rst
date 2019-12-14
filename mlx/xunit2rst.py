@@ -27,7 +27,7 @@ def render_template(destination, **kwargs):
         ERROR: Error is raised by Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with open(destination, 'w', newline='\n') as rst_file:
+    with open(str(destination), 'w', newline='\n') as rst_file:
         template = Template(filename=str(TEMPLATE_FILE), output_encoding='utf-8', input_encoding='utf-8')
         try:
             template.render_context(Context(rst_file, **kwargs))
@@ -58,7 +58,7 @@ def generate_xunit_to_rst(input_file, rst_file, prefix):
     render_template(
         rst_file,
         test_suites=test_suites,
-        rst_file=rst_file,
+        rst_file=str(rst_file),
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
