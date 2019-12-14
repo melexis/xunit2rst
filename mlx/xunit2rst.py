@@ -71,13 +71,13 @@ def parse_xunit_root(input_file):
     to use.
 
     Args:
-        input_file (str): Path to the input XML file.
+        input_file (Path): Path to the input file (.xml).
 
     Returns:
         xml.etree.ElementTree.Element: root element with testsuites as tag
         namedtuple: Set of prefixes to use for building traceability output
     '''
-    tree = ET.parse(input_file)
+    tree = ET.parse(str(input_file))
     root_input = tree.getroot()
     if root_input.tag != 'testsuites':
         test_suites = ET.Element("testsuites")

@@ -4,7 +4,15 @@ cache: pip
 dist: xenial
 matrix:
   include:
-  - python: 3.7
+    - python: 3.5
+      env:
+        - TOXENV=py35,test,doc
+    - python: 3.6
+      env:
+        - TOXENV=py36,test,doc
+    - python: 3.7
+      env:
+        - TOXENV=py37,check,test,doc
 before_install:
 - python --version
 - uname -a
