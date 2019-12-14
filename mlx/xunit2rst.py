@@ -58,7 +58,6 @@ def generate_xunit_to_rst(input_file, rst_file, prefix):
     render_template(
         rst_file,
         test_suites=test_suites,
-        rst_file=str(rst_file),
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
