@@ -26,10 +26,12 @@ def setup():
     TEST_OUT_DIR.mkdir(exist_ok=True)
 
 
-def xunit2rst_check(input_xml, output_rst, prefix='', trim=False):
+def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
 
     command = 'mlx.xunit2rst -i {} -o {}'.format(input_xml, output_rst)
+    if itemize_suites:
+        command += ' --itemize-suites'
     if prefix:
         command += ' -p {}'.format(prefix)
     if trim:
@@ -111,14 +113,27 @@ def test_xunit_trim_suffix_not_needed():
 
 
 @with_setup(setup)
-def test_junit():
-    '''Tests based on utest reports in JUnit format '''
+def test_junit_default():
+    '''Tests based on utest reports in JUnit format - itemizing testcase elements '''
     file_name = 'utest_my_lib_report'
     rst_file_name = '{}.rst'.format(file_name)
     xml_file_name = '{}.xml'.format(file_name)
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
-    xunit2rst_check(input_xml, output_rst)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=False)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_junit_itemize_testsuites():
+    '''Tests based on utest reports in JUnit format - itemizing testsuite elements'''
+    rst_file_name = '{}.rst'.format('utest_my_lib_suites_report')
+    xml_file_name = '{}.xml'.format('utest_my_lib_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=True)
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
