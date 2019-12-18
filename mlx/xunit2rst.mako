@@ -28,7 +28,7 @@ else:
 %>\
 
 % for suite in test_suites:
-    % if info.unit_or_integration == 'integration':  # integration test: create traceable item per testcase tag
+    % if not itemize_suites:  # create traceable item per testcase element
         % for test in suite:
 <%
 test_name = _convert_name(test.attrib['name'], prefix=prefix)
@@ -45,7 +45,7 @@ else:
     Test result: ${test_result}
 
         % endfor
-    % else:  # unit test: create traceable item per testsuite tag
+    % else:  # create traceable item per testsuite tag
 <%
 test_result = 'Pass'
 relationship = 'passes'

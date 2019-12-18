@@ -39,13 +39,14 @@ def render_template(destination, **kwargs):
             logging.error("%s: %s", str(traceback.error.__class__.__name__), traceback.error)
 
 
-def generate_xunit_to_rst(input_file, rst_file, prefix):
+def generate_xunit_to_rst(input_file, rst_file, prefix, itemize_suites):
     """ Calls mako template function and passes all needed parameters.
 
     Args:
         input_file (Path): Path to the input file (.xml).
         rst_file (Path): Path to the output file (.rst).
         prefix (str): Prefix to add to item IDs.
+        itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
     if not prefix and prefix_set is ITEST:
@@ -61,6 +62,7 @@ def generate_xunit_to_rst(input_file, rst_file, prefix):
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
+        itemize_suites=itemize_suites,
     )
 
 
@@ -108,6 +110,9 @@ def main():
                             dest='rst_output_file',
                             type=Path,
                             help='The output RST file',)
+    arg_parser.add_argument('-s', '--itemize-suites',
+                            action='store_true',
+                            help="Flag to itemize testsuite elements instead of testcase elements.")
     arg_parser.add_argument('-p', '--prefix',
                             action='store',
                             default="",
@@ -123,7 +128,7 @@ def main():
     if prefix.endswith('_-') and args.trim_suffix:
         prefix = prefix.rstrip('_-') + '-'
 
-    generate_xunit_to_rst(args.input_file, args.rst_output_file, prefix)
+    generate_xunit_to_rst(args.input_file, args.rst_output_file, prefix, args.itemize_suites)
 
 
 if __name__ == "__main__":
