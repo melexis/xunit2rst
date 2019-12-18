@@ -3,12 +3,13 @@ import xml.etree.ElementTree as ET
 
 title = "{} test report for {}".format(info.unit_or_integration.capitalize(), report_name)
 
-
-def _convert_name(name, prefix="", utest=False):
-    if utest and '.' not in name:
-        return None
-    name = name.split('.')[-1]  # cut off suite name if prepended by a dot
-    return prefix + name.upper().replace(' ', '_').replace('&', 'AND')
+def _convert_name(name):
+    """ Itemize given name and prepend prefix if needed """
+    name_without_suite = name.split('.')[-1]  # cut off suite name if prepended by a dot
+    converted_name = name_without_suite.upper().replace(' ', '_').replace('&', 'AND')
+    if not converted_name.startswith(prefix):
+        converted_name = prefix + converted_name
+    return converted_name
 %>\
 .. ${info.header_prefix}${report_name}:
 
@@ -20,18 +21,12 @@ ${"=" * len(title)}
     :depth: 2
     :local:
 
-<%
-if info.unit_or_integration == 'unit':
-    target_prefix = info.matrix_prefix + list(test_suites)[0].attrib['name']
-else:
-    target_prefix = prefix
-%>\
 
 % for suite in test_suites:
     % if not itemize_suites:  # create traceable item per testcase element
         % for test in suite:
 <%
-test_name = _convert_name(test.attrib['name'], prefix=prefix)
+test_name = _convert_name(test.attrib['name'])
 if len(test):
     test_result = 'Fail'
     relationship = 'fails'
@@ -45,12 +40,13 @@ else:
     Test result: ${test_result}
 
         % endfor
-    % else:  # create traceable item per testsuite tag
+    % else:  # create traceable item per testsuite element
 <%
 test_result = 'Pass'
 relationship = 'passes'
-test_name = _convert_name(suite.attrib['name'], prefix=prefix, utest=True)
-if not test_name:
+test_name = _convert_name(suite.attrib['name'])
+# skip testsuite elements that have no testcase element (typically the first testsuite element only)
+if not len(suite):
     continue
 
 for test in suite:
@@ -72,8 +68,8 @@ Traceability matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these ${info.unit_or_integration} test reports to ${info.unit_or_integration} test cases
-    :source: REPORT_${target_prefix}
-    :target: ${target_prefix}
+    :source: REPORT_${prefix}
+    :target: ${prefix}
     :sourcetitle: ${info.unit_or_integration.capitalize()} test report
     :targettitle: ${info.unit_or_integration.capitalize()} test specification
     :type: fails passes

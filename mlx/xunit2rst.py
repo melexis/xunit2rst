@@ -39,7 +39,7 @@ def render_template(destination, **kwargs):
             logging.error("%s: %s", str(traceback.error.__class__.__name__), traceback.error)
 
 
-def generate_xunit_to_rst(input_file, rst_file, prefix, itemize_suites):
+def generate_xunit_to_rst(input_file, rst_file, prefix, itemize_suites, unit_or_integration):
     """ Calls mako template function and passes all needed parameters.
 
     Args:
@@ -47,10 +47,27 @@ def generate_xunit_to_rst(input_file, rst_file, prefix, itemize_suites):
         rst_file (Path): Path to the output file (.rst).
         prefix (str): Prefix to add to item IDs.
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
+        unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
+            with 'u' or 'i', indicating unit test report or integration test report respectively as input.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
-    if not prefix and prefix_set is ITEST:
-        prefix = ITEST.matrix_prefix.replace('_', '-')
+
+    if not prefix:
+        item_name_halves = list(test_suites)[-1].attrib['name'].split('.')[-1].split('-')
+        if len(item_name_halves) > 1:
+            prefix = item_name_halves[0] + '-'
+        else:  # no prefix in name
+            prefix = prefix_set.matrix_prefix.replace('_', '-')
+
+    if isinstance(unit_or_integration, str):
+        discerning_letter = '' if not unit_or_integration else unit_or_integration.lower()[0]
+    else:
+        discerning_letter = prefix.lower()[0]
+    if discerning_letter in 'iu':
+        prefix_set = ITEST if discerning_letter == 'i' else UTEST
+    elif unit_or_integration:
+        raise ValueError("Value for --unit-or-integration input argument is invalid: expected 'u' or 'i'; got {!r}."
+                         .format(unit_or_integration))
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
@@ -119,6 +136,9 @@ def main():
                             help='Optional prefix to add to item IDs',)
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
+    arg_parser.add_argument("--unit-or-integration", action='store',
+                            help="Optional: give value starting with 'u' or 'i' if the the script's discernment is "
+                                 "wrong.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version),)
@@ -128,7 +148,7 @@ def main():
     if prefix.endswith('_-') and args.trim_suffix:
         prefix = prefix.rstrip('_-') + '-'
 
-    generate_xunit_to_rst(args.input_file, args.rst_output_file, prefix, args.itemize_suites)
+    generate_xunit_to_rst(args.input_file, args.rst_output_file, prefix, args.itemize_suites, args.unit_or_integration)
 
 
 if __name__ == "__main__":
