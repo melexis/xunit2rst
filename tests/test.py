@@ -120,7 +120,7 @@ def test_junit_default():
     xml_file_name = '{}.xml'.format(file_name)
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
-    xunit2rst_check(input_xml, output_rst, itemize_suites=False)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='')
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
@@ -134,6 +134,18 @@ def test_junit_itemize_testsuites():
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, itemize_suites=True)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+@with_setup(setup)
+def test_junit_prefix():
+    '''Tests based on utest reports in JUnit format - adding prefix via input arg'''
+    rst_file_name = '{}.rst'.format('utest_my_lib_report')
+    xml_file_name = '{}.xml'.format('utest_my_lib_no_prefix_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, prefix='UTEST_MY_LIB-')
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
