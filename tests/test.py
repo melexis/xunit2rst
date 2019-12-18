@@ -10,7 +10,9 @@ import filecmp
 from pathlib import Path
 
 import nose
-from nose.tools import with_setup
+from nose.tools import with_setup, assert_equals, assert_raises
+
+from mlx.xunit2rst import _verify_prefix_set, UTEST, ITEST
 
 TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
@@ -138,6 +140,7 @@ def test_junit_itemize_testsuites():
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
 
+
 @with_setup(setup)
 def test_junit_prefix():
     '''Tests based on utest reports in JUnit format - adding prefix via input arg'''
@@ -149,6 +152,17 @@ def test_junit_prefix():
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
+
+
+def verify_prefix_set_u_or_i_test():
+    '''Tests --unit-to-integration functionality. It should have the highest priority. '''
+    assert_equals(_verify_prefix_set(UTEST, 'Itest', 'UTEST-'), ITEST)
+    assert_equals(_verify_prefix_set(UTEST, 'i', 'UTEST-'), ITEST)
+    assert_equals(_verify_prefix_set(UTEST, 'i', ''), ITEST)
+    assert_equals(_verify_prefix_set(ITEST, 'Utest', 'ITEST-'), UTEST)
+    assert_equals(_verify_prefix_set(UTEST, 'u', 'ITEST-'), UTEST)
+    assert_equals(_verify_prefix_set(UTEST, 'u', 'UTEST-'), UTEST)
+    assert_raises(ValueError, _verify_prefix_set, UTEST, '', 'UTEST-')
 
 
 if __name__ == '__main__':
