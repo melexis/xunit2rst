@@ -30,8 +30,8 @@ Traceability matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these unit test reports to unit test cases
-    :source: REPORT_UTEST_MY_LIB
-    :target: UTEST_MY_LIB
+    :source: REPORT_UTEST_MY_LIB-
+    :target: UTEST_MY_LIB-
     :sourcetitle: Unit test report
     :targettitle: Unit test specification
     :type: fails passes
