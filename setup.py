@@ -12,7 +12,7 @@ setup(
     license='Apache License Version 2.0',
     author='JasperCraeghs',
     author_email='jce@melexis.com',
-    description='Python script for converting xUnit/JUnit XML format to reStructuredText format',
+    description='Python script for converting xUnit/JUnit XML format to RST format with traceable items',
     long_description=open("README.rst").read(),
     long_description_content_type='text/x-rst',
     zip_safe=False,
