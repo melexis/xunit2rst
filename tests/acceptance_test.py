@@ -174,5 +174,18 @@ def test_junit_prefix():
     assert filecmp.cmp(output_rst, reference_rst)
 
 
+@with_setup(setup)
+def test_junit_override_xml_prefix():
+    '''Tests based on utest reports in JUnit format - adding prefix via input arg'''
+    rst_file_name = '{}.rst'.format('utest_override_prefix_report')
+    xml_file_name = '{}.xml'.format('utest_my_lib_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, prefix='OVERRIDING-')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
 if __name__ == '__main__':
     nose.main()
