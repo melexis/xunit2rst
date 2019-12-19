@@ -39,37 +39,17 @@ def render_template(destination, **kwargs):
             raise exc
 
 
-def generate_xunit_to_rst(input_file, rst_file, prefix, trim_suffix, itemize_suites, unit_or_integration):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, *prefix_args):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
         input_file (Path): Path to the input file (.xml).
         rst_file (Path): Path to the output file (.rst).
-        prefix (str): Prefix to add to item IDs.
-        trim_suffix (bool): Whether to trim the suffix of the prefix or not.
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
-        unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
-            with 'u' or 'i', indicating unit test report or integration test report respectively as input.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
 
-    if prefix.endswith('_-') and trim_suffix:
-        prefix = prefix.rstrip('_-') + '-'
-
-    base_prefix_on_set = False
-    if not prefix:
-        item_name_halves = list(test_suites)[-1].attrib['name'].split('.')[-1].split('-')
-        if len(item_name_halves) > 1:
-            prefix = item_name_halves[0] + '-'
-        else:  # no prefix in name
-            prefix = prefix_set.matrix_prefix
-            base_prefix_on_set = True
-
-    prefix_set = _verify_prefix_set(prefix_set, unit_or_integration, prefix)
-    if base_prefix_on_set:
-        prefix = prefix_set.matrix_prefix
-    prefix = prefix.rstrip('_')
-    prefix = prefix + '-' if not prefix.endswith('-') else prefix
+    prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
@@ -94,8 +74,8 @@ def parse_xunit_root(input_file):
         input_file (Path): Path to the input file (.xml).
 
     Returns:
-        xml.etree.ElementTree.Element: root element with testsuites as tag
-        namedtuple: Set of prefixes to use for building traceability output
+        xml.etree.ElementTree.Element: Root element of the element tree with 'testsuites' as tag.
+        TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
@@ -110,17 +90,54 @@ def parse_xunit_root(input_file):
     return test_suites, prefix_set
 
 
-def _verify_prefix_set(prefix_set, unit_or_integration, prefix):
+def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, unit_or_integration):
+    """ Builds the prefix and prefix_set variables based on the input parameters.
+
+    Args:
+        test_suites (xml.etree.ElementTree.Element): Root element of the element tree with 'testsuites' as tag.
+        prefix_set (TraceableInfo): Namedtuple holding the default prefix to use for building traceability output.
+        prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
+            used, or the default prefix otherwise.
+        trim_suffix (bool): Whether to trim the suffix of the prefix or not.
+        unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
+            with 'u' or 'i', indicating unit test report or integration test report respectively as input.
+
+    Returns:
+        prefix_set (TraceableInfo): Namedtuple holding the prefixes to use for building traceability output.
+        prefix (str): Prefix to add to item IDs.
+    """
+    if prefix.endswith('_-') and trim_suffix:
+        prefix = prefix.rstrip('_-') + '-'
+
+    base_prefix_on_set = False
+    if not prefix:
+        item_name_halves = list(test_suites)[-1].attrib['name'].split('.')[-1].split('-')
+        if len(item_name_halves) > 1:
+            prefix = item_name_halves[0] + '-'
+        else:  # no prefix in name
+            prefix = prefix_set.matrix_prefix
+            base_prefix_on_set = True
+
+    prefix_set = verify_prefix_set(prefix_set, prefix, unit_or_integration)
+    if base_prefix_on_set:
+        prefix = prefix_set.matrix_prefix
+    prefix = prefix.rstrip('_')
+    prefix = prefix + '-' if not prefix.endswith('-') else prefix
+    return prefix_set, prefix
+
+
+def verify_prefix_set(prefix_set, prefix, unit_or_integration):
     """
     The unit-or-integration test input argument has the highest priority, followed by the first letter in the prefix,
     and lastly the script will interpret a test report as a unit test report if it contains a 'testsuites' element,
     integration test report otherwise.
 
     Args:
-        prefix_set (TraceableInfo): TraceableInfo namedtuple decided by the presence or lack of a 'testsuites' element.
+        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a 'testsuites'
+            element as root.
+        prefix (str): Prefix that will be used in the Mako template.
         unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u' or 'i', indicating unit test report or integration test report respectively as input.
-        prefix (str): Prefix that will be used in the Mako template.
 
     Raises:
         ValueError: The unit-or-integration argument is used, but is invalid.
@@ -182,9 +199,9 @@ def main():
     generate_xunit_to_rst(
         args.input_file,
         args.rst_output_file,
+        args.itemize_suites,
         args.prefix,
         args.trim_suffix,
-        args.itemize_suites,
         args.unit_or_integration,
     )
 
