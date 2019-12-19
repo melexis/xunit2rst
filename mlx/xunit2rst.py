@@ -24,19 +24,19 @@ def render_template(destination, **kwargs):
         **kwargs (dict): Variables to be used in the Mako template.
 
     Raises:
-        ERROR: Error is raised by Mako template.
+        ERROR: Error log containing information about the line where the exception occurred.
+        Exception: Re-raised Exception coming from Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
     with open(str(destination), 'w', newline='\n') as rst_file:
         template = Template(filename=str(TEMPLATE_FILE), output_encoding='utf-8', input_encoding='utf-8')
         try:
             template.render_context(Context(rst_file, **kwargs))
-        except OSError:
+        except Exception as exc:
             traceback = RichTraceback()
-            for (filename, lineno, function, line) in traceback.traceback:
-                logging.error("File %s, line %s, in %s", filename, lineno, function)
-                logging.error(line, "\n")
-            logging.error("%s: %s", str(traceback.error.__class__.__name__), traceback.error)
+            logging.error("Exception raised in Mako template, which will be re-raised after logging line info:")
+            logging.error("File %s, line %s, in %s: %r", *traceback.traceback[-1])
+            raise exc
 
 
 def generate_xunit_to_rst(input_file, rst_file, prefix, trim_suffix, itemize_suites, unit_or_integration):
