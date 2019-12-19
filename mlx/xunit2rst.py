@@ -24,7 +24,8 @@ def render_template(destination, **kwargs):
         **kwargs (dict): Variables to be used in the Mako template.
 
     Raises:
-        ERROR: Error is raised by Mako template.
+        ERROR: Error log containing information about the line where the exception occurred.
+        Exception: Re-raised Exception coming from Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
     with open(str(destination), 'w', newline='\n') as rst_file:
