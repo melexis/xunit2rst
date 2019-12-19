@@ -6,11 +6,12 @@ outputs of the tool match the reference output files exactly.
 '''
 import filecmp
 from pathlib import Path
+from unittest import TestCase
 
 import nose
 from nose.tools import with_setup, assert_equals, assert_raises
 
-from mlx.xunit2rst import create_parser, generate_xunit_to_rst, _verify_prefix_set, ITEST, UTEST
+from mlx.xunit2rst import create_parser, generate_xunit_to_rst, render_template, _verify_prefix_set, ITEST, UTEST
 
 TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
@@ -172,6 +173,25 @@ def test_junit_prefix():
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def mako_error_handling_test():
+    ''' Tests error logging and re-raising of an Exception in Mako template by intentionally not passing a variable '''
+    kwargs = {
+        'report_name': 'my_report',
+        'info': ITEST,
+        'prefix': 'MAKO_TEST-',
+    }
+    test_case = TestCase()
+    with test_case.assertLogs() as log_cm:
+        with assert_raises(TypeError):
+            render_template((TEST_OUT_DIR / 'never_created_file.rst'), **kwargs)
+    test_case.assertIn('Exception raised in Mako template, which will be re-raised after logging line info:',
+                       log_cm.output[0])
+    test_case.assertIn('File ', log_cm.output[-1])
+    test_case.assertIn('line ', log_cm.output[-1])
+    test_case.assertIn("in render_body: '% for suite in test_suites:'", log_cm.output[-1])
 
 
 def verify_prefix_set_u_or_i_test():
