@@ -170,15 +170,27 @@ def test_junit_prefix():
 
 
 def verify_prefix_set_u_or_i_test():
-    '''Tests --unit-to-integration functionality. It should have the highest priority. '''
+    '''
+    Tests _verify_prefix_set function. The unit_or_integration argument should have the highest priority and must
+    start with u or i (case-insensitive). The prefix argument has the second highest priority. A last resort is to
+    keep the input prefix_set.
+    '''
     assert_equals(_verify_prefix_set(UTEST, 'Itest', 'UTEST-'), ITEST)
     assert_equals(_verify_prefix_set(UTEST, 'i', 'UTEST-'), ITEST)
     assert_equals(_verify_prefix_set(UTEST, 'i', ''), ITEST)
     assert_equals(_verify_prefix_set(ITEST, 'Utest', 'ITEST-'), UTEST)
     assert_equals(_verify_prefix_set(UTEST, 'u', 'ITEST-'), UTEST)
     assert_equals(_verify_prefix_set(UTEST, 'u', 'UTEST-'), UTEST)
+    assert_equals(_verify_prefix_set(UTEST, None, 'BLAH-'), UTEST)
+    assert_equals(_verify_prefix_set(ITEST, None, 'BLAH-'), ITEST)
+    assert_equals(_verify_prefix_set(UTEST, None, 'ITEST-'), ITEST)
+    assert_equals(_verify_prefix_set(ITEST, None, 'UTEST-'), UTEST)
     with assert_raises(ValueError):
         _verify_prefix_set(UTEST, 't', 'UTEST-')
+    with assert_raises(ValueError):
+        _verify_prefix_set(ITEST, 't', 'ITEST')
+    with assert_raises(ValueError):
+        _verify_prefix_set(ITEST, 't', '')
 
 
 if __name__ == '__main__':
