@@ -133,8 +133,8 @@ def verify_prefix_set(prefix_set, prefix, unit_or_integration):
     integration test report otherwise.
 
     Args:
-        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a 'testsuites'
-            element as root.
+        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a root element
+            'testsuites'.
         prefix (str): Prefix that will be used in the Mako template.
         unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u' or 'i', indicating unit test report or integration test report respectively as input.
