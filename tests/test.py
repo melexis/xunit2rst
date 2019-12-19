@@ -4,15 +4,13 @@
 The tests in this file are pure black box tests. They just check whether the
 outputs of the tool match the reference output files exactly.
 '''
-
-from subprocess import check_call
 import filecmp
 from pathlib import Path
 
 import nose
 from nose.tools import with_setup, assert_equals, assert_raises
 
-from mlx.xunit2rst import _verify_prefix_set, UTEST, ITEST
+from mlx.xunit2rst import create_parser, generate_xunit_to_rst, _verify_prefix_set, ITEST, UTEST
 
 TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
@@ -30,20 +28,27 @@ def setup():
 
 def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
-
-    command = 'mlx.xunit2rst -i {} -o {}'.format(input_xml, output_rst)
+    arg_parser = create_parser()
+    command = ['-i', input_xml, '-o', output_rst]
     if itemize_suites:
-        command += ' --itemize-suites'
+        command.append('--itemize-suites')
     if prefix:
-        command += ' -p {}'.format(prefix)
+        command.extend(['-p', prefix])
     if trim:
-        command += ' --trim-suffix'
+        command.append('--trim-suffix')
     if u_or_i is not None:
-        command += ' --unit-or-integration {}'.format(u_or_i)
-
-    return_code = check_call(command, shell=True)
+        command.extend(['--unit-or-integration', u_or_i])
     print(command)
-    assert return_code == 0
+    args = arg_parser.parse_args(command)
+
+    generate_xunit_to_rst(
+        args.input_file,
+        args.rst_output_file,
+        args.prefix,
+        args.trim_suffix,
+        args.itemize_suites,
+        args.unit_or_integration,
+    )
 
 
 @with_setup(setup)

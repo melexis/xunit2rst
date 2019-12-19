@@ -39,18 +39,22 @@ def render_template(destination, **kwargs):
             logging.error("%s: %s", str(traceback.error.__class__.__name__), traceback.error)
 
 
-def generate_xunit_to_rst(input_file, rst_file, prefix, itemize_suites, unit_or_integration):
-    """ Calls mako template function and passes all needed parameters.
+def generate_xunit_to_rst(input_file, rst_file, prefix, trim_suffix, itemize_suites, unit_or_integration):
+    """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
         input_file (Path): Path to the input file (.xml).
         rst_file (Path): Path to the output file (.rst).
         prefix (str): Prefix to add to item IDs.
+        trim_suffix (bool): Whether to trim the suffix of the prefix or not.
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
         unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u' or 'i', indicating unit test report or integration test report respectively as input.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
+
+    if prefix.endswith('_-') and trim_suffix:
+        prefix = prefix.rstrip('_-') + '-'
 
     base_prefix_on_set = False
     if not prefix:
@@ -173,11 +177,14 @@ def main():
     arg_parser = create_parser()
     args = arg_parser.parse_args()
 
-    prefix = args.prefix
-    if prefix.endswith('_-') and args.trim_suffix:
-        prefix = prefix.rstrip('_-') + '-'
-
-    generate_xunit_to_rst(args.input_file, args.rst_output_file, prefix, args.itemize_suites, args.unit_or_integration)
+    generate_xunit_to_rst(
+        args.input_file,
+        args.rst_output_file,
+        args.prefix,
+        args.trim_suffix,
+        args.itemize_suites,
+        args.unit_or_integration,
+    )
 
 
 if __name__ == "__main__":
