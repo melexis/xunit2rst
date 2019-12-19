@@ -6,12 +6,11 @@ outputs of the tool match the reference output files exactly.
 '''
 import filecmp
 from pathlib import Path
-from unittest import TestCase
 
 import nose
-from nose.tools import with_setup, assert_equals, assert_raises
+from nose.tools import with_setup
 
-from mlx.xunit2rst import create_parser, generate_xunit_to_rst, render_template, _verify_prefix_set, ITEST, UTEST
+from mlx.xunit2rst import create_parser, generate_xunit_to_rst
 
 TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
@@ -45,9 +44,9 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
     generate_xunit_to_rst(
         args.input_file,
         args.rst_output_file,
+        args.itemize_suites,
         args.prefix,
         args.trim_suffix,
-        args.itemize_suites,
         args.unit_or_integration,
     )
 
@@ -176,46 +175,16 @@ def test_junit_prefix():
 
 
 @with_setup(setup)
-def mako_error_handling_test():
-    ''' Tests error logging and re-raising of an Exception in Mako template by intentionally not passing a variable '''
-    kwargs = {
-        'report_name': 'my_report',
-        'info': ITEST,
-        'prefix': 'MAKO_TEST-',
-    }
-    test_case = TestCase()
-    with test_case.assertLogs() as log_cm:
-        with assert_raises(TypeError):
-            render_template((TEST_OUT_DIR / 'never_created_file.rst'), **kwargs)
-    test_case.assertIn('Exception raised in Mako template, which will be re-raised after logging line info:',
-                       log_cm.output[0])
-    test_case.assertIn('File ', log_cm.output[-1])
-    test_case.assertIn('line ', log_cm.output[-1])
-    test_case.assertIn("in render_body: '% for suite in test_suites:'", log_cm.output[-1])
+def test_junit_override_xml_prefix():
+    '''Tests based on utest reports in JUnit format - adding prefix via input arg'''
+    rst_file_name = '{}.rst'.format('utest_override_prefix_report')
+    xml_file_name = '{}.xml'.format('utest_my_lib_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, prefix='OVERRIDING-')
 
-
-def verify_prefix_set_u_or_i_test():
-    '''
-    Tests _verify_prefix_set function. The unit_or_integration argument should have the highest priority and must
-    start with u or i (case-insensitive). The prefix argument has the second highest priority. A last resort is to
-    keep the input prefix_set.
-    '''
-    assert_equals(_verify_prefix_set(UTEST, 'Itest', 'UTEST-'), ITEST)
-    assert_equals(_verify_prefix_set(UTEST, 'i', 'UTEST-'), ITEST)
-    assert_equals(_verify_prefix_set(UTEST, 'i', ''), ITEST)
-    assert_equals(_verify_prefix_set(ITEST, 'Utest', 'ITEST-'), UTEST)
-    assert_equals(_verify_prefix_set(UTEST, 'u', 'ITEST-'), UTEST)
-    assert_equals(_verify_prefix_set(UTEST, 'u', 'UTEST-'), UTEST)
-    assert_equals(_verify_prefix_set(UTEST, None, 'BLAH-'), UTEST)
-    assert_equals(_verify_prefix_set(ITEST, None, 'BLAH-'), ITEST)
-    assert_equals(_verify_prefix_set(UTEST, None, 'ITEST-'), ITEST)
-    assert_equals(_verify_prefix_set(ITEST, None, 'UTEST-'), UTEST)
-    with assert_raises(ValueError):
-        _verify_prefix_set(UTEST, 't', 'UTEST-')
-    with assert_raises(ValueError):
-        _verify_prefix_set(ITEST, 't', 'ITEST')
-    with assert_raises(ValueError):
-        _verify_prefix_set(ITEST, 't', '')
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
 
 
 if __name__ == '__main__':
