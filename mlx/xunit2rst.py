@@ -131,12 +131,12 @@ def _verify_prefix_set(prefix_set, unit_or_integration, prefix):
     return prefix_set
 
 
-def main():
-    """Main function"""
+def create_parser():
+    """ Creates and returns the ArgumentParser instance to be used """
     try:
         version = require('mlx.xunit2rst')[0].version
     except DistributionNotFound:
-        from .__xunit2rst_version__ import version
+        version = '0.0.0.dev'
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument('-i', '--input',
                             action='store',
@@ -165,6 +165,12 @@ def main():
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version),)
+    return arg_parser
+
+
+def main():
+    """Main function"""
+    arg_parser = create_parser()
     args = arg_parser.parse_args()
 
     prefix = args.prefix
