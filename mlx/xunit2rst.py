@@ -62,12 +62,14 @@ def generate_xunit_to_rst(input_file, rst_file, prefix, trim_suffix, itemize_sui
         if len(item_name_halves) > 1:
             prefix = item_name_halves[0] + '-'
         else:  # no prefix in name
-            prefix = prefix_set.matrix_prefix.replace('_', '-')
+            prefix = prefix_set.matrix_prefix
             base_prefix_on_set = True
 
     prefix_set = _verify_prefix_set(prefix_set, unit_or_integration, prefix)
     if base_prefix_on_set:
-        prefix = prefix_set.matrix_prefix.replace('_', '-')
+        prefix = prefix_set.matrix_prefix
+    prefix = prefix.rstrip('_')
+    prefix = prefix + '-' if not prefix.endswith('-') else prefix
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
