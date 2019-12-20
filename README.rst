@@ -94,12 +94,16 @@ By default, all *testcase* elements from the input file are used to created trea
 desired. The ``-s, --itemize-suites`` flag lets the script itemize *testsuite* elements instead. In this case, the
 *testcase* elements will still be parsed to determine whether the testsuite passed or failed.
 
-Item names
-==========
+Item IDs
+========
 
 The *name* attribute of the element to be itemized is used to build the item ID. Lower case letters get converted to
 upper case, whitespaces get converted to underscores, and *&* characters get converted to *AND*. A valid prefix must
-end with a hyphen to be recognized by the script.
+end with a hyphen to be recognized by the script. If there is an additional string prepended to this name by means of a
+dot, this string won't be taken into account. Example below:
+
+``MY_LIB.ITEST_MY_LIB-my function & keyword`` XML element name results in item ID
+``ITEST_MY_LIB-MY_FUNCTION_AND_KEYWORD``
 
 Prefix
 ======
