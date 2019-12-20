@@ -2,27 +2,27 @@
     :target: https://opensource.org/licenses/Apache-2.0
     :alt: Apache 2.0 License
 
-.. image:: https://badge.fury.io/py/mlx.xunit2rst.png
+.. image:: https://badge.fury.io/py/mlx.xunit2rst.svg
     :target: https://badge.fury.io/py/mlx.xunit2rst
     :alt: PyPI packaged release
 
-.. image:: https://travis-ci.com/melexis/xunit2rst.png?branch=master
+.. image:: https://travis-ci.com/melexis/xunit2rst.svg?branch=master
     :target: https://travis-ci.com/melexis/xunit2rst
     :alt: Build status
 
-.. image:: https://img.shields.io/badge/Documentation-published-brightgreen.png
+.. image:: https://img.shields.io/badge/Documentation-published-brightgreen.svg
     :target: https://melexis.github.io/xunit2rst/
     :alt: Documentation
 
-.. image:: https://codecov.io/gh/melexis/xunit2rst/coverage.png
+.. image:: https://codecov.io/gh/melexis/xunit2rst/coverage.svg
     :target: https://codecov.io/gh/melexis/xunit2rst
     :alt: Code Coverage
 
-.. image:: https://requires.io/github/melexis/xunit2rst/requirements.png?branch=master
+.. image:: https://requires.io/github/melexis/xunit2rst/requirements.svg?branch=master
     :target: https://requires.io/github/melexis/xunit2rst/requirements/?branch=master
     :alt: Requirements Status
 
-.. image:: https://img.shields.io/badge/contributions-welcome-brightgreen.png
+.. image:: https://img.shields.io/badge/contributions-welcome-brightgreen.svg
     :target: https://github.com/melexis/xunit2rst/issues
     :alt: Contributions welcome
 
