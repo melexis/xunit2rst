@@ -28,7 +28,7 @@ def render_template(destination, **kwargs):
         Exception: Re-raised Exception coming from Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with open(str(destination), 'w', encoding='utf-8') as rst_file:
+    with open(str(destination), 'w', newline='\n') as rst_file:
         template = Template(filename=str(TEMPLATE_FILE), output_encoding='utf-8', input_encoding='utf-8')
         try:
             template.render_context(Context(rst_file, **kwargs))
