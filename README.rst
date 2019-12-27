@@ -108,7 +108,7 @@ dot, this string won't be taken into account. Example below:
 Prefix
 ======
 
-Traceability item IDs have a prefix that is unique for the group they belong to, e.g. *ITEST_MY_LIB-*. The``--prefix``
+Traceability item IDs have a prefix that is unique for the group they belong to, e.g. *ITEST_MY_LIB-*. The ``--prefix``
 input argument lets you configure this prefix. It will be prepended to the item names found in the input file to build
 the item ID. By default, the script adds *ITEST-* or *UTEST-* for integration or unit test reports, unless the prefixes
 already exist in the input file.
