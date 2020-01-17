@@ -38,6 +38,9 @@ setup(
     namespace_packages=['mlx'],
     keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'sphinx', 'rst', 'testing', 'traceability', 'documentation'],
     entry_points={
-        'console_scripts': ['mlx.xunit2rst = mlx.xunit2rst:main']
+        'console_scripts': [
+            'mlx.xunit2rst = mlx.xunit2rst:main',
+            'xunit2rst = mlx.xunit2rst:main',
+        ]
     },
 )
