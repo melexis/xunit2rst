@@ -7,7 +7,6 @@
 import os
 import mlx.traceability
 from pkg_resources import get_distribution
-from pygments.formatters import LatexFormatter
 
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -51,7 +50,6 @@ texinfo_documents = [
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib_robotdoc',
     'mlx.traceability',
 ]
 
@@ -63,9 +61,7 @@ latex_elements = {
     #'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
-    'preamble': r'\usepackage{fancyvrb}'
-                r'\usepackage{color}'
-                + LatexFormatter().get_style_defs(),
+    #'preamble': '',
 }
 
 # Add any paths that contain templates here, relative to this directory.
