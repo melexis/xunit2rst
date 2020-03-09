@@ -60,9 +60,9 @@ Usage
 
     mlx.xunit2rst --help
 
-    usage: mlx.xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]
-                         [--trim-suffix]
-                         [--unit-or-integration UNIT_OR_INTEGRATION] [-v]
+    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]
+                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]
+                     [-f] [-v]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -79,6 +79,9 @@ Usage
       --unit-or-integration UNIT_OR_INTEGRATION
                             Optional: give value starting with 'u' or 'i' if the
                             the script's discernment is wrong.
+      -f, --failure-message
+                            Include the error message in case of test failure in
+                            the item's body.
       -v, --version         show program's version number and exit
 
 .. _`mlx.traceability`: https://pypi.org/project/mlx.traceability/
@@ -121,3 +124,9 @@ treats the input file as an integration test report. This discerning behavior ge
 the input file or the ``--prefix`` input argument is used. The script looks for a *U* or *I* as the first letter of the
 prefix. Lastly, you can explicitly define the type by using the ``--unit-or-integration`` input argument.
 Its value should start with *u* or *i* and gets parsed case-insensitively.
+
+Include message of failure(s)
+=============================
+
+When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures of the item's test cases
+in its body.
