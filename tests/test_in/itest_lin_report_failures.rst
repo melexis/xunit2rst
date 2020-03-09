@@ -14,9 +14,9 @@ Integration test report for itest_lin_report_failures
 
     Test result: Fail
 
-    Directory 'C:\nonexistent' does not exist.
+    AssertionError: Directory 'C:\nonexistent' does not exist.
 
-    Second failure
+    Error: Second failure
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST

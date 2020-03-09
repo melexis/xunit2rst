@@ -13,17 +13,19 @@ def _convert_name(name):
     return converted_name
 
 
-def generate_body(input_string):
+def generate_body(input_string, error_type):
     ''' Transforms the input string to be part of an item's indented body with word wrapping.
 
     Args:
-        input_string (str): Raw docstring.
+        input_string (str): Raw error message.
+        error_type (str): The name of the error class. This is 'Error' if it is not specified in the input file.
 
     Returns:
         str: Indented body, which has been word wrapped to not exceed 120 characters
     '''
     indent = ' ' * 4
-    return indent + textwrap.fill(input_string, 115).replace('\n', '\n' + indent).strip()
+    complete_string = "{}: {}".format(error_type, input_string)
+    return indent + textwrap.fill(complete_string, 115).replace('\n', '\n' + indent).strip()
 %>\
 .. ${info.header_prefix}${report_name}:
 
@@ -92,7 +94,7 @@ The below table traces the test report to test cases.
         % if failure_msg:
             % for test in tests:
                 % for failure in test.iterfind('failure'):
-${generate_body(failure.get('message'))}
+${generate_body(failure.get('message'), failure.get('type', 'Error'))}
 
                 % endfor
             %endfor
