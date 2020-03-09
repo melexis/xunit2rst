@@ -19,17 +19,17 @@ Unit test report for utest_my_lib_report_failures
 
     Test result: Fail
 
-    Error: File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "  and some more text to
-    test word wrapping at 120 characters.
+    File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "  and some more text to test word
+    wrapping at 120 characters.
 
-    Error: Another failure message.
+    Another failure message.
 
 .. item:: REPORT_UTEST-SOME_FUNCTION Test report for UTEST-SOME_FUNCTION
     :fails: UTEST-SOME_FUNCTION
 
     Test result: Fail
 
-    Error: File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "
+    File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "
 
 Traceability matrix
 ===================
