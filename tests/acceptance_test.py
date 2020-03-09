@@ -215,5 +215,6 @@ def test_junit_failure_messages():
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
 
+
 if __name__ == '__main__':
     nose.main()
