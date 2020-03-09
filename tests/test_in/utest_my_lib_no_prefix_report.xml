@@ -4,8 +4,12 @@
         <testcase classname="MY_FUNCTION_SUCCESS" name="MY_FUNCTION_SUCCESS" time="0.0" />
     </testsuite>
     <testsuite errors="0" failures="0" name="MY_FUNCTION_LOCKED" skipped="0" tests="2" time="0.0" timestamp="2019-11-29T09:58:22">
-        <testcase classname="MY_FUNCTION_LOCKED" name="test_my_function_not_erased" time="0.0" />
-        <testcase classname="MY_FUNCTION_LOCKED" name="test_my_function_not_unlocked" time="0.0" />
+        <testcase classname="MY_FUNCTION_LOCKED" name="test_my_function_not_erased" time="0.0">
+            <failure message="File: ./unit_test/my_functions.c&#10;Line: 49&#10;Message: exp &quot;12 34 56 &quot; was &quot;12 34 99 &quot;&#10; and some more text to test word wrapping at 120 characters." />
+        </testcase>
+        <testcase classname="MY_FUNCTION_LOCKED" name="test_my_function_not_unlocked" time="0.0">
+            <failure message="Another failure message." />
+        </testcase>
     </testsuite>
     <testsuite errors="0" failures="1" name="SOME_FUNCTION" skipped="0" tests="1" time="0.0" timestamp="2019-11-29T09:59:30">
         <testcase classname="SOME_FUNCTION" name="SOME_FUNCTION" time="0.0">

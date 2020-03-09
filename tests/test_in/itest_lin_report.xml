@@ -2,6 +2,7 @@
 <testsuite name="Example" tests="3" errors="0" failures="1" skipped="0" time="0.049">
 <testcase classname="Example" name="First Test" time="0.002">
 <failure message="Directory 'C:\nonexistent' does not exist." type="AssertionError"></failure>
+<failure message="Second failure" type="Error"></failure>
 </testcase>
 <testcase classname="Example" name="An Unlinked Test" time="0.002">
 </testcase>
