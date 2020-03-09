@@ -15,9 +15,9 @@ Unit test report for utest_my_lib
     Test result: Pass
 
 .. item:: REPORT_UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED Test report for UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED
-    :passes: UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED
+    :fails: UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED
 
-    Test result: Pass
+    Test result: Fail
 
 .. item:: REPORT_UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_UNLOCKED Test report for UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_UNLOCKED
     :passes: UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_UNLOCKED

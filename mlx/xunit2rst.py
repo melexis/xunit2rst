@@ -39,13 +39,14 @@ def render_template(destination, **kwargs):
             raise exc
 
 
-def generate_xunit_to_rst(input_file, rst_file, itemize_suites, *prefix_args):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, *prefix_args):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
         input_file (Path): Path to the input file (.xml).
         rst_file (Path): Path to the output file (.rst).
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
+        failure_message (bool): True if failure messages are to be included in the item's body, False otherwise.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
 
@@ -62,6 +63,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, *prefix_args):
         info=prefix_set,
         prefix=prefix,
         itemize_suites=itemize_suites,
+        failure_message=failure_message,
     )
 
 
@@ -185,6 +187,8 @@ def create_parser():
     arg_parser.add_argument("--unit-or-integration", action='store',
                             help="Optional: give value starting with 'u' or 'i' if the the script's discernment is "
                                  "wrong.")
+    arg_parser.add_argument("-f", "--failure-message", action="store_true",
+                            help="Include the error message in case of test failure in the item's body.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version),)
@@ -200,6 +204,7 @@ def main():
         args.input_file,
         args.rst_output_file,
         args.itemize_suites,
+        args.failure_message,
         args.prefix,
         args.trim_suffix,
         args.unit_or_integration,

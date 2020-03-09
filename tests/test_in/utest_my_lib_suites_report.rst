@@ -15,9 +15,9 @@ Unit test report for utest_my_lib_suites
     Test result: Pass
 
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_LOCKED Test report for UTEST_MY_LIB-MY_FUNCTION_LOCKED
-    :passes: UTEST_MY_LIB-MY_FUNCTION_LOCKED
+    :fails: UTEST_MY_LIB-MY_FUNCTION_LOCKED
 
-    Test result: Pass
+    Test result: Fail
 
 .. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION Test report for UTEST_MY_LIB-SOME_FUNCTION
     :fails: UTEST_MY_LIB-SOME_FUNCTION

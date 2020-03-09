@@ -26,7 +26,7 @@ def setup():
     TEST_OUT_DIR.mkdir(exist_ok=True)
 
 
-def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None):
+def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None, failures=False):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
     arg_parser = create_parser()
     command = ['-i', input_xml, '-o', output_rst]
@@ -38,6 +38,8 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         command.append('--trim-suffix')
     if u_or_i is not None:
         command.extend(['--unit-or-integration', u_or_i])
+    if failures:
+        command.extend(['-f'])
     print(command)
     args = arg_parser.parse_args(command)
 
@@ -45,6 +47,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.input_file,
         args.rst_output_file,
         args.itemize_suites,
+        args.failure_message,
         args.prefix,
         args.trim_suffix,
         args.unit_or_integration,
@@ -164,11 +167,11 @@ def test_junit_itemize_testsuites():
 @with_setup(setup)
 def test_junit_prefix():
     '''Tests based on utest reports in JUnit format - adding prefix via input arg'''
-    rst_file_name = '{}.rst'.format('utest_my_lib_report')
+    rst_file_name = '{}.rst'.format('utest_my_lib_suites_report')
     xml_file_name = '{}.xml'.format('utest_my_lib_no_prefix_report')
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
-    xunit2rst_check(input_xml, output_rst, prefix='UTEST_MY_LIB-')
+    xunit2rst_check(input_xml, output_rst, prefix='UTEST_MY_LIB-', itemize_suites=True)
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
@@ -182,6 +185,32 @@ def test_junit_override_xml_prefix():
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, prefix='OVERRIDING-')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_xunit_failure_messages():
+    '''Tests based on itest reports in xUnit format - including failure messages'''
+    rst_file_name = '{}.rst'.format('itest_lin_report_failures')
+    xml_file_name = '{}.xml'.format('itest_lin_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, failures=True)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_junit_failure_messages():
+    '''Tests based on utest reports in JUnit format - including failure messages'''
+    rst_file_name = '{}.rst'.format('utest_my_lib_report_failures')
+    xml_file_name = '{}.xml'.format('utest_my_lib_no_prefix_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, failures=True, itemize_suites=True)
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
