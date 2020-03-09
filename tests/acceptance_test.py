@@ -45,6 +45,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.input_file,
         args.rst_output_file,
         args.itemize_suites,
+        args.failure_message,
         args.prefix,
         args.trim_suffix,
         args.unit_or_integration,
