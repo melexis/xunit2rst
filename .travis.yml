@@ -38,13 +38,14 @@ before_deploy:
   - mkdir -p doc/_build/html/
   - touch doc/_build/html/.nojekyll
 deploy:
-  skip_existing: true
   - provider: pypi
     distributions: sdist bdist_wheel
     user: __token__
     password:
       secure: Rxqleh+i8jGyrtDSMqtmJwivfXFaeh3zQfc4nCrKTK+9xtCgl2Fr8Kxt7a20Vt4gCGPtrvxyT4MmGl2BW1CiWsSI8ysOvJ3qB3zfTPf8vksxpVz7djQt7dC4SoK+Htq2qVhuWZYzRWqJymsPu6slBBfJ4cbdxOoSDM8O/j72byOUrG1eZ/q1JBThz/3zzSIG7Zsr1Bmxd2EFSr5yWDwgEgZY8P8lPQi9SAUK8BO9guu7GZGfJkZS3K30ZDnyv1QKgR8t9xX8RcY3kX73qCkGJJG9RAoaL9cDuWJRs1qTw7baLbDJKTFPNNvli8nVqtg/flpAuAaiMzgbamwjrNDbpJuKlm3PTb++n1HeFXa+xx8Tt5BVEs2W0dG+e5+nuUsXxPpHiuBWCSHdUHdCaYxCd4GEkJOiB5IQjY1YXfo95+Q9eYnLfnL2duf3ao7J2LWdjIuJpnVDl4KG5iqMSQdTqOeJJXj3oIb7e2m5hcTpsf7JVBO3V5sswUt8d8dVDzE38c9jX80/tRsmhV2HQxPNyuQtT2d8JSV2kSZKoZW8A3PQhBnhcXZv7QuCifo2r7HG561xuB83WksdZ5FLIqt3qk72Syiz0FmRkucXoaXzNAc4CwMKFgzS6GD3fdt7kEV+sbt7tiGSKkNxb/enGZ37NcJKtGkItatnz+g0zLYi71Y=
     on:
+      branch: master
+      python: 3.7
       tags: true
   - provider: pages
     skip_cleanup: true
@@ -52,3 +53,4 @@ deploy:
     github_token: "$GITHUB_TOKEN"
     on:
       branch: master
+      python: 3.7
