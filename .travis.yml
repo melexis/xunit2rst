@@ -38,6 +38,8 @@ before_deploy:
   - mkdir -p doc/_build/html/
   - touch doc/_build/html/.nojekyll
 deploy:
+  skip_cleanup: true
+  skip_existing: true
   - provider: pypi
     distributions: sdist bdist_wheel
     user: __token__
@@ -48,7 +50,6 @@ deploy:
       python: 3.7
       tags: true
   - provider: pages
-    skip_cleanup: true
     local_dir: doc/_build/html/
     github_token: "$GITHUB_TOKEN"
     on:
