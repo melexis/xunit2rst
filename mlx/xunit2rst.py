@@ -39,7 +39,7 @@ def render_template(destination, **kwargs):
             raise exc
 
 
-def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, prefix_args):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, *prefix_args):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
@@ -48,7 +48,6 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
         failure_message (bool): True if failure messages are to be included in the item's body, False otherwise.
         log_file (str): Optional path to the HTML log file, empty when not specified.
-        prefix_args (list): Input arguments for determining the prefixes to use.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
 
@@ -212,11 +211,9 @@ def main():
         args.itemize_suites,
         args.failure_message,
         args.log,
-        [
-            args.prefix,
-            args.trim_suffix,
-            args.unit_or_integration,
-        ],
+        args.prefix,
+        args.trim_suffix,
+        args.unit_or_integration,
     )
 
 
