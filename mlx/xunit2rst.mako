@@ -33,10 +33,17 @@ ${"=" * len(title)}
 ${title}
 ${"=" * len(title)}
 
+% if log_file:
+The log file that contains details about the executed test cases can be found `here <${log_file}>`_.
+% endif
+
 .. contents:: `Contents`
     :depth: 2
     :local:
 
+
+Test Cases
+==========
 
 % for suite in test_suites:
     % if not itemize_suites:  # create traceable item per testcase element
@@ -70,7 +77,7 @@ for test in suite:
 ${generate_item(test_name, relationship, failure_message, suite)}\
     % endif
 % endfor
-Traceability matrix
+Traceability Matrix
 ===================
 
 The below table traces the test report to test cases.

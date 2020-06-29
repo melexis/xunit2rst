@@ -39,7 +39,7 @@ def render_template(destination, **kwargs):
             raise exc
 
 
-def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, *prefix_args):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, *prefix_args):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
@@ -47,6 +47,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         rst_file (Path): Path to the output file (.rst).
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
         failure_message (bool): True if failure messages are to be included in the item's body, False otherwise.
+        log_file (str): Optional path to the HTML log file, empty when not specified.
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
 
@@ -64,6 +65,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         prefix=prefix,
         itemize_suites=itemize_suites,
         failure_message=failure_message,
+        log_file=log_file,
     )
 
 
@@ -189,6 +191,9 @@ def create_parser():
                                  "wrong.")
     arg_parser.add_argument("-f", "--failure-message", action="store_true",
                             help="Include the error message in case of test failure in the item's body.")
+    arg_parser.add_argument("-l", "--log", action="store",
+                            help="Optional: path to the HTML log file, relative to where Sphinx will put the --output, "
+                                "to create a link to.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version),)
@@ -205,6 +210,7 @@ def main():
         args.rst_output_file,
         args.itemize_suites,
         args.failure_message,
+        args.log,
         args.prefix,
         args.trim_suffix,
         args.unit_or_integration,
