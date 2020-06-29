@@ -18,7 +18,6 @@ before_install:
   - uname -a
   - lsb_release -a
 install:
-  - pip install -e .
   - pip install tox
   - pip install codecov
   - virtualenv --version
