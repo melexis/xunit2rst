@@ -118,7 +118,7 @@ input argument lets you configure this prefix. It will be prepended to the item 
 the item ID. By default, the script adds *ITEST-* or *UTEST-* for integration or unit test reports, unless the prefixes
 already exist in the input file.
 
-Distinction between unit and integration test reports
+Distinction Between Unit and Integration Test Reports
 =====================================================
 
 Test reports that have a *testsuites* element as root in XML are treated as unit test reports. Otherwise the script
@@ -127,13 +127,13 @@ the input file or the ``--prefix`` input argument is used. The script looks for 
 prefix. Lastly, you can explicitly define the type by using the ``--unit-or-integration`` input argument.
 Its value should start with *u* or *i* and gets parsed case-insensitively.
 
-Include message of failure(s)
+Include Message of Failure(s)
 =============================
 
 When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures of the item's test cases
 in its body.
 
-Link to log file
+Link to Log File
 ================
 
 Use input parameter `-l, --log PATH_TO_FILE` to add a link to the HTML log file. The path should be relative to the
