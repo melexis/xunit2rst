@@ -170,20 +170,20 @@ def create_parser():
                             required=True,
                             dest='input_file',
                             type=Path,
-                            help='The input XML file',)
+                            help='The input XML file')
     arg_parser.add_argument('-o', '--output',
                             action='store',
                             required=True,
                             dest='rst_output_file',
                             type=Path,
-                            help='The output RST file',)
+                            help='The output RST file')
     arg_parser.add_argument('-s', '--itemize-suites',
                             action='store_true',
                             help="Flag to itemize testsuite elements instead of testcase elements.")
     arg_parser.add_argument('-p', '--prefix',
                             action='store',
                             default="",
-                            help='Optional prefix to add to item IDs',)
+                            help='Optional prefix to add to item IDs')
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
     arg_parser.add_argument("--unit-or-integration", action='store',
@@ -193,10 +193,10 @@ def create_parser():
                             help="Include the error message in case of test failure in the item's body.")
     arg_parser.add_argument("-l", "--log", action="store",
                             help="Optional: path to the HTML log file, relative to where Sphinx will put the --output, "
-                            "to create a link to.")
+                                 "to create a link to.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
-                            version='%(prog)s {}'.format(version),)
+                            version='%(prog)s {}'.format(version))
     return arg_parser
 
 
