@@ -61,8 +61,8 @@ Usage
     mlx.xunit2rst --help
 
     usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]
-                 [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]
-                 [-f] [-l LOG] [-v]
+                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]
+                     [-f] [-l LOG] [-v]
 
     optional arguments:
       -h, --help            show this help message and exit
