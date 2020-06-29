@@ -1,13 +1,17 @@
 .. _integration_test_report_itest_lin:
 
 =====================================
-Integration test report for itest_lin
+Integration Test Report for itest_lin
 =====================================
+
 
 .. contents:: `Contents`
     :depth: 2
     :local:
 
+
+Test Cases
+==========
 
 .. item:: REPORT_ITEST_LIN-FIRST_TEST Test report for ITEST_LIN-FIRST_TEST
     :fails: ITEST_LIN-FIRST_TEST
@@ -24,7 +28,7 @@ Integration test report for itest_lin
 
     Test result: Pass
 
-Traceability matrix
+Traceability Matrix
 ===================
 
 The below table traces the test report to test cases.

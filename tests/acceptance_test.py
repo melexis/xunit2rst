@@ -26,7 +26,8 @@ def setup():
     TEST_OUT_DIR.mkdir(exist_ok=True)
 
 
-def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None, failures=False):
+def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None, failures=False,
+                    log_file=''):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
     arg_parser = create_parser()
     command = ['-i', input_xml, '-o', output_rst]
@@ -40,6 +41,8 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         command.extend(['--unit-or-integration', u_or_i])
     if failures:
         command.extend(['-f'])
+    if log_file:
+        command.extend(['-l', log_file])
     print(command)
     args = arg_parser.parse_args(command)
 
@@ -48,6 +51,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.rst_output_file,
         args.itemize_suites,
         args.failure_message,
+        args.log,
         args.prefix,
         args.trim_suffix,
         args.unit_or_integration,
@@ -211,6 +215,19 @@ def test_junit_failure_messages():
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, failures=True, itemize_suites=True)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_log_file():
+    '''Test linking to log file'''
+    rst_file_name = '{}.rst'.format('itest_report_log')
+    xml_file_name = '{}.xml'.format('itest_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, log_file='itest_log.html')
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)

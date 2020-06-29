@@ -1,9 +1,10 @@
-.. _integration_test_report_itest_lin_report_failures:
+.. _integration_test_report_itest_report_log:
 
-=====================================================
-Integration Test Report for itest_lin_report_failures
-=====================================================
+============================================
+Integration Test Report for itest_report_log
+============================================
 
+The log file that contains details about the executed test cases can be found `here <itest_log.html>`_.
 
 .. contents:: `Contents`
     :depth: 2
@@ -17,10 +18,6 @@ Test Cases
     :fails: ITEST-FIRST_TEST
 
     Test result: Fail
-
-    AssertionError: Directory 'C:\nonexistent' does not exist.
-
-    Error: Second failure
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST

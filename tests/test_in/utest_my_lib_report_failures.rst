@@ -1,13 +1,17 @@
 .. _unit_test_report_utest_my_lib_report_failures:
 
 =================================================
-Unit test report for utest_my_lib_report_failures
+Unit Test Report for utest_my_lib_report_failures
 =================================================
+
 
 .. contents:: `Contents`
     :depth: 2
     :local:
 
+
+Test Cases
+==========
 
 .. item:: REPORT_UTEST-MY_FUNCTION_SUCCESS Test report for UTEST-MY_FUNCTION_SUCCESS
     :passes: UTEST-MY_FUNCTION_SUCCESS
@@ -31,7 +35,7 @@ Unit test report for utest_my_lib_report_failures
 
     File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "
 
-Traceability matrix
+Traceability Matrix
 ===================
 
 The below table traces the test report to test cases.

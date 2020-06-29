@@ -1,13 +1,17 @@
 .. _unit_test_report_utest_my_lib_suites:
 
 ========================================
-Unit test report for utest_my_lib_suites
+Unit Test Report for utest_my_lib_suites
 ========================================
+
 
 .. contents:: `Contents`
     :depth: 2
     :local:
 
+
+Test Cases
+==========
 
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_SUCCESS Test report for UTEST_MY_LIB-MY_FUNCTION_SUCCESS
     :passes: UTEST_MY_LIB-MY_FUNCTION_SUCCESS
@@ -24,7 +28,7 @@ Unit test report for utest_my_lib_suites
 
     Test result: Fail
 
-Traceability matrix
+Traceability Matrix
 ===================
 
 The below table traces the test report to test cases.
