@@ -1,13 +1,17 @@
 .. _unit_test_report_itest_as_utest:
 
 ===================================
-Unit test report for itest_as_utest
+Unit Test Report for itest_as_utest
 ===================================
+
 
 .. contents:: `Contents`
     :depth: 2
     :local:
 
+
+Test Cases
+==========
 
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
     :fails: ITEST-FIRST_TEST
@@ -24,7 +28,7 @@ Unit test report for itest_as_utest
 
     Test result: Pass
 
-Traceability matrix
+Traceability Matrix
 ===================
 
 The below table traces the test report to test cases.
