@@ -193,7 +193,7 @@ def create_parser():
                             help="Include the error message in case of test failure in the item's body.")
     arg_parser.add_argument("-l", "--log", action="store",
                             help="Optional: path to the HTML log file, relative to where Sphinx will put the --output, "
-                                "to create a link to.")
+                            "to create a link to.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version),)
