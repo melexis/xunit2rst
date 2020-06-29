@@ -2,7 +2,7 @@
 import textwrap
 import xml.etree.ElementTree as ET
 
-title = "{} test report for {}".format(info.unit_or_integration.capitalize(), report_name)
+title = "{} Test Report for {}".format(info.unit_or_integration.capitalize(), report_name)
 
 def _convert_name(name):
     """ Itemize given name and prepend prefix if needed """
