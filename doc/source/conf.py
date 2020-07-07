@@ -53,6 +53,11 @@ extensions = [
     'mlx.traceability',
 ]
 
+# This is the location where we copy the log file to. It is relative to Sphinx'
+# source folder. Sphinx will copy these HTML file(s) to its output folder.
+# (The subfolder won't be created.)
+html_extra_path = ['generated/log.html']
+
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
