@@ -15,6 +15,7 @@ ROBOT2RST     = $(PYTHON) -m mlx.robot2rst
 ROBOT         = $(PYTHON) -m robot
 RM            := rm -rf
 ECHO          := echo
+CP            := cp
 
 ROBOT_XUNIT   = $(ROBOTDIR)/report.xml
 ITEST_PLAN    = $(OUTDIR)/itest_plan.rst
