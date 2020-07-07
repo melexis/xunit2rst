@@ -9,15 +9,13 @@ SOURCEDIR     = source
 ROBOTDIR      = $(SOURCEDIR)/robot
 OUTDIR        = $(SOURCEDIR)/generated
 BUILDDIR      = _build
-GENERATION_DIR = $(BUILDDIR)/html/generated
 PYTHON        = python3
 XUNIT2RST     = $(PYTHON) -m mlx.xunit2rst
 ROBOT2RST     = $(PYTHON) -m mlx.robot2rst
 ROBOT         = $(PYTHON) -m robot
 RM            := rm -rf
-MKDIR         := mkdir -p
-CP            := cp
 ECHO          := echo
+CP            := cp
 
 ROBOT_XUNIT   = $(ROBOTDIR)/report.xml
 ITEST_PLAN    = $(OUTDIR)/itest_plan.rst
@@ -39,8 +37,7 @@ html: Makefile
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
 	@$(XUNIT2RST) -v
-	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix -l $(LOG_FILE)
+	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix -l ../$(LOG_FILE)
 	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) --tags ^RQT-$
-	@$(MKDIR) $(GENERATION_DIR)
-	@$(ECHO) -n $(LOG_FILE) | xargs -d ' ' -n 1 -I {} $(CP) $(ROBOTDIR)/{} $(GENERATION_DIR)
+	@$(ECHO) -n $(LOG_FILE) | xargs -d ' ' -n 1 -I {} $(CP) $(ROBOTDIR)/{} $(OUTDIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
