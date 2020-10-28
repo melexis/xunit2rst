@@ -40,5 +40,5 @@ The below table traces the test report to test cases.
     :targettitle: Unit test specification
     :type: fails passes
     :stats:
-    :group:
+    :group: top
     :nocaptions:
