@@ -89,7 +89,7 @@ The below table traces the test report to test cases.
     :targettitle: ${info.unit_or_integration.capitalize()} test specification
     :type: fails passes
     :stats:
-    :group:
+    :group: top
     :nocaptions:
 \
 <%def name="generate_item(test_name, relationship, failure_msg, tests)">\

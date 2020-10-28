@@ -41,5 +41,5 @@ The below table traces the test report to test cases.
     :targettitle: Integration test specification
     :type: fails passes
     :stats:
-    :group:
+    :group: top
     :nocaptions:
