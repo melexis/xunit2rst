@@ -37,7 +37,7 @@ html: Makefile
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
 	@$(XUNIT2RST) -v
-	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix -l ../$(LOG_FILE)
+	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix -l ../$(LOG_FILE) --failure-message
 	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) --tags ^RQT-$
 	@$(ECHO) -n $(LOG_FILE) | xargs -d ' ' -n 1 -I {} $(CP) $(ROBOTDIR)/{} $(OUTDIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
