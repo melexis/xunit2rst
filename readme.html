@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Documentation xunit2rst &mdash; mlx.xunit2rst 0.7.3.dev7+g865e522 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
+        <script src="_static/traceability.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example usage of mlx.xunit2rst" href="example.html" />
+    <link rel="prev" title="Documentation mlx.xunit2rst" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> mlx.xunit2rst
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation xunit2rst</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#behavior">Behavior</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#itemization">Itemization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#item-ids">Item IDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prefix">Prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distinction-between-unit-and-integration-test-reports">Distinction Between Unit and Integration Test Reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#include-message-of-failure-s">Include Message of Failure(s)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#link-to-log-file">Link to Log File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">Example usage of mlx.xunit2rst</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mlx.xunit2rst</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Documentation xunit2rst</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/readme.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <a class="reference external image-reference" href="https://opensource.org/licenses/Apache-2.0"><img alt="Apache 2.0 License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
+<a class="reference external image-reference" href="https://badge.fury.io/py/mlx.xunit2rst"><img alt="PyPI packaged release" src="https://badge.fury.io/py/mlx.xunit2rst.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.com/melexis/xunit2rst"><img alt="Build status" src="https://travis-ci.com/melexis/xunit2rst.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://melexis.github.io/xunit2rst/"><img alt="Documentation" src="https://img.shields.io/badge/Documentation-published-brightgreen.svg" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/melexis/xunit2rst"><img alt="Code Coverage" src="https://codecov.io/gh/melexis/xunit2rst/coverage.svg" /></a>
+<a class="reference external image-reference" href="https://requires.io/github/melexis/xunit2rst/requirements/?branch=master"><img alt="Requirements Status" src="https://requires.io/github/melexis/xunit2rst/requirements.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://github.com/melexis/xunit2rst/issues"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" /></a>
+<div class="section" id="documentation-xunit2rst">
+<h1>Documentation xunit2rst<a class="headerlink" href="#documentation-xunit2rst" title="Permalink to this headline">¶</a></h1>
+<p>This script can convert a JUnit/xUnit (.xml) file to a reStructuredText (.rst) file with traceable items.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title"><cite>Contents</cite></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#goal" id="id1">Goal</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p></li>
+<li><p><a class="reference internal" href="#usage" id="id3">Usage</a></p></li>
+<li><p><a class="reference internal" href="#behavior" id="id4">Behavior</a></p>
+<ul>
+<li><p><a class="reference internal" href="#itemization" id="id5">Itemization</a></p></li>
+<li><p><a class="reference internal" href="#item-ids" id="id6">Item IDs</a></p></li>
+<li><p><a class="reference internal" href="#prefix" id="id7">Prefix</a></p></li>
+<li><p><a class="reference internal" href="#distinction-between-unit-and-integration-test-reports" id="id8">Distinction Between Unit and Integration Test Reports</a></p></li>
+<li><p><a class="reference internal" href="#include-message-of-failure-s" id="id9">Include Message of Failure(s)</a></p></li>
+<li><p><a class="reference internal" href="#link-to-log-file" id="id10">Link to Log File</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="goal">
+<h2><a class="toc-backref" href="#id1">Goal</a><a class="headerlink" href="#goal" title="Permalink to this headline">¶</a></h2>
+<p>This script allows you to connect your test reports to your test cases via the <a class="reference external" href="https://pypi.org/project/mlx.traceability/">mlx.traceability</a> Sphinx extension.</p>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#id2">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip3 install mlx.xunit2rst</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#id3">Usage</a><a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mlx.xunit2rst -i itest_report.xml -o my_lib_report.rst --prefix ITEST_MY_LIB-</span>
+
+<span class="go">mlx.xunit2rst --help</span>
+
+<span class="go">usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]</span>
+<span class="go">                 [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]</span>
+<span class="go">                 [-f] [-l LOG] [-v]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -i INPUT_FILE, --input INPUT_FILE</span>
+<span class="go">                        The input XML file</span>
+<span class="go">  -o RST_OUTPUT_FILE, --output RST_OUTPUT_FILE</span>
+<span class="go">                        The output RST file</span>
+<span class="go">  -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase</span>
+<span class="go">                        elements.</span>
+<span class="go">  -p PREFIX, --prefix PREFIX</span>
+<span class="go">                        Optional prefix to add to item IDs</span>
+<span class="go">  --trim-suffix         If the suffix of the --prefix argument ends with &#39;_-&#39;</span>
+<span class="go">                        it gets trimmed to &#39;-&#39;</span>
+<span class="go">  --unit-or-integration UNIT_OR_INTEGRATION</span>
+<span class="go">                        Optional: give value starting with &#39;u&#39; or &#39;i&#39; if the</span>
+<span class="go">                        the script&#39;s discernment is wrong.</span>
+<span class="go">  -f, --failure-message</span>
+<span class="go">                        Include the error message in case of test failure in</span>
+<span class="go">                        the item&#39;s body.</span>
+<span class="go">  -l LOG, --log LOG     Optional: path to the HTML log file, relative to where</span>
+<span class="go">                        Sphinx will put the --output, to create a link to.</span>
+<span class="go">  -v, --version         show program&#39;s version number and exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="behavior">
+<h2><a class="toc-backref" href="#id4">Behavior</a><a class="headerlink" href="#behavior" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="itemization">
+<h3><a class="toc-backref" href="#id5">Itemization</a><a class="headerlink" href="#itemization" title="Permalink to this headline">¶</a></h3>
+<p>By default, all <em>testcase</em> elements from the input file are used to created treaceability items. This may not always be
+desired. The <code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--itemize-suites</span></code> flag lets the script itemize <em>testsuite</em> elements instead. In this case, the
+<em>testcase</em> elements will still be parsed to determine whether the testsuite passed or failed.</p>
+</div>
+<div class="section" id="item-ids">
+<h3><a class="toc-backref" href="#id6">Item IDs</a><a class="headerlink" href="#item-ids" title="Permalink to this headline">¶</a></h3>
+<p>The <em>name</em> attribute of the element to be itemized is used to build the item ID. Lower case letters get converted to
+upper case, whitespaces get converted to underscores, and <em>&amp;</em> characters get converted to <em>AND</em>. A valid prefix must
+end with a hyphen to be recognized by the script. If there is an additional string prepended to this name by means of a
+dot, this string won’t be taken into account. Example below:</p>
+<p><code class="docutils literal notranslate"><span class="pre">MY_LIB.ITEST_MY_LIB-my</span> <span class="pre">function</span> <span class="pre">&amp;</span> <span class="pre">keyword</span></code> XML element name results in item ID
+<code class="docutils literal notranslate"><span class="pre">ITEST_MY_LIB-MY_FUNCTION_AND_KEYWORD</span></code></p>
+</div>
+<div class="section" id="prefix">
+<h3><a class="toc-backref" href="#id7">Prefix</a><a class="headerlink" href="#prefix" title="Permalink to this headline">¶</a></h3>
+<p>Traceability item IDs have a prefix that is unique for the group they belong to, e.g. <em>ITEST_MY_LIB-</em>. The <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
+input argument lets you configure this prefix. It will be prepended to the item names found in the input file to build
+the item ID. By default, the script adds <em>ITEST-</em> or <em>UTEST-</em> for integration or unit test reports, unless the prefixes
+already exist in the input file.</p>
+</div>
+<div class="section" id="distinction-between-unit-and-integration-test-reports">
+<h3><a class="toc-backref" href="#id8">Distinction Between Unit and Integration Test Reports</a><a class="headerlink" href="#distinction-between-unit-and-integration-test-reports" title="Permalink to this headline">¶</a></h3>
+<p>Test reports that have a <em>testsuites</em> element as root in XML are treated as unit test reports. Otherwise the script
+treats the input file as an integration test report. This discerning behavior gets overridden when prefixes are found in
+the input file or the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> input argument is used. The script looks for a <em>U</em> or <em>I</em> as the first letter of the
+prefix. Lastly, you can explicitly define the type by using the <code class="docutils literal notranslate"><span class="pre">--unit-or-integration</span></code> input argument.
+Its value should start with <em>u</em> or <em>i</em> and gets parsed case-insensitively.</p>
+</div>
+<div class="section" id="include-message-of-failure-s">
+<h3><a class="toc-backref" href="#id9">Include Message of Failure(s)</a><a class="headerlink" href="#include-message-of-failure-s" title="Permalink to this headline">¶</a></h3>
+<p>When the <code class="docutils literal notranslate"><span class="pre">-f,</span> <span class="pre">--failure-message</span></code> flag is set, the tool includes the messages of all failures of the item’s test cases
+in its body.</p>
+</div>
+<div class="section" id="link-to-log-file">
+<h3><a class="toc-backref" href="#id10">Link to Log File</a><a class="headerlink" href="#link-to-log-file" title="Permalink to this headline">¶</a></h3>
+<p>Use input parameter <code class="docutils literal notranslate"><span class="pre">-l,</span> <span class="pre">--log</span> <span class="pre">PATH_TO_FILE</span></code> to add a link to the HTML log file. This path should be relative to the
+location where Sphinx outputs the HTML version of the RST file generated by this tool. Be sure to put this log file
+in Sphinx’ source directory and add it to <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path">html_extra_path</a> in your <em>conf.py</em>. This way, the log file will end up in
+the root of Sphinx’ output location.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="example.html" class="btn btn-neutral float-right" title="Example usage of mlx.xunit2rst" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Documentation mlx.xunit2rst" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Bavo Van Achte.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
