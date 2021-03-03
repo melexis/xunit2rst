@@ -10,7 +10,7 @@ First Test
     [Documentation]    Example of a failing test
     [Tags]             RQT-LOGGING  RQT-DIRECTORY
     Log    ${MESSAGE}
-    My Keyword    /nonexistent
+    My Keyword    /'nonexistent_'  # parsing this string in a failure message results in a Sphinx warning, unless it's in a literal code block
 
 An Unlinked Test
     [Tags]             FUN
