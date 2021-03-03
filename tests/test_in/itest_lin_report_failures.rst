@@ -18,9 +18,11 @@ Test Cases
 
     Test result: Fail
 
-    AssertionError: Directory 'C:\nonexistent' does not exist.
+    ::
 
-    Error: Second failure
+      AssertionError: Directory 'C:\nonexistent' does not exist.
+
+      Error: Second failure
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST

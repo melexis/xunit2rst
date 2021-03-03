@@ -23,7 +23,7 @@ def generate_body(input_string, error_type=None):
     Returns:
         str: Indented body, which has been word wrapped to not exceed 120 characters
     '''
-    indent = ' ' * 4
+    indent = ' ' * 6
     complete_string = "{}: {}".format(error_type, input_string) if error_type else input_string
     return indent + textwrap.fill(complete_string, 115).replace('\n', '\n' + indent).strip()
 %>\
@@ -97,13 +97,17 @@ The below table traces the test report to test cases.
     :${relationship}: ${test_name}
 
     Test result: ${test_result}
-
-        % if failure_msg:
-            % for test in tests:
-                % for failure in test.iterfind('failure'):
+<% prepend_literal_block = True %>
+% if failure_msg:
+    % for test in tests:
+        % for failure in test.iterfind('failure'):
+            % if prepend_literal_block:
+    ::
+<% prepend_literal_block = False %>
+            % endif
 ${generate_body(failure.get('message'), failure.get('type'))}
 
-                % endfor
-            %endfor
-        % endif
+        % endfor
+    %endfor
+% endif
 </%def>\

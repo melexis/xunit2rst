@@ -110,5 +110,6 @@ doc/source/robot/*.xml
 doc/source/robot/*.html
 doc/source/robot/*.log
 doc/source/generated/*.rst
+doc/source/generated/*.html
 doc/_build/
 tests/test_out/
