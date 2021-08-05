@@ -5,7 +5,7 @@ from pathlib import Path
 import nose
 from nose.tools import assert_equal, assert_not_equal, assert_raises
 
-from mlx.xunit2rst import build_prefix_and_set, parse_xunit_root, verify_prefix_set, ITEST, UTEST
+from mlx.xunit2rst import build_prefix_and_set, parse_xunit_root, verify_prefix_set, ITEST, UTEST, QTEST
 
 TEST_IN_DIR = Path(__file__).parent / 'test_in'
 
@@ -65,7 +65,7 @@ def test_build_prefix_and_set_from_arg_swap_set():
 
 
 def test_build_prefix_and_set_priority():
-    ''' Argument unit_or_integration must have the highest priority for determining the correct prefix_set. '''
+    ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
     test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
     assert_equal(initial_prefix_set, UTEST)
 
@@ -75,10 +75,10 @@ def test_build_prefix_and_set_priority():
     assert_equal(prefix, 'UTEST_HOWDY-')
 
 
-def test_verify_prefix_set_u_or_i():
+def test_verify_prefix_set():
     '''
-    Tests verify_prefix_set function. The unit_or_integration argument should have the highest priority and must
-    start with u or i (case-insensitive). The prefix argument has the second highest priority. A last resort is to
+    Tests verify_prefix_set function. The --type argument should have the highest priority and must
+    start with u/i/q (case-insensitive). The prefix argument has the second highest priority. A last resort is to
     keep the input prefix_set.
     '''
     assert_equal(verify_prefix_set(UTEST, 'UTEST-', 'Itest'), ITEST)
@@ -91,12 +91,21 @@ def test_verify_prefix_set_u_or_i():
     assert_equal(verify_prefix_set(ITEST, 'BLAH-', None), ITEST)
     assert_equal(verify_prefix_set(UTEST, 'ITEST-', None), ITEST)
     assert_equal(verify_prefix_set(ITEST, 'UTEST-', None), UTEST)
+    assert_equal(verify_prefix_set(ITEST, 'QTEST-', None), QTEST)
+    assert_equal(verify_prefix_set(ITEST, 'ITEST-', 'q'), QTEST)
+    assert_equal(verify_prefix_set(UTEST, 'UTEST-', 'Qtest'), QTEST)
+    assert_equal(verify_prefix_set(QTEST, '', 'u'), UTEST)
+    assert_equal(verify_prefix_set(QTEST, '', 'i'), ITEST)
+    assert_equal(verify_prefix_set(QTEST, 'UTEST', 'i'), ITEST)
+    assert_equal(verify_prefix_set(QTEST, 'FOO-', None), QTEST)
     with assert_raises(ValueError):
         verify_prefix_set(UTEST, 'UTEST-', 't')
     with assert_raises(ValueError):
         verify_prefix_set(ITEST, 'ITEST', 't')
     with assert_raises(ValueError):
         verify_prefix_set(ITEST, '', 't')
+    with assert_raises(ValueError):
+        verify_prefix_set(QTEST, '', 't')
 
 
 if __name__ == '__main__':
