@@ -2,7 +2,7 @@
 import textwrap
 import xml.etree.ElementTree as ET
 
-title = "{} Test Report for {}".format(info.unit_or_integration.capitalize(), report_name)
+title = "{} Test Report for {}".format(info.type.capitalize(), report_name)
 
 def _convert_name(name):
     """ Itemize given name and prepend prefix if needed """
@@ -82,11 +82,11 @@ Traceability Matrix
 
 The below table traces the test report to test cases.
 
-.. item-matrix:: Linking these ${info.unit_or_integration} test reports to ${info.unit_or_integration} test cases
+.. item-matrix:: Linking these ${info.type} test reports to ${info.type} test cases
     :source: REPORT_${prefix}
     :target: ${prefix}
-    :sourcetitle: ${info.unit_or_integration.capitalize()} test report
-    :targettitle: ${info.unit_or_integration.capitalize()} test specification
+    :sourcetitle: ${info.type.capitalize()} test report
+    :targettitle: ${info.type.capitalize()} test specification
     :type: fails passes
     :stats:
     :group: top
