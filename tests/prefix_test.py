@@ -103,7 +103,7 @@ def test_verify_prefix_set():
     with assert_raises(ValueError):
         verify_prefix_set(ITEST, 'ITEST', 't')
     with assert_raises(ValueError):
-        verify_prefix_set(ITEST, '', 't')
+        verify_prefix_set(ITEST, '', '')
     with assert_raises(ValueError):
         verify_prefix_set(QTEST, '', 't')
 
