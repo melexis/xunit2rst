@@ -145,7 +145,7 @@ def verify_prefix_set(prefix_set, prefix, type_):
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
 
     Returns:
-        TraceableInfo: Contains prefix and other info for UTEST, ITEST or QTEST
+        TraceableInfo: namedtuple that contains prefix and other info regarding the type of test
 
     Raises:
         ValueError: The unit-or-integration argument is used, but is invalid.
