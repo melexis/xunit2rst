@@ -7,7 +7,7 @@ setup(
     use_scm_version={
         'write_to': 'mlx/__xunit2rst_version__.py'
     },
-    setup_requires=['setuptools_scm'],
+    setup_requires=['setuptools-scm'],
     url='https://github.com/melexis/xunit2rst',
     license='Apache License Version 2.0',
     author='JasperCraeghs',
@@ -24,9 +24,10 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Documentation',
         'Topic :: Utilities',
     ],
@@ -35,6 +36,7 @@ setup(
     package_data={'mlx.xunit2rst': ['mlx/*.mako']},
     include_package_data=True,
     install_requires=requires,
+    python_requires='>=3.6',
     namespace_packages=['mlx'],
     keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'sphinx', 'rst', 'testing', 'traceability', 'documentation'],
     entry_points={
