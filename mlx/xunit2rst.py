@@ -195,6 +195,8 @@ def create_parser():
                             help='Optional prefix to add to item IDs')
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
+    arg_parser.add_argument("--unit-or-integration", action='store',
+                            help="Deprecated alternative to --type; to be removed in version 2.0.0.")
     arg_parser.add_argument("-t", "--type", action='store',
                             help="Optional: give value starting with 'u', 'i' or 'q' to explicitly define the type "
                             "of test: unit/integration/qualification test")
@@ -213,7 +215,9 @@ def main():
     """Main function"""
     arg_parser = create_parser()
     args = arg_parser.parse_args()
-
+    if args.unit_or_integration and not args.type:
+        args.type = args.unit_or_integration
+        logging.warning('Deprecation warning: --unit-or-integration will be removed in version 2.0.0; use --type')
     generate_xunit_to_rst(
         args.input_file,
         args.rst_output_file,
