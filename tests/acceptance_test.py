@@ -193,6 +193,19 @@ def test_junit_override_xml_prefix():
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
 
+@with_setup(setup)
+def test_junit_qualification():
+    '''Tests based on utest reports in JUnit format - testing qualification test type '''
+    file_name = 'qtest_my_lib_report'
+    rst_file_name = '{}.rst'.format(file_name)
+    xml_file_name = '{}.xml'.format(file_name)
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=False, type_='q')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
 
 @with_setup(setup)
 def test_xunit_failure_messages():
