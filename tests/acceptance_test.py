@@ -26,7 +26,7 @@ def setup():
     TEST_OUT_DIR.mkdir(exist_ok=True)
 
 
-def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, u_or_i=None, failures=False,
+def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, type_=None, failures=False,
                     log_file=''):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
     arg_parser = create_parser()
@@ -37,8 +37,8 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         command.extend(['-p', prefix])
     if trim:
         command.append('--trim-suffix')
-    if u_or_i is not None:
-        command.extend(['--unit-or-integration', u_or_i])
+    if type_ is not None:
+        command.extend(['--type', type_])
     if failures:
         command.extend(['-f'])
     if log_file:
@@ -54,7 +54,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.log,
         args.prefix,
         args.trim_suffix,
-        args.unit_or_integration,
+        args.type,
     )
 
 
@@ -135,7 +135,7 @@ def test_xunit_overwrite_discernment():
     xml_file_name = '{}.xml'.format('itest_report')
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
-    xunit2rst_check(input_xml, output_rst, prefix='ITEST-', u_or_i='u')
+    xunit2rst_check(input_xml, output_rst, prefix='ITEST-', type_='u')
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
@@ -189,6 +189,20 @@ def test_junit_override_xml_prefix():
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, prefix='OVERRIDING-')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_junit_qualification():
+    '''Tests based on utest reports in JUnit format - testing qualification test type '''
+    file_name = 'qtest_my_lib_report'
+    rst_file_name = '{}.rst'.format(file_name)
+    xml_file_name = '{}.xml'.format(file_name)
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=False, type_='q')
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)

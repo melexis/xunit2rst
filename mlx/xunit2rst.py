@@ -10,9 +10,10 @@ from mako.runtime import Context
 from mako.template import Template
 from pkg_resources import DistributionNotFound, require
 
-TraceableInfo = namedtuple("TraceableInfo", ['matrix_prefix', 'unit_or_integration', 'header_prefix'])
+TraceableInfo = namedtuple("TraceableInfo", ['matrix_prefix', 'type', 'header_prefix'])
 UTEST = TraceableInfo('UTEST_', 'unit', '_unit_test_report_')
 ITEST = TraceableInfo('ITEST_', 'integration', '_integration_test_report_')
+QTEST = TraceableInfo('QTEST_', 'qualification', '_qualification_test_report_')
 TEMPLATE_FILE = Path(__file__).parent.joinpath('xunit2rst.mako')
 
 
@@ -94,7 +95,7 @@ def parse_xunit_root(input_file):
     return test_suites, prefix_set
 
 
-def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, unit_or_integration):
+def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
@@ -103,8 +104,8 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, unit_or_i
         prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
             used, or the default prefix otherwise.
         trim_suffix (bool): Whether to trim the suffix of the prefix or not.
-        unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
-            with 'u' or 'i', indicating unit test report or integration test report respectively as input.
+        type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
+            with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
 
     Returns:
         prefix_set (TraceableInfo): Namedtuple holding the prefixes to use for building traceability output.
@@ -122,7 +123,7 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, unit_or_i
             prefix = prefix_set.matrix_prefix
             base_prefix_on_set = True
 
-    prefix_set = verify_prefix_set(prefix_set, prefix, unit_or_integration)
+    prefix_set = verify_prefix_set(prefix_set, prefix, type_)
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
     prefix = prefix.rstrip('_')
@@ -130,9 +131,9 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, unit_or_i
     return prefix_set, prefix
 
 
-def verify_prefix_set(prefix_set, prefix, unit_or_integration):
+def verify_prefix_set(prefix_set, prefix, type_):
     """
-    The unit-or-integration test input argument has the highest priority, followed by the first letter in the prefix,
+    The --type input argument has the highest priority, followed by the first letter in the prefix,
     and lastly the script will interpret a test report as a unit test report if it contains a 'testsuites' element,
     integration test report otherwise.
 
@@ -140,21 +141,29 @@ def verify_prefix_set(prefix_set, prefix, unit_or_integration):
         prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a root element
             'testsuites'.
         prefix (str): Prefix that will be used in the Mako template.
-        unit_or_integration (None/str): None if the script's discernment shall be used, otherwise a string starting
-            with 'u' or 'i', indicating unit test report or integration test report respectively as input.
+        type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
+            with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
+
+    Returns:
+        TraceableInfo: namedtuple that contains prefix and other info regarding the type of test
 
     Raises:
         ValueError: The unit-or-integration argument is used, but is invalid.
     """
-    if isinstance(unit_or_integration, str):
-        discerning_letter = '' if not unit_or_integration else unit_or_integration.lower()[0]
+    type_map = {
+        'u': UTEST,
+        'i': ITEST,
+        'q': QTEST,
+    }
+    if isinstance(type_, str):
+        discerning_letter = '' if not type_ else type_.lower()[0]
     else:
         discerning_letter = prefix.lower()[0]
-    if discerning_letter in 'iu':
-        prefix_set = ITEST if discerning_letter == 'i' else UTEST
-    elif unit_or_integration is not None:
-        raise ValueError("Value for --unit-or-integration input argument is invalid: expected 'u' or 'i'; got {!r}."
-                         .format(unit_or_integration))
+    if discerning_letter in type_map:
+        return type_map[discerning_letter]
+    elif type_ is not None:
+        raise ValueError("Value for --type input argument is invalid: expected value in {}; got {!r}."
+                         .format(list(type_map), type_))
     return prefix_set
 
 
@@ -187,8 +196,10 @@ def create_parser():
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
     arg_parser.add_argument("--unit-or-integration", action='store',
-                            help="Optional: give value starting with 'u' or 'i' if the the script's discernment is "
-                                 "wrong.")
+                            help="Deprecated alternative to --type; to be removed in version 2.0.0.")
+    arg_parser.add_argument("-t", "--type", action='store',
+                            help="Optional: give value starting with 'u', 'i' or 'q' to explicitly define the type "
+                            "of test: unit/integration/qualification test")
     arg_parser.add_argument("-f", "--failure-message", action="store_true",
                             help="Include the error message in case of test failure in the item's body.")
     arg_parser.add_argument("-l", "--log", action="store",
@@ -204,7 +215,9 @@ def main():
     """Main function"""
     arg_parser = create_parser()
     args = arg_parser.parse_args()
-
+    if args.unit_or_integration and not args.type:
+        args.type = args.unit_or_integration
+        logging.warning('Deprecation warning: --unit-or-integration will be removed in version 2.0.0; use --type')
     generate_xunit_to_rst(
         args.input_file,
         args.rst_output_file,
@@ -213,7 +226,7 @@ def main():
         args.log,
         args.prefix,
         args.trim_suffix,
-        args.unit_or_integration,
+        args.type,
     )
 
 
