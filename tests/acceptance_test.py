@@ -193,6 +193,7 @@ def test_junit_override_xml_prefix():
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
 
+
 @with_setup(setup)
 def test_junit_qualification():
     '''Tests based on utest reports in JUnit format - testing qualification test type '''
