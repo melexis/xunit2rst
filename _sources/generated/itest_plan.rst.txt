@@ -10,14 +10,12 @@ itest_plan
 
 
 .. item:: ITEST-FIRST_TEST First Test
-    :validates: RQT-LOGGING RQT-DIRECTORY
 
     Example of a failing test
 
 .. item:: ITEST-AN_UNLINKED_TEST An Unlinked Test
 
 .. item:: ITEST-ANOTHER_TEST Another test
-    :validates: RQT-SUMMATION
 
     Example of a successful test
 
@@ -29,7 +27,7 @@ The below table traces the integration test cases to the validates requirements.
 
 .. item-matrix:: Linking these integration test cases to the validates requirements
     :source: ITEST-
-    :target: ^RQT-
+    :target: ^RQT-$
     :sourcetitle: Integration test case
     :targettitle: validates requirement
     :type: validates
