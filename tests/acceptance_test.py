@@ -27,7 +27,7 @@ def setup():
 
 
 def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, type_=None, failures=False,
-                    log_file=''):
+                    log_file='', add_links=False):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
     arg_parser = create_parser()
     command = ['-i', input_xml, '-o', output_rst]
@@ -43,6 +43,8 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         command.extend(['-f'])
     if log_file:
         command.extend(['-l', log_file])
+    if add_links:
+        command.append('--links')
     print(command)
     args = arg_parser.parse_args(command)
 
@@ -52,6 +54,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.itemize_suites,
         args.failure_message,
         args.log,
+        args.links,
         args.prefix,
         args.trim_suffix,
         args.type,
@@ -242,6 +245,19 @@ def test_log_file():
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, log_file='itest_log.html')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_log_file_links():
+    '''Test linking to log file for each test case'''
+    rst_file_name = '{}.rst'.format('itest_report_log_links')
+    xml_file_name = '{}.xml'.format('itest_report')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, log_file='itest_log.html', add_links=True)
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)

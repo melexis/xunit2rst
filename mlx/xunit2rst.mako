@@ -45,9 +45,9 @@ The log file that contains details about the executed test cases can be found `h
 Test Cases
 ==========
 
-% for suite in test_suites:
+% for suite_idx, suite in enumerate(test_suites, start=1):
     % if not itemize_suites:  # create traceable item per testcase element
-        % for test in suite:
+        % for test_idx, test in enumerate(suite, start=1):
 <%
 test_name = _convert_name(test.attrib['name'])
 if len(test):
@@ -57,7 +57,7 @@ else:
     test_result = 'Pass'
     relationship = 'passes'
 %>\
-${generate_item(test_name, relationship, failure_message, [test])}\
+${generate_item(test_name, relationship, failure_message, [test], (suite_idx, test_idx))}\
         % endfor
     % else:  # create traceable item per testsuite element
 <%
@@ -74,7 +74,7 @@ for test in suite:
         relationship = 'fails'
         break
 %>\
-${generate_item(test_name, relationship, failure_message, suite)}\
+${generate_item(test_name, relationship, failure_message, suite, (1, suite_idx))}\
     % endif
 % endfor
 Traceability Matrix
@@ -92,7 +92,7 @@ The below table traces the test report to test cases.
     :group: top
     :nocaptions:
 \
-<%def name="generate_item(test_name, relationship, failure_msg, tests)">\
+<%def name="generate_item(test_name, relationship, failure_msg, tests, indexes)">\
 .. item:: REPORT_${test_name} Test report for ${test_name}
     :${relationship}: ${test_name}
 
@@ -109,5 +109,9 @@ ${generate_body(failure.get('message'), failure.get('type'))}
 
         % endfor
     %endfor
+% endif
+% if add_links:
+    Link to `log file <${log_file}#s${indexes[0]}-t${indexes[1]}>`_.
+
 % endif
 </%def>\
