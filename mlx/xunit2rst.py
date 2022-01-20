@@ -51,7 +51,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         log_file (str): Optional path to the HTML log file, empty when not specified.
         add_links (bool): True to add links to the HTML log file for each test case
     """
-    test_suites, prefix_set = parse_xunit_root(input_file)
+    test_suites, prefix_set, multiple_suites = parse_xunit_root(input_file)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
@@ -69,6 +69,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         failure_message=failure_message,
         log_file=log_file,
         add_links=add_links,
+        multiple_suites=multiple_suites,
     )
 
 
@@ -83,10 +84,13 @@ def parse_xunit_root(input_file):
     Returns:
         xml.etree.ElementTree.Element: Root element of the element tree with 'testsuites' as tag.
         TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
+        bool: True if the report may contain more than one test suite, False otherwise
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
+    multiple_suites = True
     if root_input.tag != 'testsuites':
+        multiple_suites = False
         test_suites = ET.Element("testsuites")
         test_suites.append(root_input)
         prefix_set = ITEST
@@ -94,7 +98,7 @@ def parse_xunit_root(input_file):
         test_suites = root_input
         prefix_set = UTEST
 
-    return test_suites, prefix_set
+    return test_suites, prefix_set, multiple_suites
 
 
 def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):

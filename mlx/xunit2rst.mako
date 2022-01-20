@@ -96,7 +96,11 @@ The below table traces the test report to test cases.
 .. item:: REPORT_${test_name} Test report for ${test_name}
     :${relationship}: ${test_name}
 
+% if add_links:
+    Test result: `${test_result} <${log_file}#${"s1-" if multiple_suites else ""}s${indexes[0]}-t${indexes[1]}>`_
+% else:
     Test result: ${test_result}
+% endif
 <% prepend_literal_block = True %>
 % if failure_msg:
     % for test in tests:
@@ -109,9 +113,5 @@ ${generate_body(failure.get('message'), failure.get('type'))}
 
         % endfor
     %endfor
-% endif
-% if add_links:
-    Link to `log file <${log_file}#s${indexes[0]}-t${indexes[1]}>`_.
-
 % endif
 </%def>\
