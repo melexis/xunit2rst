@@ -124,7 +124,8 @@ ${generate_body(failure.get('message'), failure.get('type'))}
     %endfor
 % endif
 % if add_links:
-    Link to `log file with details for ${test_name} <${log_file}#${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}>`_.
+    Link to `log file with details for ${test_name} \
+<${log_file}#${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}>`_.
 
 % endif
 </%def>\
