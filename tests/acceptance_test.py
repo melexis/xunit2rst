@@ -263,5 +263,18 @@ def test_log_file_links():
     assert filecmp.cmp(output_rst, reference_rst)
 
 
+@with_setup(setup)
+def test_log_file_links_multiple_suites():
+    '''Test linking to log file for each test case with multiple suites in the report'''
+    rst_file_name = '{}.rst'.format('itest_report_log_links_multisuite')
+    xml_file_name = '{}.xml'.format('itest_lin_report_multisuite')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, log_file='itest_log.html', add_links=True)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
 if __name__ == '__main__':
     nose.main()

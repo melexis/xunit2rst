@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 title = "{} Test Report for {}".format(info.type.capitalize(), report_name)
 
+
 def _convert_name(name):
     """ Itemize given name and prepend prefix if needed """
     name_without_suite = name.split('.')[-1]  # cut off suite name if prepended by a dot
@@ -44,10 +45,13 @@ The log file that contains details about the executed test cases can be found `h
 
 Test Cases
 ==========
-
+<%
+suite_names = set()
+test_idx = 0
+%>
 % for suite_idx, suite in enumerate(test_suites, start=1):
     % if not itemize_suites:  # create traceable item per testcase element
-        % for test_idx, test in enumerate(suite, start=1):
+        % for test in suite:
 <%
 test_name = _convert_name(test.attrib['name'])
 if len(test):
@@ -56,8 +60,17 @@ if len(test):
 else:
     test_result = 'Pass'
     relationship = 'passes'
+if add_links:
+    class_name = test.attrib.get('classname', '')
+    print(class_name)
+    if " & " in class_name:
+        suite_name = class_name.split('.')[-1]
+        if suite_name not in suite_names:
+            test_idx = 0
+        suite_names.add(suite_name)
+test_idx += 1
 %>\
-${generate_item(test_name, relationship, failure_message, [test], (suite_idx, test_idx))}\
+${generate_item(test_name, relationship, failure_message, [test], (len(suite_names), test_idx))}\
         % endfor
     % else:  # create traceable item per testsuite element
 <%
@@ -74,7 +87,7 @@ for test in suite:
         relationship = 'fails'
         break
 %>\
-${generate_item(test_name, relationship, failure_message, suite, (1, suite_idx))}\
+${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\
     % endif
 % endfor
 Traceability Matrix
@@ -97,7 +110,7 @@ The below table traces the test report to test cases.
     :${relationship}: ${test_name}
 
 % if add_links:
-    Test result: `${test_result} <${log_file}#${"s1-" if multiple_suites else ""}s${indexes[0]}-t${indexes[1]}>`_
+    Test result: `${test_result} <${log_file}#${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}>`_
 % else:
     Test result: ${test_result}
 % endif

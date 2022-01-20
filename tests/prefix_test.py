@@ -12,9 +12,8 @@ TEST_IN_DIR = Path(__file__).parent / 'test_in'
 
 def test_build_prefix_and_set_utest_default():
     ''' Use default prefix for unit test reports '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_no_prefix_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_no_prefix_report.xml')
     assert_equal(initial_prefix_set, UTEST)
-    assert_equal(multiple_suites, True)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
     assert_equal(prefix_set, initial_prefix_set)
@@ -23,9 +22,8 @@ def test_build_prefix_and_set_utest_default():
 
 def test_build_prefix_and_set_itest_default():
     ''' Use default prefix for integration test reports '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
     assert_equal(initial_prefix_set, ITEST)
-    assert_equal(multiple_suites, False)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
     assert_equal(prefix_set, initial_prefix_set)
@@ -34,9 +32,8 @@ def test_build_prefix_and_set_itest_default():
 
 def test_build_prefix_and_set_from_name():
     ''' Get prefix from element name '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
     assert_equal(initial_prefix_set, UTEST)
-    assert_equal(multiple_suites, True)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
     assert_equal(prefix_set, initial_prefix_set)
@@ -45,9 +42,8 @@ def test_build_prefix_and_set_from_name():
 
 def test_build_prefix_and_set_from_arg():
     ''' Get prefix from input argument `--prefix` and trim suffix of prefix '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
     assert_equal(initial_prefix_set, UTEST)
-    assert_equal(multiple_suites, True)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'TEST_MY_LIB_-', True, None)
     assert_equal(prefix_set, initial_prefix_set)
@@ -59,9 +55,8 @@ def test_build_prefix_and_set_from_arg_swap_set():
     Get prefix from input argument `--prefix` and base prefix_set on its first letter.
     Don't trim suffix of prefix.
     '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
     assert_equal(initial_prefix_set, ITEST)
-    assert_equal(multiple_suites, False)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_MY_LIB_-', False, None)
     assert_not_equal(prefix_set, initial_prefix_set)
@@ -71,9 +66,8 @@ def test_build_prefix_and_set_from_arg_swap_set():
 
 def test_build_prefix_and_set_priority():
     ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
-    test_suites, initial_prefix_set, multiple_suites = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+    test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
     assert_equal(initial_prefix_set, UTEST)
-    assert_equal(multiple_suites, True)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_HOWDY-', False, 'i')
     assert_not_equal(prefix_set, initial_prefix_set)
