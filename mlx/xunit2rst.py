@@ -208,7 +208,8 @@ def create_parser():
                             help="Optional: path to the HTML log file, relative to where Sphinx will put the --output, "
                                  "to create a link to.")
     arg_parser.add_argument("--links", action="store_true",
-                            help="Optional: inserts a link to the RobotFramework HTML log file for each test case")
+                            help="Optional: inserts a link to the RobotFramework HTML log file for each test case "
+                                 "as ext_robotframeworklog link id.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version))
