@@ -16,24 +16,21 @@ Test Cases
 
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
     :fails: ITEST-FIRST_TEST
+    :ext_robotframeworklog: itest_log.html:s1-t1
 
     Test result: Fail
 
-    Link to `log file with details for ITEST-FIRST_TEST <itest_log.html#s1-t1>`_.
-
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST
+    :ext_robotframeworklog: itest_log.html:s1-t2
 
     Test result: Pass
-
-    Link to `log file with details for ITEST-AN_UNLINKED_TEST <itest_log.html#s1-t2>`_.
 
 .. item:: REPORT_ITEST-ANOTHER_TEST Test report for ITEST-ANOTHER_TEST
     :passes: ITEST-ANOTHER_TEST
+    :ext_robotframeworklog: itest_log.html:s1-t3
 
     Test result: Pass
-
-    Link to `log file with details for ITEST-ANOTHER_TEST <itest_log.html#s1-t3>`_.
 
 Traceability Matrix
 ===================
