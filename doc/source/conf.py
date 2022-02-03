@@ -80,11 +80,12 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-# Additional attributes for traceability plugin
+# Additional relationships for traceability plugin
 traceability_relationships = {
     'passes': 'passed_by',
     'fails': 'failed_by',
     'validates': 'validated_by',
+    'ext_robotframeworklog': '',
 }
 traceability_relationship_to_string = {
     'passes': 'Passes',
@@ -93,6 +94,11 @@ traceability_relationship_to_string = {
     'failed_by': 'Failed by',
     'validates': 'Validates',
     'validated_by': 'Validated by',
+    'ext_robotframeworklog': 'Details in log file',
+}
+
+traceability_external_relationship_to_url = {
+    'ext_robotframeworklog': 'field1#field2'
 }
 # -- Options for HTML output -------------------------------------------------
 

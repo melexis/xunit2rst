@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id" tests="15" errors="0" failures="0" skipped="0" time="177.821">
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 1" time="4.113">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 2" time="4.136">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 3" time="4.078">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 4" time="4.125">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 5" time="4.081">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 6" time="4.134">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 7" time="4.335">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 8" time="4.121">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Product Id" name="read product id 9" time="4.102">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 1" time="4.354">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 2" time="4.088">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 3" time="4.107">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 4" time="4.288">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 5" time="4.310">
+</testcase>
+<testcase classname="Empty Flash Product Id &amp; Empty Flash Mlx Device Project Id.Empty Flash Mlx Device Project Id" name="read mlx device project id 6" time="4.113">
+</testcase>
+</testsuite>

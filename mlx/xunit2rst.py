@@ -40,7 +40,7 @@ def render_template(destination, **kwargs):
             raise exc
 
 
-def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, *prefix_args):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, add_links, *prefix_args):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
@@ -49,6 +49,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         itemize_suites (bool): True for itemization of testsuite elements, False for testcase elements.
         failure_message (bool): True if failure messages are to be included in the item's body, False otherwise.
         log_file (str): Optional path to the HTML log file, empty when not specified.
+        add_links (bool): True to add links to the HTML log file for each test case
     """
     test_suites, prefix_set = parse_xunit_root(input_file)
 
@@ -67,6 +68,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         itemize_suites=itemize_suites,
         failure_message=failure_message,
         log_file=log_file,
+        add_links=add_links,
     )
 
 
@@ -205,6 +207,9 @@ def create_parser():
     arg_parser.add_argument("-l", "--log", action="store",
                             help="Optional: path to the HTML log file, relative to where Sphinx will put the --output, "
                                  "to create a link to.")
+    arg_parser.add_argument("--links", action="store_true",
+                            help="Optional: inserts a link to the RobotFramework HTML log file for each test case "
+                                 "as ext_robotframeworklog link id.")
     arg_parser.add_argument('-v', '--version',
                             action='version',
                             version='%(prog)s {}'.format(version))
@@ -224,6 +229,7 @@ def main():
         args.itemize_suites,
         args.failure_message,
         args.log,
+        args.links,
         args.prefix,
         args.trim_suffix,
         args.type,
