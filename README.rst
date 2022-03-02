@@ -6,8 +6,8 @@
     :target: https://badge.fury.io/py/mlx.xunit2rst
     :alt: PyPI packaged release
 
-.. image:: https://travis-ci.com/melexis/xunit2rst.svg?branch=master
-    :target: https://travis-ci.com/melexis/xunit2rst
+.. image:: https://github.com/melexis/xunit2rst/actions/workflows/python-package.yml/badge.svg?branch=master
+    :target: https://github.com/melexis/xunit2rst/actions/workflows/python-package.yml
     :alt: Build status
 
 .. image:: https://img.shields.io/badge/Documentation-published-brightgreen.svg
