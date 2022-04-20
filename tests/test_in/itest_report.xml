@@ -7,4 +7,9 @@
 </testcase>
 <testcase classname="Example" name="Another test" time="0.002">
 </testcase>
+<properties>
+    <property name="Documentation" value="My test suite title" />
+    <property name="More Info" value="Test support for xUnit output of RobotFramework==5.0.0" />
+    <property name="Version" value="1.0" />
+</properties>
 </testsuite>
