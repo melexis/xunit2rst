@@ -77,6 +77,8 @@ def parse_xunit_root(input_file):
     This function parses the root element of the XML file and returns a testsuites root element and the set of prefixes
     to use.
 
+    Note: only elements with tag 'testsuites', 'testsuite' and 'testcase' are included.
+
     Args:
         input_file (Path): Path to the input file (.xml).
 
@@ -93,6 +95,14 @@ def parse_xunit_root(input_file):
     else:
         test_suites = root_input
         prefix_set = UTEST
+
+    for suite in test_suites:
+        if suite.tag != 'testsuite':
+            test_suites.remove(suite)
+            continue
+        for test in suite:
+            if test.tag != 'testcase':
+                suite.remove(test)
 
     return test_suites, prefix_set
 
