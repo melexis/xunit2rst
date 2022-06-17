@@ -66,7 +66,6 @@ else:
     relationship = 'passes'
 if add_links:
     class_name = test.attrib.get('classname', '')
-    print(class_name)
     if class_name.startswith(f"{suite.attrib.get('name')}."):
         suite_name = class_name.split('.')[-1]
         if suite_name not in suite_names:
