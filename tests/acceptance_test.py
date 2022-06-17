@@ -276,5 +276,18 @@ def test_log_file_links_multiple_suites():
     assert filecmp.cmp(output_rst, reference_rst)
 
 
+@with_setup(setup)
+def test_support_for_skipped():
+    '''Tests based on itest reports in xUnit format - including failure messages and a test that was skipped'''
+    rst_file_name = '{}.rst'.format('itest_report_skipped_failures_log')
+    xml_file_name = '{}.xml'.format('itest_report_skipped')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, failures=True)
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
 if __name__ == '__main__':
     nose.main()
