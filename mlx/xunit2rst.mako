@@ -55,8 +55,12 @@ test_idx = 0
 <%
 test_name = _convert_name(test.attrib['name'])
 if len(test):
-    test_result = 'Fail'
-    relationship = 'fails'
+    if test.findall('skipped'):
+        test_result = 'Skipped'
+        relationship = 'skipped'
+    else:
+        test_result = 'Fail'
+        relationship = 'fails'
 else:
     test_result = 'Pass'
     relationship = 'passes'
@@ -82,10 +86,13 @@ if not len(suite):
     continue
 
 for test in suite:
-    if len(test):
+    if test.findall('failure'):
         test_result = 'Fail'
         relationship = 'fails'
         break
+    if test.findall('skipped'):
+        test_result = 'Skipped'
+        relationship = 'skipped'
 %>\
 ${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\
     % endif
@@ -116,7 +123,7 @@ The below table traces the test report to test cases.
 <% prepend_literal_block = True %>
 % if failure_msg:
     % for test in tests:
-        % for failure in test.iterfind('failure'):
+        % for failure in test.findall('failure') + test.findall('skipped'):
             % if prepend_literal_block:
     ::
 <% prepend_literal_block = False %>
