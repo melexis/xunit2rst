@@ -56,7 +56,7 @@ test_idx = 0
 test_name = _convert_name(test.attrib['name'])
 if len(test):
     if test.findall('skipped'):
-        test_result = 'Skipped'
+        test_result = 'Skip'
         relationship = 'skipped'
     else:
         test_result = 'Fail'
@@ -90,7 +90,7 @@ for test in suite:
         relationship = 'fails'
         break
     if test.findall('skipped'):
-        test_result = 'Skipped'
+        test_result = 'Skip'
         relationship = 'skipped'
 %>\
 ${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\

@@ -30,7 +30,7 @@ Test Cases
 .. item:: REPORT_ITEST-ANOTHER_TEST Test report for ITEST-ANOTHER_TEST
     :skipped: ITEST-ANOTHER_TEST
 
-    Test result: Skipped
+    Test result: Skip
 
     ::
 
