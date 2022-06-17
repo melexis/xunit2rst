@@ -14,9 +14,9 @@ Test Cases
 ==========
 
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
-    :skipped: ITEST-FIRST_TEST
+    :fails: ITEST-FIRST_TEST
 
-    Test result: Skipped
+    Test result: Fail
 
     ::
 
