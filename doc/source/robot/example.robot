@@ -22,6 +22,11 @@ Another test
     ${sum}             Evaluate  ${128} + ${128}
     Should Be Equal    ${sum}    ${256}
 
+A skipped test
+    [Documentation]    Example of a test that is always skipped
+    [Tags]             RQT-LOGGING
+    Skip               This test case is always skipped.
+
 *** Keywords ***
 My Keyword
     [Arguments]    ${path}
