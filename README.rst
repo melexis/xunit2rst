@@ -135,8 +135,8 @@ Its value should start with *u* or *i* and gets parsed case-insensitively.
 Include Message of Failure(s)
 =============================
 
-When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures of the item's test cases
-in its body.
+When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures and reasons for skipping
+of the item's test cases in its body.
 
 Links to Log File
 =================
