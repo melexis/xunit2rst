@@ -14,9 +14,9 @@ Test Cases
 ==========
 
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_SUCCESS Test report for UTEST_MY_LIB-MY_FUNCTION_SUCCESS
-    :passes: UTEST_MY_LIB-MY_FUNCTION_SUCCESS
+    :skipped: UTEST_MY_LIB-MY_FUNCTION_SUCCESS
 
-    Test result: Pass
+    Test result: Skip
 
 .. item:: REPORT_UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED Test report for UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED
     :skipped: UTEST_MY_LIB-TEST_MY_FUNCTION_NOT_ERASED
@@ -28,10 +28,15 @@ Test Cases
 
     Test result: Pass
 
-.. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION Test report for UTEST_MY_LIB-SOME_FUNCTION
-    :fails: UTEST_MY_LIB-SOME_FUNCTION
+.. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION1 Test report for UTEST_MY_LIB-SOME_FUNCTION1
+    :fails: UTEST_MY_LIB-SOME_FUNCTION1
 
     Test result: Fail
+
+.. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION2 Test report for UTEST_MY_LIB-SOME_FUNCTION2
+    :skipped: UTEST_MY_LIB-SOME_FUNCTION2
+
+    Test result: Skip
 
 Traceability Matrix
 ===================
