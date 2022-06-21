@@ -62,7 +62,7 @@ Usage
 
     usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]
                      [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]
-                     [-f] [-l LOG] [-v]
+                     [-t TYPE] [-f] [-l LOG] [--links] [-v]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -74,18 +74,21 @@ Usage
                             elements.
       -p PREFIX, --prefix PREFIX
                             Optional prefix to add to item IDs
-      --trim-suffix         If the suffix of the --prefix argument ends with '_-'
-                            it gets trimmed to '-'
+      --trim-suffix         If the suffix of the --prefix argument ends with '_-' it gets
+                            trimmed to '-'
       --unit-or-integration UNIT_OR_INTEGRATION
-                            Optional: give value starting with 'u' or 'i' if the
-                            the script's discernment is wrong.
+                            Deprecated alternative to --type; to be removed in version
+                            2.0.0.
+      -t TYPE, --type TYPE  Optional: give value starting with 'u', 'i' or 'q' to
+                            explicitly define the type of test:
+                            unit/integration/qualification test
       -f, --failure-message
-                            Include the error message in case of test failure in
-                            the item's body.
-      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where
-                            Sphinx will put the --output, to create a link to.
-      --links               Optional: inserts a link to the RobotFramework HTML log file for each test case. Requires
-                            additional configuration in conf.py.
+                            Include the error message in case of test failure in the item's
+                            body.
+      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx
+                            will put the --output, to create a link to.
+      --links               Optional: inserts a link to the RobotFramework HTML log file
+                            for each test case as ext_robotframeworklog link id.
       -v, --version         show program's version number and exit
 
 .. _`mlx.traceability`: https://pypi.org/project/mlx.traceability/
@@ -126,7 +129,7 @@ Distinction Between Unit and Integration Test Reports
 Test reports that have a *testsuites* element as root in XML are treated as unit test reports. Otherwise the script
 treats the input file as an integration test report. This discerning behavior gets overridden when prefixes are found in
 the input file or the ``--prefix`` input argument is used. The script looks for a *U* or *I* as the first letter of the
-prefix. Lastly, you can explicitly define the type by using the ``--unit-or-integration`` input argument.
+prefix. Lastly, you can explicitly define the type by using the ``--type`` input argument.
 Its value should start with *u* or *i* and gets parsed case-insensitively.
 
 Include Message of Failure(s)
