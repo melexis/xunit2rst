@@ -278,13 +278,26 @@ def test_log_file_links_multiple_suites():
 
 @with_setup(setup)
 def test_support_for_skipped_junit():
-    '''Tests based on utest reports in JUnit format - test support for skipped tests '''
+    '''Tests based on utest reports in JUnit format - test support for skipped tests'''
     file_name = 'utest_my_lib_report_skipped'
     rst_file_name = '{}.rst'.format(file_name)
     xml_file_name = '{}.xml'.format(file_name)
     input_xml = str(TEST_IN_DIR / xml_file_name)
     output_rst = str(TEST_OUT_DIR / rst_file_name)
     xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='')
+
+    reference_rst = str(TEST_IN_DIR / rst_file_name)
+    assert filecmp.cmp(output_rst, reference_rst)
+
+
+@with_setup(setup)
+def test_support_for_skipped_itemize_suites():
+    '''Tests based on utest reports in JUnit format - test support for skipped tests when itemizing test suites'''
+    rst_file_name = '{}.rst'.format('utest_my_lib_suites_report_skipped')
+    xml_file_name = '{}.xml'.format('utest_my_lib_report_skipped')
+    input_xml = str(TEST_IN_DIR / xml_file_name)
+    output_rst = str(TEST_OUT_DIR / rst_file_name)
+    xunit2rst_check(input_xml, output_rst, itemize_suites=True, prefix='', failures=True)
 
     reference_rst = str(TEST_IN_DIR / rst_file_name)
     assert filecmp.cmp(output_rst, reference_rst)
