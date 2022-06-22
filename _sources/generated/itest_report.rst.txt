@@ -36,6 +36,16 @@ Test Cases
 
     Test result: Pass
 
+.. item:: REPORT_ITEST-A_SKIPPED_TEST Test report for ITEST-A_SKIPPED_TEST
+    :skipped: ITEST-A_SKIPPED_TEST
+    :ext_robotframeworklog: ../log.html:s1-t4
+
+    Test result: Skip
+
+    ::
+
+      SkipExecution: This test case is always skipped.
+
 Traceability Matrix
 ===================
 

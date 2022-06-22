@@ -19,6 +19,10 @@ itest_plan
 
     Example of a successful test
 
+.. item:: ITEST-A_SKIPPED_TEST A skipped test
+
+    Example of a test that is always skipped
+
 
 Traceability matrix
 ===================
