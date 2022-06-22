@@ -25,11 +25,7 @@ Test Cases
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_LOCKED Test report for UTEST_MY_LIB-MY_FUNCTION_LOCKED
     :skipped: UTEST_MY_LIB-MY_FUNCTION_LOCKED
 
-    Test result: Skip
-
-    ::
-
-      Skipping this test case but the other test case in this suite should pass.
+    Test result: Pass
 
 .. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION Test report for UTEST_MY_LIB-SOME_FUNCTION
     :fails: UTEST_MY_LIB-SOME_FUNCTION
