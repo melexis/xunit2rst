@@ -77,21 +77,25 @@ ${generate_item(test_name, relationship, failure_message, [test], (len(suite_nam
         % endfor
     % else:  # create traceable item per testsuite element
 <%
-test_result = 'Skip'
-relationship = 'skipped'
+test_result = 'Pass'
+relationship = 'passes'
 test_name = _convert_name(suite.attrib['name'])
 # skip testsuite elements that have no testcase element (typically the first testsuite element only)
 if not len(suite):
     continue
 
+skipped_counter = 0
 for test in suite:
     if test.findall('failure'):
         test_result = 'Fail'
         relationship = 'fails'
         break
-    if not len(test):
-        test_result = 'Pass'
-        relationship = 'passes'
+    if test.findall('skipped'):
+        skipped_counter += 1
+else:
+    if skipped_counter == len(suite):
+        test_result = 'Skip'
+        relationship = 'skipped'
 %>\
 ${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\
     % endif
