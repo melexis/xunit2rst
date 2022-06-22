@@ -102,7 +102,19 @@ Itemization
 
 By default, all *testcase* elements from the input file are used to created treaceability items. This may not always be
 desired. The ``-s, --itemize-suites`` flag lets the script itemize *testsuite* elements instead. In this case, the
-*testcase* elements will still be parsed to determine whether the testsuite passed or failed.
+*testcase* elements will still be parsed to determine whether the testsuite passed or failed or skipped.
+
+Test Result of Itemized Suites
+------------------------------
+
+Pass (passes)
+  No test cases have failed. Some might be skipped.
+
+Fail (fails)
+  At least one test case has failed.
+
+Skip (skipped)
+  All test cases have been skipped.
 
 Item IDs
 ========
@@ -135,8 +147,8 @@ Its value should start with *u* or *i* and gets parsed case-insensitively.
 Include Message of Failure(s)
 =============================
 
-When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures of the item's test cases
-in its body.
+When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures and reasons for skipping
+of the item's test cases in its body.
 
 Links to Log File
 =================

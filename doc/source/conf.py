@@ -84,6 +84,7 @@ pygments_style = 'sphinx'
 traceability_relationships = {
     'passes': 'passed_by',
     'fails': 'failed_by',
+    'skipped': 'skipped_by',
     'validates': 'validated_by',
     'ext_robotframeworklog': '',
 }
@@ -92,6 +93,8 @@ traceability_relationship_to_string = {
     'passed_by': 'Passed by',
     'fails': 'Fails',
     'failed_by': 'Failed by',
+    'skipped': 'Skipped',
+    'skipped_by': 'Skipped by',
     'validates': 'Validates',
     'validated_by': 'Validated by',
     'ext_robotframeworklog': 'Details in log file',

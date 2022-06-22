@@ -55,14 +55,17 @@ test_idx = 0
 <%
 test_name = _convert_name(test.attrib['name'])
 if len(test):
-    test_result = 'Fail'
-    relationship = 'fails'
+    if test.findall('skipped'):
+        test_result = 'Skip'
+        relationship = 'skipped'
+    else:
+        test_result = 'Fail'
+        relationship = 'fails'
 else:
     test_result = 'Pass'
     relationship = 'passes'
 if add_links:
     class_name = test.attrib.get('classname', '')
-    print(class_name)
     if class_name.startswith(f"{suite.attrib.get('name')}."):
         suite_name = class_name.split('.')[-1]
         if suite_name not in suite_names:
@@ -81,11 +84,18 @@ test_name = _convert_name(suite.attrib['name'])
 if not len(suite):
     continue
 
+skipped_counter = 0
 for test in suite:
-    if len(test):
+    if test.findall('failure'):
         test_result = 'Fail'
         relationship = 'fails'
         break
+    if test.findall('skipped'):
+        skipped_counter += 1
+else:
+    if skipped_counter == len(suite):
+        test_result = 'Skip'
+        relationship = 'skipped'
 %>\
 ${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\
     % endif
@@ -114,9 +124,9 @@ The below table traces the test report to test cases.
 
     Test result: ${test_result}
 <% prepend_literal_block = True %>
-% if failure_msg:
+% if failure_msg and relationship != 'passes':
     % for test in tests:
-        % for failure in test.iterfind('failure'):
+        % for failure in test.findall('failure') + test.findall('skipped'):
             % if prepend_literal_block:
     ::
 <% prepend_literal_block = False %>
