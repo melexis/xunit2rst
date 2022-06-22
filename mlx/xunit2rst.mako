@@ -84,12 +84,16 @@ test_name = _convert_name(suite.attrib['name'])
 if not len(suite):
     continue
 
+skipped_counter = 0
 for test in suite:
     if test.findall('failure'):
         test_result = 'Fail'
         relationship = 'fails'
         break
     if test.findall('skipped'):
+        skipped_counter += 1
+else:
+    if skipped_counter == len(suite):
         test_result = 'Skip'
         relationship = 'skipped'
 %>\
@@ -120,7 +124,7 @@ The below table traces the test report to test cases.
 
     Test result: ${test_result}
 <% prepend_literal_block = True %>
-% if failure_msg:
+% if failure_msg and relationship != 'passes':
     % for test in tests:
         % for failure in test.findall('failure') + test.findall('skipped'):
             % if prepend_literal_block:
