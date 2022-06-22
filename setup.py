@@ -7,7 +7,7 @@ setup(
     use_scm_version={
         'write_to': 'mlx/__xunit2rst_version__.py'
     },
-    setup_requires=['setuptools-scm'],
+    setup_requires=['setuptools-scm>=6.0.0,<7.*'],
     url='https://github.com/melexis/xunit2rst',
     license='Apache License Version 2.0',
     author='JasperCraeghs',
