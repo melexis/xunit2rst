@@ -108,7 +108,7 @@ Test Result of Itemized Suites
 ------------------------------
 
 Pass (passes)
-  No test cases have failed.
+  No test cases have failed. Some might be skipped.
 
 Fail (fails)
   At least one test case has failed.
