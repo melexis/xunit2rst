@@ -49,7 +49,7 @@ The below table traces the test report to test cases.
     :target: UTEST-
     :sourcetitle: Unit test report
     :targettitle: Unit test specification
-    :type: fails passes
+    :type: fails passes skipped
     :stats:
     :group: top
     :nocaptions:
