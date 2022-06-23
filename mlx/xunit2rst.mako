@@ -110,7 +110,7 @@ The below table traces the test report to test cases.
     :target: ${prefix}
     :sourcetitle: ${info.type.capitalize()} test report
     :targettitle: ${info.type.capitalize()} test specification
-    :type: fails passes
+    :type: fails passes skipped
     :stats:
     :group: top
     :nocaptions:

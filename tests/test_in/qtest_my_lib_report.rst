@@ -43,7 +43,7 @@ The below table traces the test report to test cases.
     :target: QTEST_MY_LIB-
     :sourcetitle: Qualification test report
     :targettitle: Qualification test specification
-    :type: fails passes
+    :type: fails passes skipped
     :stats:
     :group: top
     :nocaptions:

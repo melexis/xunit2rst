@@ -38,7 +38,7 @@ The below table traces the test report to test cases.
     :target: ITEST_LIN-
     :sourcetitle: Integration test report
     :targettitle: Integration test specification
-    :type: fails passes
+    :type: fails passes skipped
     :stats:
     :group: top
     :nocaptions:
