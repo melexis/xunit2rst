@@ -60,9 +60,10 @@ Usage
 
     mlx.xunit2rst --help
 
-    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]
-                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]
-                     [-t TYPE] [-f] [-l LOG] [--links] [-v]
+    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s] [-p PREFIX]
+                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f]
+                     [-l LOG] [--links] [-v]
+
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -70,6 +71,8 @@ Usage
                             The input XML file
       -o RST_OUTPUT_FILE, --output RST_OUTPUT_FILE
                             The output RST file
+      --only EXPRESSION     Expression of tags for Sphinx' `only` directive that surrounds all
+                            RST content. By default, no `only` directive is generated.
       -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase
                             elements.
       -p PREFIX, --prefix PREFIX
@@ -91,7 +94,13 @@ Usage
                             for each test case as ext_robotframeworklog link id.
       -v, --version         show program's version number and exit
 
+If you use the ``--only`` input argument, you should also add |sphinx_selective_exclude.eager_only|_ to the
+``extensions`` list to prevent `mlx.traceability`_ from parsing the content and ignoring the effect of the
+``only`` directive.
+
 .. _`mlx.traceability`: https://pypi.org/project/mlx.traceability/
+.. |sphinx_selective_exclude.eager_only| replace:: ``'sphinx_selective_exclude.eager_only'``
+.. _sphinx_selective_exclude.eager_only: https://pypi.org/project/sphinx-selective-exclude/
 
 --------
 Behavior

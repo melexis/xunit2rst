@@ -51,6 +51,7 @@ texinfo_documents = [
 # ones.
 extensions = [
     'mlx.traceability',
+    'sphinx_selective_exclude.eager_only',
 ]
 
 # This is the location where we copy the log file to. It is relative to Sphinx'
@@ -118,4 +119,5 @@ html_static_path = [os.path.join(os.path.dirname(mlx.traceability.__file__), 'as
 traceability_render_relationship_per_item = True
 
 def setup(app):
-    pass
+    if os.environ.get('LAYER', 'FLASH') == 'FLASH':
+        tags.add('FLASH')
