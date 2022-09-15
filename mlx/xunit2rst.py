@@ -166,7 +166,7 @@ def verify_prefix_set(prefix_set, prefix, type_):
         TraceableInfo: namedtuple that contains prefix and other info regarding the type of test
 
     Raises:
-        ValueError: The unit-or-integration argument is used, but is invalid.
+        ValueError: The --type argument is used, but is invalid.
     """
     type_map = {
         'u': UTEST,
