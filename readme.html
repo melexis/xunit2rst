@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation xunit2rst &mdash; mlx.xunit2rst 1.2.1 documentation</title>
+  <title>Documentation xunit2rst &mdash; mlx.xunit2rst 1.3.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" type="text/css" />
@@ -34,7 +34,7 @@
             <a href="index.html" class="icon icon-home"> mlx.xunit2rst
           </a>
               <div class="version">
-                1.2
+                1.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -134,9 +134,10 @@
 
 <span class="go">mlx.xunit2rst --help</span>
 
-<span class="go">usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [-s] [-p PREFIX]</span>
-<span class="go">                 [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION]</span>
-<span class="go">                 [-t TYPE] [-f] [-l LOG] [--links] [-v]</span>
+<span class="go">usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s] [-p PREFIX]</span>
+<span class="go">                 [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f]</span>
+<span class="go">                 [-l LOG] [--links] [-v]</span>
+
 
 <span class="go">optional arguments:</span>
 <span class="go">  -h, --help            show this help message and exit</span>
@@ -144,6 +145,8 @@
 <span class="go">                        The input XML file</span>
 <span class="go">  -o RST_OUTPUT_FILE, --output RST_OUTPUT_FILE</span>
 <span class="go">                        The output RST file</span>
+<span class="go">  --only EXPRESSION     Expression of tags for Sphinx&#39; `only` directive that surrounds all</span>
+<span class="go">                        RST content. By default, no `only` directive is generated.</span>
 <span class="go">  -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase</span>
 <span class="go">                        elements.</span>
 <span class="go">  -p PREFIX, --prefix PREFIX</span>
@@ -166,6 +169,9 @@
 <span class="go">  -v, --version         show program&#39;s version number and exit</span>
 </pre></div>
 </div>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">--only</span></code> input argument, you should also add <a class="reference external" href="https://pypi.org/project/sphinx-selective-exclude/"><code class="docutils literal notranslate"><span class="pre">'sphinx_selective_exclude.eager_only'</span></code></a> to the
+<code class="docutils literal notranslate"><span class="pre">extensions</span></code> list to prevent <a class="reference external" href="https://pypi.org/project/mlx.traceability/">mlx.traceability</a> from parsing the content and ignoring the effect of the
+<code class="docutils literal notranslate"><span class="pre">only</span></code> directive.</p>
 </section>
 <section id="behavior">
 <h2><a class="toc-backref" href="#id4">Behavior</a><a class="headerlink" href="#behavior" title="Permalink to this heading"></a></h2>
