@@ -20,7 +20,7 @@ CP            := cp
 ROBOT_XUNIT   = $(ROBOTDIR)/report.xml
 ITEST_PLAN    = $(OUTDIR)/itest_plan.rst
 LOG_FILE      = log.html
-LAYER         ?= FLASH
+LAYER         ?= ""
 
 # Put it first so that "make" without argument is like "make help".
 help:
