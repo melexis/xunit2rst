@@ -4,9 +4,9 @@ import logging
 import xml.etree.ElementTree as ET
 from collections import namedtuple
 from pathlib import Path
+from textwrap import indent
 
 from mako.exceptions import RichTraceback
-from mako.runtime import Context
 from mako.template import Template
 from pkg_resources import DistributionNotFound, require
 
@@ -17,11 +17,12 @@ QTEST = TraceableInfo('QTEST_', 'qualification', '_qualification_test_report_')
 TEMPLATE_FILE = Path(__file__).parent.joinpath('xunit2rst.mako')
 
 
-def render_template(destination, **kwargs):
+def render_template(destination, only="", **kwargs):
     """ Renders the Mako template, and writes output file to the specified destination.
 
     Args:
         destination (Path): Location of the output file.
+        only (str): Expression for 'only' directive, which will only be added when this string is not empty.
         **kwargs (dict): Variables to be used in the Mako template.
 
     Raises:
@@ -29,18 +30,22 @@ def render_template(destination, **kwargs):
         Exception: Re-raised Exception coming from Mako template.
     """
     destination.parent.mkdir(parents=True, exist_ok=True)
-    with open(str(destination), 'w', newline='\n', encoding='utf-8') as rst_file:
-        template = Template(filename=str(TEMPLATE_FILE), output_encoding='utf-8', input_encoding='utf-8')
-        try:
-            template.render_context(Context(rst_file, **kwargs))
-        except Exception as exc:
-            traceback = RichTraceback()
-            logging.error("Exception raised in Mako template, which will be re-raised after logging line info:")
-            logging.error("File %s, line %s, in %s: %r", *traceback.traceback[-1])
-            raise exc
+    template = Template(filename=str(TEMPLATE_FILE))
+    try:
+        rst_content = template.render(**kwargs)
+    except Exception as exc:
+        traceback = RichTraceback()
+        logging.error("Exception raised in Mako template, which will be re-raised after logging line info:")
+        logging.error("File %s, line %s, in %s: %r", *traceback.traceback[-1])
+        raise exc
+    if only:
+        rst_content = f".. only:: {only}\n\n{indent(rst_content, ' ' * 4)}"
+    with open(str(destination), 'w', encoding='utf-8', newline='\n') as rst_file:
+        rst_file.write(rst_content)
 
 
-def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, add_links, *prefix_args):
+def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, add_links, *prefix_args,
+                          **kwargs):
     """ Processes input arguments, calls mako template function while passing all needed parameters.
 
     Args:
@@ -69,6 +74,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         failure_message=failure_message,
         log_file=log_file,
         add_links=add_links,
+        **kwargs,
     )
 
 
@@ -160,7 +166,7 @@ def verify_prefix_set(prefix_set, prefix, type_):
         TraceableInfo: namedtuple that contains prefix and other info regarding the type of test
 
     Raises:
-        ValueError: The unit-or-integration argument is used, but is invalid.
+        ValueError: The --type argument is used, but is invalid.
     """
     type_map = {
         'u': UTEST,
@@ -198,6 +204,9 @@ def create_parser():
                             dest='rst_output_file',
                             type=Path,
                             help='The output RST file')
+    arg_parser.add_argument("--only", dest="expression", default="",
+                            help="Expression of tags for Sphinx' `only` directive that surrounds all RST content. "
+                            "By default, no `only` directive is generated.")
     arg_parser.add_argument('-s', '--itemize-suites',
                             action='store_true',
                             help="Flag to itemize testsuite elements instead of testcase elements.")
@@ -243,6 +252,7 @@ def main():
         args.prefix,
         args.trim_suffix,
         args.type,
+        only=args.expression,
     )
 
 
