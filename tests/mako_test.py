@@ -8,10 +8,12 @@ from mlx.xunit2rst import ITEST, render_template
 
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
 
+
 class TestMako(unittest.TestCase):
 
     def test_mako_error_handling(self):
-        ''' Tests error logging and re-raising of an Exception in Mako template by intentionally not passing a variable '''
+        ''' Tests error logging and re-raising of an Exception in Mako template by intentionally not passing a
+        variable '''
         kwargs = {
             'report_name': 'my_report',
             'info': ITEST,
