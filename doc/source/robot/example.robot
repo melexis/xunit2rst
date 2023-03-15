@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    Example using the space separated plain text format.
 Library          OperatingSystem
+Metadata         Report Info File    test_report_info.yml
 
 *** Variables ***
 ${MESSAGE}       Hello, world!
