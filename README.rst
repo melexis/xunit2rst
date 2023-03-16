@@ -155,6 +155,34 @@ Include Message of Failure(s)
 When the ``-f, --failure-message`` flag is set, the tool includes the messages of all failures and reasons for skipping
 of the item's test cases in its body.
 
+.. _content:
+
+Add Content to Test Reports
+===========================
+
+Extra reStructuredText content for the generated test reports can be defined in a YAML_ file that contains a
+mapping, aka `dictionary`_, of case insensitive test case names (or test suite names for ``-s, --itemize-suites``) as
+keys and reStructuredText strings as values. `Multiline strings`_ are supported. This feature is used in the `example
+documentation`_.
+
+The path to the YAML file, an absolute path or relative to the input XML file, must be added as a metadata element to
+the XML content, with the string ``Report Infor File`` as name and the path as value.
+
+Examples of metadata in XML:
+
+.. code:: xml
+
+    <properties>
+      <property name="Report Info File" value="../extra_content.yml"/>
+    </properties>
+
+    <traits>
+      <trait name="Report Info File" value="../extra_content.yml"/>
+    </traits>
+
+When using Robot Framework v5 or greater, this path can be provided as `Free test suite metadata`_, as I've done in
+`this commit`_.
+
 Links to Log File
 =================
 
@@ -178,5 +206,11 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
         'ext_robotframeworklog': 'field1#field2'
     }
 
+.. _YAML: https://yaml.org/spec/1.2.2/
+.. _dictionary: https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html#yaml-basics
+.. _Multiline strings: https://yaml-multiline.info/
+.. _example documentation: https://melexis.github.io/xunit2rst/generated/itest_report.html#REPORT_ITEST-ANOTHER_TEST
+.. _Free test suite metadata: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata
+.. _this commit: https://github.com/melexis/xunit2rst/pull/39/commits/23e9fbc3d54f5b93caedc341b217462718a17073
 .. _html_extra_path: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path
 .. _external relationship: https://melexis.github.io/sphinx-traceability-extension/configuration.html#external-relationship-to-url-translation
