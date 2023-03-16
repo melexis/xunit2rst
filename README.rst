@@ -18,10 +18,6 @@
     :target: https://codecov.io/gh/melexis/xunit2rst
     :alt: Code Coverage
 
-.. image:: https://requires.io/github/melexis/xunit2rst/requirements.svg?branch=master
-    :target: https://requires.io/github/melexis/xunit2rst/requirements/?branch=master
-    :alt: Requirements Status
-
 .. image:: https://img.shields.io/badge/contributions-welcome-brightgreen.svg
     :target: https://github.com/melexis/xunit2rst/issues
     :alt: Contributions welcome
