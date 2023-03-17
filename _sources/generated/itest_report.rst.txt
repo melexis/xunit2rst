@@ -26,6 +26,14 @@
 
           AssertionError: Directory '/'nonexistent_'' does not exist.
 
+        .. note::
+            This note is defined in ``doc/source/extra_content.yml`` and linked to ``doc/source/robot/example.robot`` in the ``Metadata`` section as shown in the snippet below:
+
+            .. code-block::
+
+               Metadata         Report Info File    ../extra_content.yml
+
+
     .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
         :passes: ITEST-AN_UNLINKED_TEST
         :ext_robotframeworklog: ../log.html:s1-t2
@@ -38,6 +46,11 @@
 
         Test result: Pass
 
+        Extra content defined in `this YAML file`_, thanks to the feature :ref:`content`.
+
+        .. _this YAML file: https://github.com/melexis/xunit2rst/blob/master/doc/source/extra_content.yml
+
+
     .. item:: REPORT_ITEST-A_SKIPPED_TEST Test report for ITEST-A_SKIPPED_TEST
         :skipped: ITEST-A_SKIPPED_TEST
         :ext_robotframeworklog: ../log.html:s1-t4
@@ -47,6 +60,8 @@
         ::
 
           SkipExecution: This test case is always skipped.
+
+        A oneliner as extra content.
 
     Traceability Matrix
     ===================
