@@ -10,3 +10,4 @@ first test: |
 
          Metadata         Report Info File    ../extra_content.yml
 A skipped test: A oneliner as extra content.
+nonexistent test: This extra content shall not be used as there is no test with this name.
