@@ -14,7 +14,7 @@ def _convert_name(name):
     return converted_name
 
 
-def generate_body(input_string, error_type=None):
+def generate_body(input_string, indent, error_type=None):
     ''' Transforms the input string to be part of an item's indented body with word wrapping.
 
     Args:
@@ -24,9 +24,9 @@ def generate_body(input_string, error_type=None):
     Returns:
         str: Indented body, which has been word wrapped to not exceed 120 characters
     '''
-    indent = ' ' * 6
     complete_string = "{}: {}".format(error_type, input_string) if error_type else input_string
-    return indent + textwrap.fill(complete_string, 115).replace('\n', '\n' + indent).strip()
+    wrapped = textwrap.fill(complete_string, width=(119 - len(indent)), break_on_hyphens=False, break_long_words=False)
+    return textwrap.indent(wrapped, indent)
 %>\
 .. ${info.header_prefix}${report_name}:
 
@@ -53,7 +53,6 @@ test_idx = 0
     % if not itemize_suites:  # create traceable item per testcase element
         % for test in suite:
 <%
-test_name = _convert_name(test.attrib['name'])
 if len(test):
     if test.findall('skipped'):
         test_result = 'Skip'
@@ -73,13 +72,12 @@ if add_links:
         suite_names.add(suite_name)
 test_idx += 1
 %>\
-${generate_item(test_name, relationship, failure_message, [test], (len(suite_names), test_idx))}\
+${generate_item(test.attrib['name'], relationship, failure_message, [test], (len(suite_names), test_idx))}\
         % endfor
     % else:  # create traceable item per testsuite element
 <%
 test_result = 'Pass'
 relationship = 'passes'
-test_name = _convert_name(suite.attrib['name'])
 # skip testsuite elements that have no testcase element (typically the first testsuite element only)
 if not len(suite):
     continue
@@ -97,7 +95,7 @@ else:
         test_result = 'Skip'
         relationship = 'skipped'
 %>\
-${generate_item(test_name, relationship, failure_message, suite, (0, suite_idx))}\
+${generate_item(suite.attrib['name'], relationship, failure_message, suite, (0, suite_idx))}\
     % endif
 % endfor
 Traceability Matrix
@@ -115,7 +113,11 @@ The below table traces the test report to test cases.
     :group: top
     :nocaptions:
 \
-<%def name="generate_item(test_name, relationship, failure_msg, tests, indexes)">\
+<%def name="generate_item(element_name, relationship, failure_msg, tests, indexes)">\
+<%
+test_name = _convert_name(element_name)
+extra_content = extra_content_map.get(element_name.lower(), "")
+%>\
 .. item:: REPORT_${test_name} Test report for ${test_name}
     :${relationship}: ${test_name}
 % if add_links:
@@ -131,9 +133,13 @@ The below table traces the test report to test cases.
     ::
 <% prepend_literal_block = False %>
             % endif
-${generate_body(failure.get('message'), failure.get('type'))}
+${generate_body(failure.get('message'), ' ' * 6, error_type=failure.get('type'))}
 
         % endfor
-    %endfor
+    % endfor
+% endif
+% if extra_content:
+${textwrap.indent(extra_content, ' ' * 4)}
+
 % endif
 </%def>\

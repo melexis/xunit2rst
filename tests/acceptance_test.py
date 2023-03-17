@@ -276,6 +276,17 @@ class TestAcceptance(unittest.TestCase):
         reference_rst = str(TEST_IN_DIR / rst_file_name)
         assert filecmp.cmp(output_rst, reference_rst)
 
+    def test_extra_content(self):
+        file_name = 'itest_report_extra_content'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, prefix='ITEST-')
+
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
 
 if __name__ == '__main__':
     unittest.main()

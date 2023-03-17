@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    Example using the space separated plain text format.
 Library          OperatingSystem
+Metadata         xunit2rst content file    ../extra_content.yml
 
 *** Variables ***
 ${MESSAGE}       Hello, world!

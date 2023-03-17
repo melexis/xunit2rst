@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 
-requires = ['mako']
+requires = [
+    'mako',
+    'ruamel.yaml>=0.17.21',
+]
 
 setup(
     name='mlx.xunit2rst',

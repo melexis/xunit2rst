@@ -25,8 +25,8 @@ Test Cases
 
     ::
 
-      File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "  and some more text to test word
-      wrapping at 120 characters.
+      File: ./unit_test/my_functions.c Line: 49 Message: exp "12 34 56 " was "12 34 99 "  and some more text to test
+      word wrapping at 120 characters.
 
       Another failure message.
 

@@ -18,6 +18,7 @@
     <properties>
         <property name="Documentation" value="My test suite title" />
         <property name="More Info" value="Test compatibility with a 'properties' element thrown in" />
+        <property name="xUnit2rst Content File" value="../../doc/source/extra_content.yml" />
         <property name="Version" value="1.0" />
     </properties>
 </testsuites>

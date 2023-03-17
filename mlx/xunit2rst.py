@@ -9,6 +9,7 @@ from textwrap import indent
 from mako.exceptions import RichTraceback
 from mako.template import Template
 from pkg_resources import DistributionNotFound, require
+from ruamel.yaml import YAML
 
 TraceableInfo = namedtuple("TraceableInfo", ['matrix_prefix', 'type', 'header_prefix'])
 UTEST = TraceableInfo('UTEST_', 'unit', '_unit_test_report_')
@@ -56,13 +57,20 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         log_file (str): Optional path to the HTML log file, empty when not specified.
         add_links (bool): True to add links to the HTML log file for each test case
     """
-    test_suites, prefix_set = parse_xunit_root(input_file)
+    test_suites, prefix_set, report_info_file = parse_xunit_root(input_file)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
         report_name = report_name[:-len('_report')]
+
+    extra_content_map = {}
+    if report_info_file:
+        yaml = YAML(typ='safe', pure=True)
+        if not report_info_file.is_absolute():
+            report_info_file = input_file.parent / report_info_file
+        extra_content_map = {name.lower(): content for name, content in yaml.load(report_info_file).items()}
 
     render_template(
         rst_file,
@@ -74,8 +82,24 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         failure_message=failure_message,
         log_file=log_file,
         add_links=add_links,
+        extra_content_map=extra_content_map,
         **kwargs,
     )
+
+
+def look_for_content_file(element):
+    """ If the element contains metadata, it returns the path to the content file, if configured.
+
+    Args:
+        element (xml.etree.ElementTree.Element): XML element to inspect
+
+    Returns:
+        Path/None: Path to the content file, if found in the given element; None otherwise
+    """
+    if element.tag in ('properties', 'traits'):
+        for prop in element:
+            if prop.attrib['name'].lower() == 'xunit2rst content file':
+                return Path(prop.attrib['value'])
 
 
 def parse_xunit_root(input_file):
@@ -91,6 +115,7 @@ def parse_xunit_root(input_file):
     Returns:
         xml.etree.ElementTree.Element: Root element of the element tree with 'testsuites' as tag.
         TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
+        Path/None: Path to the content file; None if not configured
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
@@ -102,15 +127,21 @@ def parse_xunit_root(input_file):
         test_suites = root_input
         prefix_set = UTEST
 
+    report_info_file = None
     for suite in test_suites:
         if suite.tag != 'testsuite':
+            value = look_for_content_file(suite)
+            if value:
+                report_info_file = value
             test_suites.remove(suite)
             continue
         for test in suite:
             if test.tag != 'testcase':
+                value = look_for_content_file(test)
+                if value:
+                    report_info_file = value
                 suite.remove(test)
-
-    return test_suites, prefix_set
+    return test_suites, prefix_set, report_info_file
 
 
 def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):

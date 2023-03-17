@@ -11,7 +11,7 @@ TEST_IN_DIR = Path(__file__).parent / 'test_in'
 class TestPrefix(unittest.TestCase):
     def test_build_prefix_and_set_utest_default(self):
         ''' Use default prefix for unit test reports '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_no_prefix_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_no_prefix_report.xml')
         self.assertEqual(initial_prefix_set, UTEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
@@ -20,7 +20,7 @@ class TestPrefix(unittest.TestCase):
 
     def test_build_prefix_and_set_itest_default(self):
         ''' Use default prefix for integration test reports '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
         self.assertEqual(initial_prefix_set, ITEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
@@ -29,7 +29,7 @@ class TestPrefix(unittest.TestCase):
 
     def test_build_prefix_and_set_from_name(self):
         ''' Get prefix from element name '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, UTEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, '', True, None)
@@ -38,7 +38,7 @@ class TestPrefix(unittest.TestCase):
 
     def test_build_prefix_and_set_from_arg(self):
         ''' Get prefix from input argument `--prefix` and trim suffix of prefix '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, UTEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'TEST_MY_LIB_-', True, None)
@@ -50,7 +50,7 @@ class TestPrefix(unittest.TestCase):
         Get prefix from input argument `--prefix` and base prefix_set on its first letter.
         Don't trim suffix of prefix.
         '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
         self.assertEqual(initial_prefix_set, ITEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_MY_LIB_-', False, None)
@@ -60,13 +60,18 @@ class TestPrefix(unittest.TestCase):
 
     def test_build_prefix_and_set_priority(self):
         ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
-        test_suites, initial_prefix_set = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+        test_suites, initial_prefix_set, _ = parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, UTEST)
 
         prefix_set, prefix = build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_HOWDY-', False, 'i')
         self.assertNotEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix_set, ITEST)
         self.assertEqual(prefix, 'UTEST_HOWDY-')
+
+    def test_content_file_path(self):
+        ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
+        _, _, content_file_path = parse_xunit_root(TEST_IN_DIR / 'qtest_my_lib_report.xml')
+        self.assertEqual(content_file_path, Path("../../doc/source/extra_content.yml"))
 
     def test_verify_prefix_set(self):
         '''
