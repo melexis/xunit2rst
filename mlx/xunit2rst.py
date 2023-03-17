@@ -98,7 +98,7 @@ def look_for_content_file(element):
     """
     if element.tag in ('properties', 'traits'):
         for prop in element:
-            if prop.attrib['name'].lower() == 'report info file':
+            if prop.attrib['name'].lower() == 'xunit2rst content file':
                 return Path(prop.attrib['value'])
 
 

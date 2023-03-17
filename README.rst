@@ -166,22 +166,21 @@ keys and reStructuredText strings as values. `Multiline strings`_ are supported.
 documentation`_.
 
 The path to the YAML file, an absolute path or relative to the input XML file, must be added as a metadata element to
-the XML content, with the string ``Report Infor File`` as name and the path as value.
+the XML content, with the string ``xunit2rst content file`` as name and the path as value.
 
-Examples of metadata in XML:
+Examples of valid metadata in XML:
 
 .. code:: xml
 
     <properties>
-      <property name="Report Info File" value="../extra_content.yml"/>
+      <property name="xunit2rst content file" value="../extra_content.yml"/>
     </properties>
 
     <traits>
-      <trait name="Report Info File" value="../extra_content.yml"/>
+      <trait name="xUnit2rst Content File" value="/home/user/git/test_project/extra_content.yml"/>
     </traits>
 
-When using Robot Framework v5 or greater, this path can be provided as `Free test suite metadata`_, as I've done in
-`this commit`_.
+When using Robot Framework v5 or greater, this path can be provided as `Free test suite metadata`_.
 
 Links to Log File
 =================
@@ -211,6 +210,5 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
 .. _Multiline strings: https://yaml-multiline.info/
 .. _example documentation: https://melexis.github.io/xunit2rst/generated/itest_report.html#REPORT_ITEST-ANOTHER_TEST
 .. _Free test suite metadata: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata
-.. _this commit: https://github.com/melexis/xunit2rst/pull/39/commits/23e9fbc3d54f5b93caedc341b217462718a17073
 .. _html_extra_path: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path
 .. _external relationship: https://melexis.github.io/sphinx-traceability-extension/configuration.html#external-relationship-to-url-translation
