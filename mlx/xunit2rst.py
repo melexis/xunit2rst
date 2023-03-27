@@ -70,7 +70,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         yaml = YAML(typ='safe', pure=True)
         if not report_info_file.is_absolute():
             report_info_file = input_file.parent / report_info_file
-        extra_content_map = {name.lower(): content for name, content in yaml.load(report_info_file).items()}
+        extra_content_map = {name.lower().replace(' ', '_'): content for name, content in yaml.load(report_info_file).items()}
 
     render_template(
         rst_file,

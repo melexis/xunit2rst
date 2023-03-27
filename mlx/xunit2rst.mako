@@ -116,7 +116,8 @@ The below table traces the test report to test cases.
 <%def name="generate_item(element_name, relationship, failure_msg, tests, indexes)">\
 <%
 test_name = _convert_name(element_name)
-extra_content = extra_content_map.get(element_name.lower(), "")
+key_name = element_name.lower().replace(' ', '_')
+extra_content = extra_content_map.get(key_name, "")
 %>\
 .. item:: REPORT_${test_name} Test report for ${test_name}
     :${relationship}: ${test_name}
