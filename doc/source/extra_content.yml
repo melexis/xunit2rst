@@ -1,4 +1,4 @@
-Another test: |
+Another_test: |
   Extra content defined in `this YAML file`_, thanks to the feature :ref:`content`.
 
   .. _this YAML file: https://github.com/melexis/xunit2rst/blob/master/doc/source/extra_content.yml
