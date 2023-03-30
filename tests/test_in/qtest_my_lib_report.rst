@@ -10,8 +10,8 @@ Qualification Test Report for qtest_my_lib
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_QTEST_MY_LIB-MY_FUNCTION_SUCCESS Test report for QTEST_MY_LIB-MY_FUNCTION_SUCCESS
     :passes: QTEST_MY_LIB-MY_FUNCTION_SUCCESS

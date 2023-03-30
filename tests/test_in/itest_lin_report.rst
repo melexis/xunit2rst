@@ -10,8 +10,8 @@ Integration Test Report for itest_lin
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_ITEST_LIN-FIRST_TEST Test report for ITEST_LIN-FIRST_TEST
     :fails: ITEST_LIN-FIRST_TEST

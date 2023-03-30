@@ -10,8 +10,8 @@ Unit Test Report for utest_override_prefix
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_OVERRIDING-UTEST_MY_LIB-MY_FUNCTION_SUCCESS Test report for OVERRIDING-UTEST_MY_LIB-MY_FUNCTION_SUCCESS
     :passes: OVERRIDING-UTEST_MY_LIB-MY_FUNCTION_SUCCESS

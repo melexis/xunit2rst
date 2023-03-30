@@ -11,8 +11,8 @@ The log file that contains details about the executed test cases can be found `h
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
     :fails: ITEST-FIRST_TEST

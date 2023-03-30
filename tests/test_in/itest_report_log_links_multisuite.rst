@@ -11,8 +11,8 @@ The log file that contains details about the executed test cases can be found `h
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_ITEST-READ_PRODUCT_ID_1 Test report for ITEST-READ_PRODUCT_ID_1
     :passes: ITEST-READ_PRODUCT_ID_1

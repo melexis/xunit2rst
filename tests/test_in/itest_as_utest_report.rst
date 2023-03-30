@@ -10,8 +10,8 @@ Unit Test Report for itest_as_utest
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
     :fails: ITEST-FIRST_TEST
