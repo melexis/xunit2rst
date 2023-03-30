@@ -43,8 +43,8 @@ The log file that contains details about the executed test cases can be found `h
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 <%
 suite_names = set()
 test_idx = 0
