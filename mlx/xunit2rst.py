@@ -105,23 +105,24 @@ def look_for_content_file(element):
 
 def parse_xunit_root(input_file):
     """
-    This function parses the root element of the XML file and returns a testsuites root element and the set of prefixes
-    to use.
+    This function parses the root element of the XML file and returns the root element, which contains one or more
+    'testsuite' elements, and the set of prefixes to use.
 
-    Note: only elements with tag 'testsuites', 'testsuite' and 'testcase' are included.
+    Note: only the root element and elements with tag 'testsuite' and 'testcase' are included. The tag of the root
+    element does not matter.
 
     Args:
         input_file (Path): Path to the input file (.xml).
 
     Returns:
-        xml.etree.ElementTree.Element: Root element of the element tree with 'testsuites' as tag.
+        xml.etree.ElementTree.Element: Root element of the element tree, which contains 'testsuite' elements.
         TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
         Path/None: Path to the content file; None if not configured
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
-    if root_input.tag != 'testsuites':
-        test_suites = ET.Element("testsuites")
+    if root_input.find('testsuite') is None:
+        test_suites = ET.Element("root")
         test_suites.append(root_input)
         prefix_set = ITEST
     else:
@@ -149,7 +150,8 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
-        test_suites (xml.etree.ElementTree.Element): Root element of the element tree with 'testsuites' as tag.
+        test_suites (xml.etree.ElementTree.Element): Root element of the element tree, which contains one or more
+            'testsuite' elements.
         prefix_set (TraceableInfo): Namedtuple holding the default prefix to use for building traceability output.
         prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
             used, or the default prefix otherwise.
@@ -166,10 +168,12 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
 
     base_prefix_on_set = False
     if not prefix:
-        item_name_halves = list(test_suites)[-1].attrib['name'].split('.')[-1].split('-')
-        if len(item_name_halves) > 1:
-            prefix = item_name_halves[0] + '-'
-        else:  # no prefix in name
+        test_suite = list(test_suites)[-1]
+        test_suite_name = test_suite.attrib.get('name', '')
+        name_parts = test_suite_name.split('.')[-1].split('-')
+        if len(name_parts) > 1 :
+            prefix = name_parts[0] + '-'
+        else:  # test suite has no name or does not contain a prefix
             prefix = prefix_set.matrix_prefix
             base_prefix_on_set = True
 
@@ -177,19 +181,19 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
     prefix = prefix.rstrip('_')
-    prefix = prefix + '-' if not prefix.endswith('-') else prefix
+    if not prefix.endswith('-'):
+        prefix += '-'
     return prefix_set, prefix
 
 
 def verify_prefix_set(prefix_set, prefix, type_):
     """
     The --type input argument has the highest priority, followed by the first letter in the prefix,
-    and lastly the script will interpret a test report as a unit test report if it contains a 'testsuites' element,
-    integration test report otherwise.
+    and lastly the given prefix_set will be used.
 
     Args:
-        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a root element
-            'testsuites'.
+        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by whether the 'testsuite' elements have a
+            parent element.
         prefix (str): Prefix that will be used in the Mako template.
         type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
