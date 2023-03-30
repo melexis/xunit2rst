@@ -10,8 +10,8 @@ Unit Test Report for utest_my_lib_report_failures
     :local:
 
 
-Test Cases
-==========
+Test Reports
+============
 
 .. item:: REPORT_UTEST-MY_FUNCTION_SUCCESS Test report for UTEST-MY_FUNCTION_SUCCESS
     :passes: UTEST-MY_FUNCTION_SUCCESS
