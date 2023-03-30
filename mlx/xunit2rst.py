@@ -171,7 +171,7 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
         test_suite = list(test_suites)[-1]
         test_suite_name = test_suite.attrib.get('name', '')
         name_parts = test_suite_name.split('.')[-1].split('-')
-        if len(name_parts) > 1 :
+        if len(name_parts) > 1:
             prefix = name_parts[0] + '-'
         else:  # test suite has no name or does not contain a prefix
             prefix = prefix_set.matrix_prefix
