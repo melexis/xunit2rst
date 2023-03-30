@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling" tests="17" errors="0" failures="0" skipped="0" time="3088.158" timestamp="2023-03-30T10:04:27.156000">
+<testsuite name="Closed Loop Control" tests="2" errors="0" failures="0" skipped="0" time="340.365" timestamp="2023-03-30T10:04:27.210000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Closed Loop Control" name="closed loop motor control" time="65.867">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Closed Loop Control" name="closed loop slew rate" time="256.949">
+</testcase>
+<properties>
+<property name="Documentation" value="Closed loop control testsuite"/>
+<property name="More Info" value="Motor tests with focus on closed loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Fixed Braking Time" tests="3" errors="0" failures="0" skipped="0" time="98.904" timestamp="2023-03-30T10:10:07.580000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="blocked motor blocked" time="23.344">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="motor start with fixed braking time" time="27.584">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="motor stop with fixed braking time" time="33.464">
+</testcase>
+<properties>
+<property name="Documentation" value="Fixed braking time testsuite"/>
+<property name="More Info" value="Checks the SCPI commands for Javascript initialization and execution"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Open Loop Control" tests="2" errors="0" failures="0" skipped="0" time="369.528" timestamp="2023-03-30T10:11:46.497000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Open Loop Control" name="open loop motor control" time="96.397">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Open Loop Control" name="open loop slew rate" time="258.676">
+</testcase>
+<properties>
+<property name="Documentation" value="Open loop control testsuite"/>
+<property name="More Info" value="Motor tests with focus on open loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Pi Loop" tests="3" errors="0" failures="0" skipped="0" time="1610.659" timestamp="2023-03-30T10:17:56.033000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Pi Loop" name="pi loop asymmetric KI coeff" time="640.600">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Pi Loop" name="pi loop asymmetric KP coeff" time="636.543">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Pi Loop" name="pi loop asymmetric factor" time="318.946">
+</testcase>
+<properties>
+<property name="Documentation" value="PI loop test suite"/>
+<property name="More Info" value="Motor tests with focus on PI loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Startup" tests="3" errors="0" failures="0" skipped="0" time="296.624" timestamp="2023-03-30T10:44:46.697000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Startup" name="pulse train pulse delay" time="56.545">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Startup" name="pulse train output duty cycle" time="117.722">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Startup" name="pulse train half flat non flat" time="107.839">
+</testcase>
+<properties>
+<property name="Documentation" value="Startup and acceleration testsuite"/>
+<property name="More Info" value="Startup and acceleration tests"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Windmilling" tests="4" errors="0" failures="0" skipped="0" time="371.969" timestamp="2023-03-30T10:49:43.328000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Windmilling" name="windmilling check" time="159.289">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Windmilling" name="forward windmilling no movement detected without braking" time="92.205">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Windmilling" name="forward windmilling no movement detected with braking" time="48.452">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Windmilling" name="forward windmilling detected" time="57.353">
+</testcase>
+<properties>
+<property name="Documentation" value="Windmilling testsuite"/>
+<property name="More Info" value="Checks the SCPI commands for Javascript initialization and execution"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+</testsuite>

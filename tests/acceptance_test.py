@@ -287,6 +287,27 @@ class TestAcceptance(unittest.TestCase):
         reference_rst = str(TEST_IN_DIR / rst_file_name)
         assert filecmp.cmp(output_rst, reference_rst)
 
+    def test_xunit_rf6(self):
+        file_name = 'rf6_report'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, log_file='log.html', add_links=True)
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
+    def test_xunit_rf6_multisuite(self):
+        file_name = 'rf6_multisuite_report'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, type_='q', prefix='SWQTEST-', log_file='log.html', add_links=True)
+
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
 
 if __name__ == '__main__':
     unittest.main()
