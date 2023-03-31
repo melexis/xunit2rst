@@ -57,7 +57,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         log_file (str): Optional path to the HTML log file, empty when not specified.
         add_links (bool): True to add links to the HTML log file for each test case
     """
-    test_suites, prefix_set, report_info_file = parse_xunit_root(input_file)
+    test_suites, prefix_set, report_info_files = parse_xunit_root(input_file)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
@@ -65,13 +65,15 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
     if report_name.endswith('_report'):
         report_name = report_name[:-len('_report')]
 
-    extra_content_map = {}
-    if report_info_file:
+    indexed_extra_content_map = {}
+    for i, file in report_info_files.items():
+        extra_content_map = {}
         yaml = YAML(typ='safe', pure=True)
-        if not report_info_file.is_absolute():
-            report_info_file = input_file.parent / report_info_file
+        if not file.is_absolute():
+            file = input_file.parent / file
         extra_content_map = {name.lower().replace(' ', '_'): content
-                             for name, content in yaml.load(report_info_file).items()}
+                            for name, content in yaml.load(file).items()}
+        indexed_extra_content_map[i] = extra_content_map
 
     render_template(
         rst_file,
@@ -83,7 +85,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         failure_message=failure_message,
         log_file=log_file,
         add_links=add_links,
-        extra_content_map=extra_content_map,
+        indexed_extra_content_map=indexed_extra_content_map,
         **kwargs,
     )
 
@@ -117,7 +119,7 @@ def parse_xunit_root(input_file):
     Returns:
         xml.etree.ElementTree.Element: Root element of the element tree, which contains 'testsuite' elements.
         TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
-        Path/None: Path to the content file; None if not configured
+        dict: Mapping of testsuite index to the Path to the content files; empty when none are configured
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
@@ -129,21 +131,18 @@ def parse_xunit_root(input_file):
         test_suites = root_input
         prefix_set = UTEST
 
-    report_info_file = None
-    for suite in test_suites:
+    report_info_files = {}
+    for i, suite in enumerate(test_suites):
         if suite.tag != 'testsuite':
-            value = look_for_content_file(suite)
-            if value:
-                report_info_file = value
             test_suites.remove(suite)
             continue
         for test in suite:
             if test.tag != 'testcase':
                 value = look_for_content_file(test)
                 if value:
-                    report_info_file = value
+                    report_info_files[i] = value
                 suite.remove(test)
-    return test_suites, prefix_set, report_info_file
+    return test_suites, prefix_set, report_info_files
 
 
 def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
