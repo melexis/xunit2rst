@@ -72,7 +72,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         if not file.is_absolute():
             file = input_file.parent / file
         extra_content_map = {name.lower().replace(' ', '_'): content
-                            for name, content in yaml.load(file).items()}
+                             for name, content in yaml.load(file).items()}
         indexed_extra_content_map[i] = extra_content_map
 
     render_template(
