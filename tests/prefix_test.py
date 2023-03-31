@@ -71,7 +71,7 @@ class TestPrefix(unittest.TestCase):
     def test_content_file_path(self):
         ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
         _, _, content_file_path = parse_xunit_root(TEST_IN_DIR / 'qtest_my_lib_report.xml')
-        self.assertEqual(content_file_path, Path("../../doc/source/extra_content.yml"))
+        self.assertEqual(content_file_path, {3: Path("../../doc/source/extra_content.yml")})
 
     def test_verify_prefix_set(self):
         '''
