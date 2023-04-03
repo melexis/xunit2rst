@@ -11,5 +11,6 @@
     <property name="Documentation" value="My test suite title" />
     <property name="More Info" value="Test support for xUnit output of RobotFramework==5.0.0" />
     <property name="Version" value="1.0" />
+    <property name="xUnit2rst Content File" value="./extra_content1.yml" />
 </properties>
 </testsuite>
