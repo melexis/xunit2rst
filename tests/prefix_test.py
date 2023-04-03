@@ -73,7 +73,6 @@ class TestPrefix(unittest.TestCase):
         _, _, content_files = parse_xunit_root(TEST_IN_DIR / 'qtest_my_lib_report.xml')
         self.assertEqual(content_files, {3: Path("../../doc/source/extra_content.yml")})
 
-
     def test_content_files_no_root(self):
         ''' Test the extraction of the content file path when the XML has no valid root element '''
         _, _, content_files = parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
