@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Pi Loop" tests="2" errors="0" failures="0" skipped="0" time="1725.107" timestamp="2023-03-30T12:07:27.000000">
+<testsuite name="Pi Loop" tests="2" errors="0" failures="0" skipped="0" time="1724.981" timestamp="2023-03-30T12:07:27.118000">
+<testcase classname="Pi Loop.Pi Loop" name="pi loop asymmetric KI coeff" time="843.272">
+</testcase>
+<testcase classname="Pi Loop.Pi Loop" name="pi loop asymmetric KP coeff" time="837.283">
+</testcase>
+<properties>
+<property name="Documentation" value="PI loop test suite"/>
+<property name="More Info" value="Motor tests with focus on PI loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+</testsuite>

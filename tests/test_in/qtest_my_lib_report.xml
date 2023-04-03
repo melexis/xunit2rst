@@ -14,11 +14,12 @@
         <testcase classname="MY_LIB.QTEST_MY_LIB-SOME_FUNCTION" name="QTEST_MY_LIB-SOME_FUNCTION" time="0.0">
             <failure message="File: ./qualification_test/my_functions.c&#10;Line: 49&#10;Message: exp &quot;12 34 56 &quot; was &quot;12 34 99 &quot;&#10;" />
         </testcase>
-    </testsuite>
+
     <properties>
         <property name="Documentation" value="My test suite title" />
         <property name="More Info" value="Test compatibility with a 'properties' element thrown in" />
         <property name="xUnit2rst Content File" value="../../doc/source/extra_content.yml" />
         <property name="Version" value="1.0" />
     </properties>
+    </testsuite>
 </testsuites>

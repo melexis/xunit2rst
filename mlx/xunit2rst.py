@@ -57,7 +57,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         log_file (str): Optional path to the HTML log file, empty when not specified.
         add_links (bool): True to add links to the HTML log file for each test case
     """
-    test_suites, prefix_set, report_info_file = parse_xunit_root(input_file)
+    test_suites, prefix_set, report_info_files = parse_xunit_root(input_file)
 
     prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
@@ -65,13 +65,15 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
     if report_name.endswith('_report'):
         report_name = report_name[:-len('_report')]
 
-    extra_content_map = {}
-    if report_info_file:
+    indexed_extra_content_map = {}
+    for i, file in report_info_files.items():
+        extra_content_map = {}
         yaml = YAML(typ='safe', pure=True)
-        if not report_info_file.is_absolute():
-            report_info_file = input_file.parent / report_info_file
+        if not file.is_absolute():
+            file = input_file.parent / file
         extra_content_map = {name.lower().replace(' ', '_'): content
-                             for name, content in yaml.load(report_info_file).items()}
+                             for name, content in yaml.load(file).items()}
+        indexed_extra_content_map[i] = extra_content_map
 
     render_template(
         rst_file,
@@ -83,7 +85,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         failure_message=failure_message,
         log_file=log_file,
         add_links=add_links,
-        extra_content_map=extra_content_map,
+        indexed_extra_content_map=indexed_extra_content_map,
         **kwargs,
     )
 
@@ -105,51 +107,50 @@ def look_for_content_file(element):
 
 def parse_xunit_root(input_file):
     """
-    This function parses the root element of the XML file and returns a testsuites root element and the set of prefixes
-    to use.
+    This function parses the root element of the XML file and returns the root element, which contains one or more
+    'testsuite' elements, and the set of prefixes to use.
 
-    Note: only elements with tag 'testsuites', 'testsuite' and 'testcase' are included.
+    Note: only the root element and elements with tag 'testsuite' and 'testcase' are included. The tag of the root
+    element does not matter.
 
     Args:
         input_file (Path): Path to the input file (.xml).
 
     Returns:
-        xml.etree.ElementTree.Element: Root element of the element tree with 'testsuites' as tag.
+        xml.etree.ElementTree.Element: Root element of the element tree, which contains 'testsuite' elements.
         TraceableInfo: Namedtuple holding the prefixes to use for building traceability output.
-        Path/None: Path to the content file; None if not configured
+        dict: Mapping of testsuite index to the Path to the content files; empty when none are configured
     """
     tree = ET.parse(str(input_file))
     root_input = tree.getroot()
-    if root_input.tag != 'testsuites':
-        test_suites = ET.Element("testsuites")
+    if root_input.find('testsuite') is None:
+        test_suites = ET.Element("root")
         test_suites.append(root_input)
         prefix_set = ITEST
     else:
         test_suites = root_input
         prefix_set = UTEST
 
-    report_info_file = None
-    for suite in test_suites:
+    report_info_files = {}
+    for i, suite in enumerate(test_suites):
         if suite.tag != 'testsuite':
-            value = look_for_content_file(suite)
-            if value:
-                report_info_file = value
             test_suites.remove(suite)
             continue
         for test in suite:
             if test.tag != 'testcase':
                 value = look_for_content_file(test)
                 if value:
-                    report_info_file = value
+                    report_info_files[i] = value
                 suite.remove(test)
-    return test_suites, prefix_set, report_info_file
+    return test_suites, prefix_set, report_info_files
 
 
 def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
-        test_suites (xml.etree.ElementTree.Element): Root element of the element tree with 'testsuites' as tag.
+        test_suites (xml.etree.ElementTree.Element): Root element of the element tree, which contains one or more
+            'testsuite' elements.
         prefix_set (TraceableInfo): Namedtuple holding the default prefix to use for building traceability output.
         prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
             used, or the default prefix otherwise.
@@ -166,10 +167,12 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
 
     base_prefix_on_set = False
     if not prefix:
-        item_name_halves = list(test_suites)[-1].attrib['name'].split('.')[-1].split('-')
-        if len(item_name_halves) > 1:
-            prefix = item_name_halves[0] + '-'
-        else:  # no prefix in name
+        test_suite = list(test_suites)[-1]
+        test_suite_name = test_suite.attrib.get('name', '')
+        name_parts = test_suite_name.split('.')[-1].split('-')
+        if len(name_parts) > 1:
+            prefix = name_parts[0] + '-'
+        else:  # test suite has no name or does not contain a prefix
             prefix = prefix_set.matrix_prefix
             base_prefix_on_set = True
 
@@ -177,19 +180,19 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
     prefix = prefix.rstrip('_')
-    prefix = prefix + '-' if not prefix.endswith('-') else prefix
+    if not prefix.endswith('-'):
+        prefix += '-'
     return prefix_set, prefix
 
 
 def verify_prefix_set(prefix_set, prefix, type_):
     """
     The --type input argument has the highest priority, followed by the first letter in the prefix,
-    and lastly the script will interpret a test report as a unit test report if it contains a 'testsuites' element,
-    integration test report otherwise.
+    and lastly the given prefix_set will be used.
 
     Args:
-        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by the presence or lack of a root element
-            'testsuites'.
+        prefix_set (TraceableInfo): TraceableInfo UTEST or ITEST decided by whether the 'testsuite' elements have a
+            parent element.
         prefix (str): Prefix that will be used in the Mako template.
         type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.

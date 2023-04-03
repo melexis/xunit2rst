@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling" tests="17" errors="0" failures="0" skipped="0" time="3088.158" timestamp="2023-03-30T10:04:27.156000">
+<testsuite name="Closed Loop Control" tests="2" errors="0" failures="0" skipped="0" time="340.365" timestamp="2023-03-30T10:04:27.210000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Closed Loop Control" name="closed loop motor control" time="65.867">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Closed Loop Control" name="closed loop slew rate" time="256.949">
+</testcase>
+<properties>
+<property name="Documentation" value="Closed loop control testsuite"/>
+<property name="xunit2rst content file" value="./extra_content0.yml"/>
+<property name="More Info" value="Motor tests with focus on closed loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Fixed Braking Time" tests="3" errors="0" failures="0" skipped="0" time="98.904" timestamp="2023-03-30T10:10:07.580000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="blocked motor blocked" time="23.344">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="motor start with fixed braking time" time="27.584">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Fixed Braking Time" name="motor stop with fixed braking time" time="33.464">
+</testcase>
+<properties>
+<property name="Documentation" value="Fixed braking time testsuite"/>
+<property name="More Info" value="Checks the SCPI commands for Javascript initialization and execution"/>
+<property name="xunit2rst content file" value="./extra_content1.yml"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+<testsuite name="Open Loop Control" tests="2" errors="0" failures="0" skipped="0" time="369.528" timestamp="2023-03-30T10:11:46.497000">
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Open Loop Control" name="open loop motor control" time="96.397">
+</testcase>
+<testcase classname="Closed Loop Control &amp; Fixed Braking Time &amp; Open Loop Control &amp; Pi Loop &amp; Startup &amp; Windmilling.Open Loop Control" name="open loop slew rate" time="258.676">
+</testcase>
+<properties>
+<property name="Documentation" value="Open loop control testsuite"/>
+<property name="More Info" value="Motor tests with focus on open loop control"/>
+<property name="Version" value="1.0"/>
+</properties>
+</testsuite>
+</testsuite>
