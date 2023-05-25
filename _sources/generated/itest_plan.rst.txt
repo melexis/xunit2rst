@@ -23,8 +23,12 @@ itest_plan
 
     Example of a test that is always skipped
 
+.. item:: ITEST-COMP1-TESTING_SPECIAL_CHARACTERS_AND_PREFIX Comp1: testing 'Special" characters & prefix
 
-Traceability matrix
+    The item ID will contain COMP1-SPECIAL_CHARACTERS_AND_PREFIX.
+
+
+Traceability Matrix
 ===================
 
 The below table traces the integration test cases to the validates requirements.

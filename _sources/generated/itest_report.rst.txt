@@ -61,6 +61,12 @@
 
           SkipExecution: This test case is always skipped.
 
+    .. item:: REPORT_ITEST-COMP1-TESTING_SPECIAL_CHARACTERS_AND_PREFIX Test report for ITEST-COMP1-TESTING_SPECIAL_CHARACTERS_AND_PREFIX
+        :passes: ITEST-COMP1-TESTING_SPECIAL_CHARACTERS_AND_PREFIX
+        :ext_robotframeworklog: ../log.html:s1-t5
+
+        Test result: Pass
+
         A oneliner as extra content.
 
     Traceability Matrix
