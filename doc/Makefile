@@ -21,6 +21,7 @@ ROBOT_XUNIT   = $(ROBOTDIR)/report.xml
 ITEST_PLAN    = $(OUTDIR)/itest_plan.rst
 LOG_FILE      = log.html
 LAYER         ?= ""
+PREFIX        ?= ITEST_-  # becomes ITEST-
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -38,7 +39,7 @@ html: Makefile
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
 	@$(XUNIT2RST) -v
-	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p ITEST_- --trim-suffix -l ../$(LOG_FILE) --only $(LAYER) --links --failure-message
-	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) --tags ^RQT-$
+	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p $(PREFIX) --trim-suffix -l ../$(LOG_FILE) --only $(LAYER) --links --failure-message
+	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) -p $(PREFIX) --trim-suffix --type $(PREFIX) --tags ^RQT-$
 	@$(ECHO) -n $(LOG_FILE) | xargs -d ' ' -n 1 -I {} $(CP) $(ROBOTDIR)/{} $(OUTDIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)

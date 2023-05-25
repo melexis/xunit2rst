@@ -71,7 +71,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         yaml = YAML(typ='safe', pure=True)
         if not file.is_absolute():
             file = input_file.parent / file
-        extra_content_map = {name.lower().replace(' ', '_'): content
+        extra_content_map = {name: content
                              for name, content in yaml.load(file).items()}
         indexed_extra_content_map[i] = extra_content_map
 

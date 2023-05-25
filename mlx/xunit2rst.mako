@@ -1,4 +1,5 @@
 <%
+import re
 import textwrap
 import xml.etree.ElementTree as ET
 
@@ -6,12 +7,14 @@ title = "{} Test Report for {}".format(info.type.capitalize(), report_name)
 
 
 def _convert_name(name):
-    """ Itemize given name and prepend prefix if needed """
-    name_without_suite = name.split('.')[-1]  # cut off suite name if prepended by a dot
-    converted_name = name_without_suite.upper().replace(' ', '_').replace('&', 'AND')
-    if not converted_name.startswith(prefix):
-        converted_name = prefix + converted_name
-    return converted_name
+    """ Itemize given test case name """
+    name = name.split('.')[-1]  # cut off suite name if prepended by a dot
+    name = name.upper()
+    name = re.sub('\s*:\s*', '-', name)
+    name = name.replace('&', 'AND')
+    name = re.sub('[^\w\s_-]', '', name)
+    name = re.sub('\s+', '_', name)
+    return name
 
 
 def generate_body(input_string, indent, error_type=None):
@@ -50,7 +53,10 @@ suite_names = set()
 test_idx = 0
 %>
 % for suite_idx, suite in enumerate(test_suites):
-<% print(suite_idx); extra_content_map = indexed_extra_content_map.get(suite_idx, {}) %>\
+<%
+extra_content_map = indexed_extra_content_map.get(suite_idx, {})
+extra_content_map = {_convert_name(key): value for key, value in extra_content_map.items()}
+%>\
     % if not itemize_suites:  # create traceable item per testcase element
         % for test in suite:
 <%
@@ -116,9 +122,12 @@ The below table traces the test report to test cases.
 \
 <%def name="generate_item(element_name, relationship, failure_msg, tests, indexes, extra_content_map)">\
 <%
-test_name = _convert_name(element_name)
-key_name = element_name.lower().replace(' ', '_')
-extra_content = extra_content_map.get(key_name, "")
+test_name_no_prefix = _convert_name(element_name)
+extra_content = extra_content_map.get(test_name_no_prefix, "")
+if test_name_no_prefix.startswith(prefix):
+    test_name = test_name_no_prefix
+else:
+    test_name = prefix + test_name_no_prefix
 %>\
 .. item:: REPORT_${test_name} Test report for ${test_name}
     :${relationship}: ${test_name}
