@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Testcases Base" tests="4" errors="0" failures="0" skipped="0" time="571.001" timestamp="2023-07-03T10:18:30.542000">
+<testsuite name="Tc Angles Xy" tests="2" errors="0" failures="0" skipped="0" time="275.113" timestamp="2023-07-03T10:18:30.559000">
+<testsuite name="Tc Angles Xy" tests="2" errors="0" failures="0" skipped="0" time="275.110" timestamp="2023-07-03T10:18:30.561000">
+<testcase classname="Testcases Base.Tc Angles Xy.Tc Angles Xy" name="Test angles in all quadrants in legacy XY magnetic mode" time="162.731">
+</testcase>
+<testcase classname="Testcases Base.Tc Angles Xy.Tc Angles Xy" name="Test random angles in legacy XY magnetic mode" time="104.466">
+</testcase>
+<properties>
+<property name="Documentation" value="Verifies angle measurement function for the XY legacy, dBz,&#10;dual and diagnostic magnetic modes."/>
+</properties>
+</testsuite>
+</testsuite>
+<testsuite name="Tc Angles Xz" tests="2" errors="0" failures="0" skipped="0" time="295.869" timestamp="2023-07-03T10:23:05.673000">
+<testsuite name="Tc Angles Xz" tests="2" errors="0" failures="0" skipped="0" time="295.866" timestamp="2023-07-03T10:23:05.675000">
+<testcase classname="Testcases Base.Tc Angles Xz.Tc Angles Xz" name="Test angles in all quadrants in legacy XZ magnetic mode" time="155.340">
+</testcase>
+<testcase classname="Testcases Base.Tc Angles Xz.Tc Angles Xz" name="Test random angles in legacy XZ magnetic mode" time="133.102">
+</testcase>
+<properties>
+<property name="Documentation" value="Verifies angle measurement function for the XZ legacy magnetic&#10;mode."/>
+</properties>
+</testsuite>
+</testsuite>
+</testsuite>

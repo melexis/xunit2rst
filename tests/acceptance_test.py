@@ -308,6 +308,17 @@ class TestAcceptance(unittest.TestCase):
         reference_rst = str(TEST_IN_DIR / rst_file_name)
         assert filecmp.cmp(output_rst, reference_rst)
 
+    def test_xunit_nested_suites(self):
+        file_name = 'qtest_nested_suites'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, type_='q', prefix='SWQTEST_TESTCASES_BASE-', log_file='testcases_base_log.html')
+
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
 
 if __name__ == '__main__':
     unittest.main()
