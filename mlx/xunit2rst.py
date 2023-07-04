@@ -136,12 +136,18 @@ def parse_xunit_root(input_file):
         if suite.tag != 'testsuite':
             test_suites.remove(suite)
             continue
-        for test in suite:
-            if test.tag != 'testcase':
-                value = look_for_content_file(test)
+        for element in reversed(suite):
+            if element.tag == 'testsuite':
+                for sub in element:
+                    suite.append(sub)
+                # remove parent testsuite to only have a single layer of testsuite in the tree
+                suite.remove(element)
+        for element in suite:
+            if element.tag != 'testcase':
+                value = look_for_content_file(element)
                 if value:
                     report_info_files[i] = value
-                suite.remove(test)
+                suite.remove(element)
     return test_suites, prefix_set, report_info_files
 
 
