@@ -10,10 +10,10 @@ def _convert_name(name):
     """ Itemize given test case name """
     name = name.split('.')[-1]  # cut off suite name if prepended by a dot
     name = name.upper()
-    name = re.sub('\s*:\s*', '-', name)
+    name = re.sub(r'\s*:\s*', '-', name)
     name = name.replace('&', 'AND')
-    name = re.sub('[^\w\s_-]', '', name)
-    name = re.sub('\s+', '_', name)
+    name = re.sub(r'[^\w\s_-]', '', name)
+    name = re.sub(r'\s+', '_', name)
     return name
 
 
