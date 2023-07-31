@@ -314,7 +314,8 @@ class TestAcceptance(unittest.TestCase):
         xml_file_name = '{}.xml'.format(file_name)
         input_xml = str(TEST_IN_DIR / xml_file_name)
         output_rst = str(TEST_OUT_DIR / rst_file_name)
-        xunit2rst_check(input_xml, output_rst, type_='q', prefix='SWQTEST_TESTCASES_BASE-', log_file='testcases_base_log.html')
+        xunit2rst_check(input_xml, output_rst, type_='q', prefix='SWQTEST_TESTCASES_BASE-',
+                        log_file='testcases_base_log.html')
 
         reference_rst = str(TEST_IN_DIR / rst_file_name)
         assert filecmp.cmp(output_rst, reference_rst)
