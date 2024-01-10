@@ -1,3 +1,7 @@
+.. role:: xunit2rst-skip
+.. role:: xunit2rst-fail
+.. role:: xunit2rst-pass
+
 .. _qualification_test_report_rf6_multisuite:
 
 ============================================
@@ -18,7 +22,8 @@ Test Reports
     :passes: SWQTEST-CLOSED_LOOP_MOTOR_CONTROL
     :ext_robotframeworklog: log.html:s1-t1
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
     closed loop motor control extra content
 
@@ -26,13 +31,15 @@ Test Reports
     :passes: SWQTEST-CLOSED_LOOP_SLEW_RATE
     :ext_robotframeworklog: log.html:s1-t2
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST-BLOCKED_MOTOR_BLOCKED Test report for SWQTEST-BLOCKED_MOTOR_BLOCKED
     :passes: SWQTEST-BLOCKED_MOTOR_BLOCKED
     :ext_robotframeworklog: log.html:s1-t3
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
     blocked motor blocked extra content
 
@@ -40,13 +47,15 @@ Test Reports
     :passes: SWQTEST-MOTOR_START_WITH_FIXED_BRAKING_TIME
     :ext_robotframeworklog: log.html:s1-t4
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST-MOTOR_STOP_WITH_FIXED_BRAKING_TIME Test report for SWQTEST-MOTOR_STOP_WITH_FIXED_BRAKING_TIME
     :passes: SWQTEST-MOTOR_STOP_WITH_FIXED_BRAKING_TIME
     :ext_robotframeworklog: log.html:s1-t5
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
     motor stop with fixed braking time extra content
 
@@ -54,13 +63,15 @@ Test Reports
     :passes: SWQTEST-OPEN_LOOP_MOTOR_CONTROL
     :ext_robotframeworklog: log.html:s1-t6
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST-OPEN_LOOP_SLEW_RATE Test report for SWQTEST-OPEN_LOOP_SLEW_RATE
     :passes: SWQTEST-OPEN_LOOP_SLEW_RATE
     :ext_robotframeworklog: log.html:s1-t7
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 Traceability Matrix
 ===================

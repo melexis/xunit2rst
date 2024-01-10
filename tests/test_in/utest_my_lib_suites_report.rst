@@ -1,3 +1,7 @@
+.. role:: xunit2rst-skip
+.. role:: xunit2rst-fail
+.. role:: xunit2rst-pass
+
 .. _unit_test_report_utest_my_lib_suites:
 
 ========================================
@@ -16,17 +20,20 @@ Test Reports
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_SUCCESS Test report for UTEST_MY_LIB-MY_FUNCTION_SUCCESS
     :passes: UTEST_MY_LIB-MY_FUNCTION_SUCCESS
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_UTEST_MY_LIB-MY_FUNCTION_LOCKED Test report for UTEST_MY_LIB-MY_FUNCTION_LOCKED
     :fails: UTEST_MY_LIB-MY_FUNCTION_LOCKED
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
 .. item:: REPORT_UTEST_MY_LIB-SOME_FUNCTION Test report for UTEST_MY_LIB-SOME_FUNCTION
     :fails: UTEST_MY_LIB-SOME_FUNCTION
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
 Traceability Matrix
 ===================

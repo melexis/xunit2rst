@@ -1,3 +1,7 @@
+.. role:: xunit2rst-skip
+.. role:: xunit2rst-fail
+.. role:: xunit2rst-pass
+
 .. _integration_test_report_itest_report_extra_content:
 
 ======================================================
@@ -16,7 +20,8 @@ Test Reports
 .. item:: REPORT_ITEST-FIRST_TEST Test report for ITEST-FIRST_TEST
     :fails: ITEST-FIRST_TEST
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
     .. note::
         This note is defined in ``doc/source/extra_content.yml`` and linked to ``doc/source/robot/example.robot`` in the ``Metadata`` section as shown in the snippet below:
@@ -29,12 +34,14 @@ Test Reports
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_ITEST-ANOTHER_TEST Test report for ITEST-ANOTHER_TEST
     :passes: ITEST-ANOTHER_TEST
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
     Extra content defined in `this YAML file`_, thanks to the feature :ref:`content`.
 

@@ -1,3 +1,7 @@
+.. role:: xunit2rst-skip
+.. role:: xunit2rst-fail
+.. role:: xunit2rst-pass
+
 .. _integration_test_report_itest_report_log_links:
 
 ==================================================
@@ -18,19 +22,22 @@ Test Reports
     :fails: ITEST-FIRST_TEST
     :ext_robotframeworklog: itest_log.html:s1-t1
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
     :passes: ITEST-AN_UNLINKED_TEST
     :ext_robotframeworklog: itest_log.html:s1-t2
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_ITEST-ANOTHER_TEST Test report for ITEST-ANOTHER_TEST
     :passes: ITEST-ANOTHER_TEST
     :ext_robotframeworklog: itest_log.html:s1-t3
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 Traceability Matrix
 ===================
