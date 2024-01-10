@@ -31,9 +31,9 @@ def generate_body(input_string, indent, error_type=None):
     wrapped = textwrap.fill(complete_string, width=(119 - len(indent)), break_on_hyphens=False, break_long_words=False)
     return textwrap.indent(wrapped, indent)
 %>\
-.. role:: xunit2rst-Skip
-.. role:: xunit2rst-Fail
-.. role:: xunit2rst-Pass
+.. role:: xunit2rst-skip
+.. role:: xunit2rst-fail
+.. role:: xunit2rst-pass
 
 .. ${info.header_prefix}${report_name}:
 
