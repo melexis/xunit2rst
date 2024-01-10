@@ -31,6 +31,10 @@ def generate_body(input_string, indent, error_type=None):
     wrapped = textwrap.fill(complete_string, width=(119 - len(indent)), break_on_hyphens=False, break_long_words=False)
     return textwrap.indent(wrapped, indent)
 %>\
+.. role:: xunit2rst-Skip
+.. role:: xunit2rst-Fail
+.. role:: xunit2rst-Pass
+
 .. ${info.header_prefix}${report_name}:
 
 ${"=" * len(title)}
@@ -135,7 +139,9 @@ else:
     :ext_robotframeworklog: ${log_file}:${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}
 % endif
 
-    Test result: ${test_result}
+<% role_name = "xunit2rst-" + test_result.lower() %>\
+    Test result: :${role_name}:`${test_result}`
+
 <% prepend_literal_block = True %>
 % if failure_msg and relationship != 'passes':
     % for test in tests:
