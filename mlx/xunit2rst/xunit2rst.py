@@ -3,12 +3,12 @@ import argparse
 import logging
 import xml.etree.ElementTree as ET
 from collections import namedtuple
+from importlib.metadata import distribution, PackageNotFoundError
 from pathlib import Path
 from textwrap import indent
 
 from mako.exceptions import RichTraceback
 from mako.template import Template
-from pkg_resources import DistributionNotFound, require
 from ruamel.yaml import YAML
 
 TraceableInfo = namedtuple("TraceableInfo", ['matrix_prefix', 'type', 'header_prefix'])
@@ -229,8 +229,8 @@ def verify_prefix_set(prefix_set, prefix, type_):
 def create_parser():
     """ Creates and returns the ArgumentParser instance to be used """
     try:
-        version = require('mlx.xunit2rst')[0].version
-    except DistributionNotFound:
+        version = distribution('mlx.xunitrst').version
+    except PackageNotFoundError:
         version = '0.0.0.dev'
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument('-i', '--input',
