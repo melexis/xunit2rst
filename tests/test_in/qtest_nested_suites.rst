@@ -1,3 +1,10 @@
+.. role:: xunit2rst-skip
+    :class: xunit2rst skip
+.. role:: xunit2rst-fail
+    :class: xunit2rst fail
+.. role:: xunit2rst-pass
+    :class: xunit2rst pass
+
 .. _qualification_test_report_qtest_nested_suites:
 
 =================================================
@@ -17,22 +24,26 @@ Test Reports
 .. item:: REPORT_SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XY_MAGNETIC_MODE Test report for SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XY_MAGNETIC_MODE
     :passes: SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XY_MAGNETIC_MODE
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XY_MAGNETIC_MODE Test report for SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XY_MAGNETIC_MODE
     :passes: SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XY_MAGNETIC_MODE
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XZ_MAGNETIC_MODE Test report for SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XZ_MAGNETIC_MODE
     :passes: SWQTEST_TESTCASES_BASE-TEST_ANGLES_IN_ALL_QUADRANTS_IN_LEGACY_XZ_MAGNETIC_MODE
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XZ_MAGNETIC_MODE Test report for SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XZ_MAGNETIC_MODE
     :passes: SWQTEST_TESTCASES_BASE-TEST_RANDOM_ANGLES_IN_LEGACY_XZ_MAGNETIC_MODE
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 Traceability Matrix
 ===================

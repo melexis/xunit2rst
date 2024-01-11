@@ -1,3 +1,10 @@
+.. role:: xunit2rst-skip
+    :class: xunit2rst skip
+.. role:: xunit2rst-fail
+    :class: xunit2rst fail
+.. role:: xunit2rst-pass
+    :class: xunit2rst pass
+
 .. _unit_test_report_utest_my_lib_report_failures:
 
 =================================================
@@ -16,12 +23,14 @@ Test Reports
 .. item:: REPORT_UTEST-MY_FUNCTION_SUCCESS Test report for UTEST-MY_FUNCTION_SUCCESS
     :passes: UTEST-MY_FUNCTION_SUCCESS
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_UTEST-MY_FUNCTION_LOCKED Test report for UTEST-MY_FUNCTION_LOCKED
     :fails: UTEST-MY_FUNCTION_LOCKED
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
     ::
 
@@ -33,7 +42,8 @@ Test Reports
 .. item:: REPORT_UTEST-SOME_FUNCTION Test report for UTEST-SOME_FUNCTION
     :fails: UTEST-SOME_FUNCTION
 
-    Test result: Fail
+    Test result: :xunit2rst-fail:`Fail`
+
 
     ::
 

@@ -1,3 +1,10 @@
+.. role:: xunit2rst-skip
+    :class: xunit2rst skip
+.. role:: xunit2rst-fail
+    :class: xunit2rst fail
+.. role:: xunit2rst-pass
+    :class: xunit2rst pass
+
 .. _unit_test_report_rf6:
 
 ========================
@@ -18,13 +25,15 @@ Test Reports
     :passes: UTEST-PI_LOOP_ASYMMETRIC_KI_COEFF
     :ext_robotframeworklog: log.html:s1-s1-t1
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 .. item:: REPORT_UTEST-PI_LOOP_ASYMMETRIC_KP_COEFF Test report for UTEST-PI_LOOP_ASYMMETRIC_KP_COEFF
     :passes: UTEST-PI_LOOP_ASYMMETRIC_KP_COEFF
     :ext_robotframeworklog: log.html:s1-s1-t2
 
-    Test result: Pass
+    Test result: :xunit2rst-pass:`Pass`
+
 
 Traceability Matrix
 ===================
