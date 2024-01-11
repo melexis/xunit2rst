@@ -38,7 +38,7 @@ setup(
     ],
     platforms='any',
     packages=find_packages(exclude=['tests', 'doc']),
-    package_data={'mlx.xunit2rst': ['mlx/*.mako']},
+    package_data={'mlx.xunit2rst': ['mlx/*.mako', 'mlx/assets/*']},
     include_package_data=True,
     install_requires=requires,
     python_requires='>=3.7',
