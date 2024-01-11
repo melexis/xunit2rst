@@ -220,7 +220,7 @@ Use the stylesheet_ get a background color for the test results (pass, fail and 
 in the generated HTML documentation of the test case.
 This feature is used in the `test reports`_.
 
-You can use the [stylesheet](doc/source/_static/xunit2rst.css) by adding it with `add_css_file`_ or by adding it
+You can use the stylesheet_ by adding it with `add_css_file`_ or by adding it
 manually in you own stylesheet.
 
 .. _test reports: https://melexis.github.io/xunit2rst/generated/itest_report.html#test-reports
