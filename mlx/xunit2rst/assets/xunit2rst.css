@@ -1,0 +1,21 @@
+.xunit2rst {
+    padding: 2px 5px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    border-radius: 3px;
+}
+
+.xunit2rst.skip {
+    color: black;
+    background-color: #fed84f;
+}
+
+.xunit2rst.pass {
+    color: black;
+    background-color: #97bd61;
+}
+
+.xunit2rst.fail {
+    color: white;
+    background-color: #ce3e01;
+}
