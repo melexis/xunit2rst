@@ -216,12 +216,13 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
 Color Test Results
 ==================
 
-Use the stylesheet_ get a background color for the test results (pass, fail and skip)
-in the generated HTML documentation of the test case.
-This feature is used in the `test reports`_.
+You can highlight each test result (pass, fail and skip) in a different color so that they stand out
+more from the rest of the report.
+The element with the test result text contains two classes: `xunit2rst` and the test result itself.
+For HTML documentation, you can use the CSS stylesheet_, provided with the Python package,
+by passing it to Sphinx with `add_css_file`_, or by adding its contents manually to your own stylesheet.
 
-You can use the stylesheet_ by adding it with `add_css_file`_ or by adding it
-manually in you own stylesheet.
+This feature is demonstrated in the `test reports`_ of the example documentation.
 
 .. _test reports: https://melexis.github.io/xunit2rst/generated/itest_report.html#test-reports
 .. _add_css_file: https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_css_file
