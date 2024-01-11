@@ -16,3 +16,5 @@ recursive-include tests *.py
 recursive-include tests *.rst
 recursive-include tests *.xml
 exclude tests/test_out/*
+
+include doc/source/_static/xunit2rst.css
