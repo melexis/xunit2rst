@@ -212,3 +212,16 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
 .. _Free test suite metadata: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata
 .. _html_extra_path: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path
 .. _external relationship: https://melexis.github.io/sphinx-traceability-extension/configuration.html#external-relationship-to-url-translation
+
+Color Test Results
+==================
+
+Use the [stylesheet](doc/source/_static/xunit2rst.css) get a background color for the test results (pass, fail and skip)
+in the generated HTML documentation of the test case.
+This feature is used in the `test reports`_.
+
+You can use the [stylesheet](doc/source/_static/xunit2rst.css) by adding it with `add_css_file`_ or by adding it
+manually in you own stylesheet.
+
+.. _test reports: https://melexis.github.io/xunit2rst/generated/itest_report.html#test-reports
+.. _add_css_file: https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_css_file
