@@ -1,6 +1,9 @@
 .. role:: xunit2rst-skip
+    :class: xunit2rst skip
 .. role:: xunit2rst-fail
+    :class: xunit2rst fail
 .. role:: xunit2rst-pass
+    :class: xunit2rst pass
 
 .. _unit_test_report_utest_my_lib_report_skipped:
 

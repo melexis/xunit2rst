@@ -1,6 +1,9 @@
 .. role:: xunit2rst-skip
+    :class: xunit2rst skip
 .. role:: xunit2rst-fail
+    :class: xunit2rst fail
 .. role:: xunit2rst-pass
+    :class: xunit2rst pass
 
 .. _integration_test_report_itest_lin_report_failures:
 
