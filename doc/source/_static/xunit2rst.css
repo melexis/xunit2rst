@@ -1,35 +1,21 @@
-.xunit2rst-skip {
+.xunit2rst {
     padding: 2px 5px;
-    font-size: 0.75em;
     letter-spacing: 1px;
     white-space: nowrap;
-    color: black;
-    background-color: #ddd;
     border-radius: 3px;
+}
+
+.xunit2rst.skip {
+    color: black;
     background-color: #fed84f;
-    color: #000 !important;
 }
 
-.xunit2rst-pass {
-    padding: 2px 5px;
-    font-size: 0.75em;
-    letter-spacing: 1px;
-    white-space: nowrap;
+.xunit2rst.pass {
     color: black;
-    background-color: #ddd;
-    border-radius: 3px;
     background-color: #97bd61;
-    color: #000 !important;
 }
 
-.xunit2rst-fail {
-    padding: 2px 5px;
-    font-size: 0.75em;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    color: black;
-    background-color: #ddd;
-    border-radius: 3px;
+.xunit2rst.fail {
+    color: white;
     background-color: #ce3e01;
-    color: #fff !important;
 }

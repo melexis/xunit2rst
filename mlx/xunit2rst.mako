@@ -32,8 +32,11 @@ def generate_body(input_string, indent, error_type=None):
     return textwrap.indent(wrapped, indent)
 %>\
 .. role:: xunit2rst-skip
+    :class: xunit2rst skip
 .. role:: xunit2rst-fail
+    :class: xunit2rst fail
 .. role:: xunit2rst-pass
+    :class: xunit2rst pass
 
 .. ${info.header_prefix}${report_name}:
 
