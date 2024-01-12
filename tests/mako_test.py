@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from unittest import TestCase
 
-from mlx.xunit2rst import ITEST, render_template
+from mlx.xunit2rst import xunit2rst as dut
 
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
 
@@ -16,13 +16,13 @@ class TestMako(unittest.TestCase):
         variable '''
         kwargs = {
             'report_name': 'my_report',
-            'info': ITEST,
+            'info': dut.ITEST,
             'prefix': 'MAKO_TEST-',
         }
         test_case = TestCase()
         with test_case.assertLogs() as log_cm:
             with self.assertRaises(TypeError):
-                render_template((TEST_OUT_DIR / 'never_created_file.rst'), **kwargs)
+                dut.render_template((TEST_OUT_DIR / 'never_created_file.rst'), **kwargs)
         test_case.assertIn('Exception raised in Mako template, which will be re-raised after logging line info:',
                            log_cm.output[0])
         test_case.assertIn('File ', log_cm.output[-1])

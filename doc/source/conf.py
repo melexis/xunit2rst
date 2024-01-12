@@ -5,9 +5,11 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
-import mlx.traceability
-from pkg_resources import get_distribution
+from importlib.metadata import distribution
+from pathlib import Path
 
+import mlx.traceability
+import mlx.xunit2rst
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -21,16 +23,16 @@ copyright = '2019, Bavo Van Achte'
 authors = ['Bavo Van Achte', 'Jasper Craeghs']
 
 # The full version, including alpha/beta/rc tags
-release = get_distribution('mlx.xunit2rst').version
+release = distribution('mlx.xunit2rst').version
 version = '.'.join(release.split('.')[:2])
 
 latex_documents = [
-    ('index', 'xunit2rst.tex', 'Script to convert .robot files to .rst files with traceable items',
+    ('index', 'xunit2rst.tex', 'Script to convert xUnit files to .rst files with traceable items',
      ' \\and '.join(authors), 'manual', True),
 ]
 
 man_pages = [
-    ('index', 'xunit2rst', 'Script to convert .robot files to .rst files with traceable items',
+    ('index', 'xunit2rst', 'Script to convert xUnit files to .rst files with traceable items',
      authors, 1)
 ]
 
@@ -41,7 +43,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'xunit2rst', 'xunit2rst conversion script', '@*'.join(authors), 'xunit2rst',
-     'Script to convert .robot files to .rst files with traceable items.', 'Miscellaneous'),
+     'Script to convert xUnit files to .rst files with traceable items.', 'Miscellaneous'),
 ]
 
 # -- General configuration ---------------------------------------------------
@@ -114,17 +116,18 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = [os.path.join(os.path.dirname(mlx.traceability.__file__), 'assets'),
-                    '_static']
-
-# These paths are either relative to html_static_path
-# or fully qualified paths (eg. https://...)
-html_css_files = [
-    'xunit2rst.css',
+html_static_path = [
+    str(Path(mlx.traceability.__file__).parent / 'assets'),
+    str(Path(mlx.xunit2rst.__file__).parent / 'assets'),
 ]
 
 traceability_render_relationship_per_item = True
 
+
 def setup(app):
+    # Color Test Results
+    app.add_css_file('xunit2rst.css')
+
+    # To demo --only input argument
     if os.environ.get('LAYER', 'FLASH') == 'FLASH':
         tags.add('FLASH')

@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_namespace_packages, setup
 
 requires = [
     'mako',
@@ -8,9 +8,8 @@ requires = [
 setup(
     name='mlx.xunit2rst',
     use_scm_version={
-        'write_to': 'mlx/__xunit2rst_version__.py'
+        'write_to': 'mlx/xunit2rst/__version__.py'
     },
-    setup_requires=['setuptools-scm>=6.0.0'],
     url='https://github.com/melexis/xunit2rst',
     license='Apache License Version 2.0',
     author='JasperCraeghs',
@@ -27,27 +26,30 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Topic :: Documentation',
         'Topic :: Documentation :: Sphinx',
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_packages(exclude=['tests', 'doc']),
-    package_data={'mlx.xunit2rst': ['mlx/*.mako']},
+    packages=find_namespace_packages(where='.'),
+    package_dir={"": "."},
+    package_data={
+        'mlx.xunit2rst': ['*.mako'],
+        'mlx.xunit2rst.assets': ['*.css']
+    },
     include_package_data=True,
     install_requires=requires,
-    python_requires='>=3.7',
-    namespace_packages=['mlx'],
+    python_requires='>=3.8',
     keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'sphinx', 'rst', 'testing', 'traceability', 'documentation'],
     entry_points={
         'console_scripts': [
-            'mlx.xunit2rst = mlx.xunit2rst:main',
-            'xunit2rst = mlx.xunit2rst:main',
+            'mlx.xunit2rst = mlx.xunit2rst.xunit2rst:main',
+            'xunit2rst = mlx.xunit2rst.xunit2rst:main',
         ]
     },
 )

@@ -7,8 +7,9 @@ recursive-include doc *.yml
 recursive-include doc Makefile
 include tox.ini
 recursive-include mlx *.mako
+recursive-include mlx *.css
 
-exclude mlx/__xunit2rst_version__.py
+exclude mlx/xunit2rst/__version__.py
 exclude .pylintrc
 exclude  doc/source/generated/*
 
@@ -16,5 +17,3 @@ recursive-include tests *.py
 recursive-include tests *.rst
 recursive-include tests *.xml
 exclude tests/test_out/*
-
-include doc/source/_static/xunit2rst.css
