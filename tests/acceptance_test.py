@@ -8,7 +8,7 @@ import filecmp
 import unittest
 from pathlib import Path
 
-from mlx.xunit2rst import create_parser, generate_xunit_to_rst
+from mlx.xunit2rst import xunit2rst as dut
 
 TOP_DIR = Path(__file__).parents[1]
 TEST_OUT_DIR = Path(__file__).parent / 'test_out'
@@ -18,7 +18,7 @@ TEST_IN_DIR = Path(__file__).parent / 'test_in'
 def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, type_=None, failures=False,
                     log_file='', add_links=False):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
-    arg_parser = create_parser()
+    arg_parser = dut.create_parser()
     command = ['-i', input_xml, '-o', output_rst]
     if itemize_suites:
         command.append('--itemize-suites')
@@ -37,7 +37,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
     print(command)
     args = arg_parser.parse_args(command)
 
-    generate_xunit_to_rst(
+    dut.generate_xunit_to_rst(
         args.input_file,
         args.rst_output_file,
         args.itemize_suites,
