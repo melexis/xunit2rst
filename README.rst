@@ -226,4 +226,4 @@ This feature is demonstrated in the `test reports`_ of the example documentation
 
 .. _test reports: https://melexis.github.io/xunit2rst/generated/itest_report.html#test-reports
 .. _add_css_file: https://www.sphinx-doc.org/en/master/extdev/appapi.html#sphinx.application.Sphinx.add_css_file
-.. _stylesheet: doc/source/_static/xunit2rst.css
+.. _stylesheet: mlx/xunit2rst/assets/xunit2rst.css
