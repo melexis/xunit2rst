@@ -37,8 +37,12 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_namespace_packages(include=['mlx.xunit2rst']),
-    package_data={'mlx.xunit2rst': ['mlx/xunit2rst/*.mako', 'mlx/xunit2rst/assets/*']},
+    packages=find_namespace_packages(where='.'),
+    package_dir={"": "."},
+    package_data={
+        'mlx.xunit2rst': ['*.mako'],
+        'mlx.xunit2rst.assets': ['*.css']
+    },
     include_package_data=True,
     install_requires=requires,
     python_requires='>=3.8',
