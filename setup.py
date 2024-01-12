@@ -37,17 +37,16 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_namespace_packages(include=['mlx.*']),
+    packages=find_namespace_packages(include=['mlx.xunit2rst']),
     package_data={'mlx.xunit2rst': ['mlx/xunit2rst/*.mako', 'mlx/xunit2rst/assets/*']},
     include_package_data=True,
     install_requires=requires,
     python_requires='>=3.8',
-    namespace_packages=['mlx'],
     keywords=['xUnit', 'JUnit', 'XML', 'reStructuredText', 'sphinx', 'rst', 'testing', 'traceability', 'documentation'],
     entry_points={
         'console_scripts': [
-            'mlx.xunit2rst = mlx.xunit2rst:main',
-            'xunit2rst = mlx.xunit2rst:main',
+            'mlx.xunit2rst = mlx.xunit2rst.xunit2rst:main',
+            'xunit2rst = mlx.xunit2rst.xunit2rst:main',
         ]
     },
 )
