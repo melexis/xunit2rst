@@ -9,7 +9,7 @@ include tox.ini
 recursive-include mlx *.mako
 recursive-include mlx *.css
 
-exclude mlx/__xunit2rst_version__.py
+exclude mlx/xunit2rst/__version__.py
 exclude .pylintrc
 exclude  doc/source/generated/*
 
