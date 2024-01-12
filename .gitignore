@@ -24,7 +24,7 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-mlx/__xunit2rst_version__.py
+mlx/xunit2rst/__version__.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

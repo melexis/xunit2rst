@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_namespace_packages, setup
 
 requires = [
     'mako',
@@ -8,7 +8,7 @@ requires = [
 setup(
     name='mlx.xunit2rst',
     use_scm_version={
-        'write_to': 'mlx/__xunit2rst_version__.py'
+        'write_to': 'mlx/xunit2rst/__version__.py'
     },
     setup_requires=['setuptools-scm>=6.0.0'],
     url='https://github.com/melexis/xunit2rst',
@@ -37,8 +37,8 @@ setup(
         'Topic :: Utilities',
     ],
     platforms='any',
-    packages=find_packages(exclude=['tests', 'doc']),
-    package_data={'mlx.xunit2rst': ['mlx/*.mako']},
+    packages=find_namespace_packages(include=['mlx.*']),
+    package_data={'mlx.xunit2rst': ['mlx/xunit2rst/*.mako', 'mlx/xunit2rst/assets/*']},
     include_package_data=True,
     install_requires=requires,
     python_requires='>=3.8',
