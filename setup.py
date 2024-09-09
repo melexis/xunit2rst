@@ -7,9 +7,6 @@ requires = [
 
 setup(
     name='mlx.xunit2rst',
-    use_scm_version={
-        'write_to': 'mlx/xunit2rst/__version__.py'
-    },
     url='https://github.com/melexis/xunit2rst',
     license='Apache License Version 2.0',
     author='JasperCraeghs',
