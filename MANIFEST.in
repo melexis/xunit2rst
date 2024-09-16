@@ -1,19 +1,20 @@
-include requirements.txt
 include LICENSE
-recursive-include doc *.py
-recursive-include doc *.robot
-recursive-include doc *.rst
-recursive-include doc *.yml
-recursive-include doc Makefile
-include tox.ini
+include README.rst
+include LICENSE
+
+recursive-include mlx *.py
+recursive-exclude mlx *version__.py
 recursive-include mlx *.mako
 recursive-include mlx *.css
 
-exclude mlx/xunit2rst/__version__.py
+exclude .gitignore
 exclude .pylintrc
-exclude  doc/source/generated/*
+exclude codecov.yml
+exclude requirements.txt
+exclude tox.ini
 
-recursive-include tests *.py
-recursive-include tests *.rst
-recursive-include tests *.xml
-exclude tests/test_out/*
+recursive-exclude .github *
+recursive-exclude build *
+recursive-exclude doc *
+recursive-exclude tests *
+global-exclude *.py[co]
