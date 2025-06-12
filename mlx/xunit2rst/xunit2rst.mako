@@ -118,8 +118,8 @@ Traceability Matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these ${info.type} test reports to ${info.type} test cases
-    :source: REPORT_${prefix}${suffix}
-    :target: ${prefix}
+    :source: REPORT_${prefix}
+    :target: ${prefix_for_test_case}
     :sourcetitle: ${info.type.capitalize()} test report
     :targettitle: ${info.type.capitalize()} test specification
     :type: fails passes skipped
@@ -131,12 +131,12 @@ The below table traces the test report to test cases.
 <%
 test_name_no_prefix = _convert_name(element_name)
 extra_content = extra_content_map.get(test_name_no_prefix, "")
-if test_name_no_prefix.startswith(prefix):
+if test_name_no_prefix.startswith(prefix_for_test_case):
     test_name = test_name_no_prefix
-    report_name = suffix + test_name_no_prefix
+    report_name = prefix + test_name_no_prefix[len(prefix_for_test_case):]
 else:
-    test_name = prefix + test_name_no_prefi
-    report_name = prefix + suffix + test_name_no_prefix
+    test_name = prefix_for_test_case + test_name_no_prefix
+    report_name = prefix + test_name_no_prefix
 %>\
 .. item:: REPORT_${report_name} Test report for ${test_name}
     :${relationship}: ${test_name}

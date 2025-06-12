@@ -59,7 +59,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
     """
     test_suites, prefix_set, report_info_files = parse_xunit_root(input_file)
 
-    prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
+    prefix_set, prefix, prefix_for_test_case = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
@@ -95,6 +95,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
+        prefix_for_test_case=prefix_for_test_case,
         itemize_suites=itemize_suites,
         failure_message=failure_message,
         log_file=log_file,
@@ -165,7 +166,7 @@ def parse_xunit_root(input_file):
     return test_suites, prefix_set, report_info_files
 
 
-def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_, suffix):
+def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, suffix, type_):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
@@ -175,13 +176,14 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_, su
         prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
             used, or the default prefix otherwise.
         trim_suffix (bool): Whether to trim the suffix of the prefix or not.
+        suffix (str): Suffix to append to the prefix, for test case report items only.
         type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
-        suffix (str): Suffix to append to the prefix, but not for the item IDs of the test cases.
 
     Returns:
         prefix_set (TraceableInfo): Namedtuple holding the prefixes to use for building traceability output.
-        prefix (str): Prefix to add to item IDs.
+        prefix (str): Prefix to add to item IDs, including the optional --suffix.
+        prefix_for_test_case (str): Prefix to add to item IDs of test cases only
     """
     if prefix.endswith('_-') and trim_suffix:
         prefix = prefix.rstrip('_-') + '-'
@@ -201,9 +203,12 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_, su
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
     prefix = prefix.rstrip('_')
+    if suffix:
+        prefix += suffix
     if not prefix.endswith('-'):
         prefix += '-'
-    return prefix_set, prefix
+    prefix_for_test_case = prefix.replace(suffix, '').rstrip('-') + '-' if suffix else prefix
+    return prefix_set, prefix, prefix_for_test_case
 
 
 def verify_prefix_set(prefix_set, prefix, type_):
@@ -311,8 +316,8 @@ def main():
         args.links,
         args.prefix,
         args.trim_suffix,
-        args.type,
         args.suffix,
+        args.type,
         only=args.expression,
     )
 
