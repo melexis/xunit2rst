@@ -31,7 +31,7 @@ Test Reports
 
         .. code-block::
 
-           Metadata         Report Info File    ../extra_content.yml
+           Metadata  xunit2rst content file  ../extra_content.yml
 
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
