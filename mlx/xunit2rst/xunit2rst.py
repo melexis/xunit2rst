@@ -71,8 +71,22 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         yaml = YAML(typ='safe', pure=True)
         if not file.is_absolute():
             file = input_file.parent / file
+
+        if file.suffix == '.mako' and file.stem.endswith(('.yml', '.yaml')):
+            # Render the Mako template first to generate YAML content
+            template = Template(filename=str(file))
+            try:
+                yaml_content = template.render(input_file=input_file)
+            except Exception as exc:
+                traceback = RichTraceback()
+                logging.error("Exception raised in Mako template %s, which will be re-raised after logging line info:",
+                              file)
+                logging.error("File %s, line %s, in %s: %r", *traceback.traceback[-1])
+                raise exc
+        else:
+            yaml_content = file
         extra_content_map = {name: content
-                             for name, content in yaml.load(file).items()}
+                             for name, content in yaml.load(yaml_content).items()}
         indexed_extra_content_map[i] = extra_content_map
 
     render_template(

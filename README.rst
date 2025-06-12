@@ -182,6 +182,18 @@ Examples of valid metadata in XML:
 
 When using Robot Framework v5 or greater, this path can be provided as `Free test suite metadata`_.
 
+Using Mako Templates for Dynamic Content
+-----------------------------------------
+
+For even greater flexibility, you can use Mako_ templates to generate YAML content dynamically. If the content filename
+ends with ``.yml.mako`` or ``.yaml.mako``, it will be treated as a Mako template and rendered before parsing as YAML.
+This allows you to generate content based on test parameters that are stored in another file, for example.
+
+Inside your Mako template, you have access to the following variables:
+
+input_file:
+    The path to the input XML file.
+
 Links to Log File
 =================
 
@@ -212,6 +224,7 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
 .. _Free test suite metadata: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata
 .. _html_extra_path: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path
 .. _external relationship: https://melexis.github.io/sphinx-traceability-extension/configuration.html#external-relationship-to-url-translation
+.. _Mako: https://www.makotemplates.org/
 
 Color Test Results
 ==================
