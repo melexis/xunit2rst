@@ -15,8 +15,8 @@ TEST_OUT_DIR = Path(__file__).parent / 'test_out'
 TEST_IN_DIR = Path(__file__).parent / 'test_in'
 
 
-def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, type_=None, failures=False,
-                    log_file='', add_links=False):
+def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim=False, suffix='', type_=None,
+                    failures=False, log_file='', add_links=False):
     ''' Helper function for testing whether mlx.xunit2rst produces the expected output '''
     arg_parser = dut.create_parser()
     command = ['-i', input_xml, '-o', output_rst]
@@ -26,6 +26,8 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         command.extend(['-p', prefix])
     if trim:
         command.append('--trim-suffix')
+    if suffix:
+        command.extend(('--suffix', suffix))
     if type_ is not None:
         command.extend(['--type', type_])
     if failures:
@@ -46,6 +48,7 @@ def xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='', trim
         args.links,
         args.prefix,
         args.trim_suffix,
+        args.suffix,
         args.type,
     )
 
