@@ -51,6 +51,23 @@ Test Reports
     .. _this YAML file: https://github.com/melexis/xunit2rst/blob/master/doc/source/extra_content.yml
 
 
+.. item:: REPORT_ITEST-TEST_VOLTAGE_STEPPING Test report for ITEST-TEST_VOLTAGE_STEPPING
+    :passes: ITEST-TEST_VOLTAGE_STEPPING
+
+    Test result: :xunit2rst-pass:`Pass`
+
+
+    - Successfully ran the motor 5 times at 6 V
+    - Successfully ran the motor 5 times at 7 V
+    - Successfully ran the motor 5 times at 8 V
+    - Successfully ran the motor 5 times at 9 V
+    - Successfully ran the motor 5 times at 10 V
+    - Successfully ran the motor 5 times at 11 V
+    - Successfully ran the motor 5 times at 12 V
+    - Successfully ran the motor 5 times at 13 V
+    - Successfully ran the motor 5 times at 14 V
+
+
 Traceability Matrix
 ===================
 
