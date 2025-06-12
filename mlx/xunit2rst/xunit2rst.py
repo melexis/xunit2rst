@@ -165,7 +165,7 @@ def parse_xunit_root(input_file):
     return test_suites, prefix_set, report_info_files
 
 
-def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
+def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_, suffix):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
@@ -177,6 +177,7 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
         trim_suffix (bool): Whether to trim the suffix of the prefix or not.
         type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
+        suffix (str): Suffix to append to the prefix, but not for the item IDs of the test cases.
 
     Returns:
         prefix_set (TraceableInfo): Namedtuple holding the prefixes to use for building traceability output.
@@ -269,6 +270,10 @@ def create_parser():
                             action='store',
                             default="",
                             help='Optional prefix to add to item IDs')
+    arg_parser.add_argument('--suffix',
+                            action='store',
+                            default="",
+                            help='Optional suffix to add to the prefix for the item IDs, except for the test cases')
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
     arg_parser.add_argument("--unit-or-integration", action='store',
@@ -307,6 +312,7 @@ def main():
         args.prefix,
         args.trim_suffix,
         args.type,
+        args.suffix,
         only=args.expression,
     )
 

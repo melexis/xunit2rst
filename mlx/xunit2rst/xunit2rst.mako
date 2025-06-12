@@ -118,7 +118,7 @@ Traceability Matrix
 The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these ${info.type} test reports to ${info.type} test cases
-    :source: REPORT_${prefix}
+    :source: REPORT_${prefix}${suffix}
     :target: ${prefix}
     :sourcetitle: ${info.type.capitalize()} test report
     :targettitle: ${info.type.capitalize()} test specification
@@ -133,10 +133,12 @@ test_name_no_prefix = _convert_name(element_name)
 extra_content = extra_content_map.get(test_name_no_prefix, "")
 if test_name_no_prefix.startswith(prefix):
     test_name = test_name_no_prefix
+    report_name = suffix + test_name_no_prefix
 else:
-    test_name = prefix + test_name_no_prefix
+    test_name = prefix + test_name_no_prefi
+    report_name = prefix + suffix + test_name_no_prefix
 %>\
-.. item:: REPORT_${test_name} Test report for ${test_name}
+.. item:: REPORT_${report_name} Test report for ${test_name}
     :${relationship}: ${test_name}
 % if add_links:
     :ext_robotframeworklog: ${log_file}:${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}
