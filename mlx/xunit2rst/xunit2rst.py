@@ -202,12 +202,12 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, suffix, t
     prefix_set = verify_prefix_set(prefix_set, prefix, type_)
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
-    prefix = prefix.rstrip('_')
     if suffix:
-        prefix += suffix
+        prefix = prefix.rstrip('-') + suffix
+    prefix = prefix.rstrip('_')
     if not prefix.endswith('-'):
         prefix += '-'
-    prefix_for_test_case = prefix.replace(suffix, '').rstrip('-') + '-' if suffix else prefix
+    prefix_for_test_case = prefix.replace(suffix, '').rstrip('_-') + '-' if suffix else prefix
     return prefix_set, prefix, prefix_for_test_case
 
 
