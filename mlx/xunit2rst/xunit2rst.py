@@ -18,20 +18,22 @@ QTEST = TraceableInfo('QTEST_', 'qualification', '_qualification_test_report_')
 TEMPLATE_FILE = Path(__file__).parent.joinpath('xunit2rst.mako')
 
 
-def render_template(destination, only="", **kwargs):
-    """ Renders the Mako template, and writes output file to the specified destination.
+def render_template(template_path, only="", **kwargs):
+    """ Renders the Mako template, and returns the result.
 
     Args:
-        destination (Path): Location of the output file.
+        template_path (Path): Path to the Mako template file.
         only (str): Expression for 'only' directive, which will only be added when this string is not empty.
         **kwargs (dict): Variables to be used in the Mako template.
+
+    Returns:
+        str: The rendered result of the Mako template.
 
     Raises:
         ERROR: Error log containing information about the line where the exception occurred.
         Exception: Re-raised Exception coming from Mako template.
     """
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    template = Template(filename=str(TEMPLATE_FILE))
+    template = Template(filename=str(template_path))
     try:
         rst_content = template.render(**kwargs)
     except Exception as exc:
@@ -41,8 +43,7 @@ def render_template(destination, only="", **kwargs):
         raise exc
     if only:
         rst_content = f".. only:: {only}\n\n{indent(rst_content, ' ' * 4)}"
-    with open(str(destination), 'w', encoding='utf-8', newline='\n') as rst_file:
-        rst_file.write(rst_content)
+    return rst_content
 
 
 def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, add_links, *prefix_args,
@@ -73,24 +74,15 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
             file = input_file.parent / file
 
         if file.suffix == '.mako' and file.stem.endswith(('.yml', '.yaml')):
-            # Render the Mako template first to generate YAML content
-            template = Template(filename=str(file))
-            try:
-                yaml_content = template.render(input_file=input_file)
-            except Exception as exc:
-                traceback = RichTraceback()
-                logging.error("Exception raised in Mako template %s, which will be re-raised after logging line info:",
-                              file)
-                logging.error("File %s, line %s, in %s: %r", *traceback.traceback[-1])
-                raise exc
+            yaml_content = render_template(file, input_file=input_file)
         else:
             yaml_content = file
         extra_content_map = {name: content
                              for name, content in yaml.load(yaml_content).items()}
         indexed_extra_content_map[i] = extra_content_map
 
-    render_template(
-        rst_file,
+    rst_content = render_template(
+        TEMPLATE_FILE,
         test_suites=test_suites,
         report_name=report_name,
         info=prefix_set,
@@ -103,6 +95,9 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         indexed_extra_content_map=indexed_extra_content_map,
         **kwargs,
     )
+    rst_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(str(rst_file), 'w', encoding='utf-8', newline='\n') as rst_file:
+        rst_file.write(rst_content)
 
 
 def look_for_content_file(element):
