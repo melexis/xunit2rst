@@ -22,7 +22,7 @@ class TestMako(unittest.TestCase):
         test_case = TestCase()
         with test_case.assertLogs() as log_cm:
             with self.assertRaises(TypeError):
-                dut.render_template((TEST_OUT_DIR / 'never_created_file.rst'), **kwargs)
+                dut.render_template(dut.TEMPLATE_FILE, **kwargs)
         test_case.assertIn('Exception raised in Mako template, which will be re-raised after logging line info:',
                            log_cm.output[0])
         test_case.assertIn('File ', log_cm.output[-1])
