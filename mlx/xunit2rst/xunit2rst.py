@@ -77,8 +77,11 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
             yaml_content = render_template(file, input_file=input_file)
         else:
             yaml_content = file
-        extra_content_map = {name: content
-                             for name, content in yaml.load(yaml_content).items()}
+        for name, content in yaml.load(yaml_content).items():
+            if not isinstance(content, str):
+                raise ValueError(f"The extra content for the test report for {name!r} is not a string; "
+                                 f"got {content.__class__.__name__} instead.")
+            extra_content_map[name] = content
         indexed_extra_content_map[i] = extra_content_map
 
     rst_content = render_template(
