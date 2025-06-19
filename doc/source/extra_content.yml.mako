@@ -1,8 +1,10 @@
 <%
-from pathlib import Path
 import json
-with open(Path(input_file).parent / 'test_parameters.json', 'r', encoding='utf-8') as fp:
-  params = json.load(fp)
+from os import environ
+from pathlib import Path
+
+with open(Path(environ['TEST_IN_DIR']) / 'test_parameters.json', 'r', encoding='utf-8') as fp:
+  config = json.load(fp)
 %>\
 Another_test: |
   Extra content defined in `this YAML file`_, thanks to the feature :ref:`content`.
@@ -15,7 +17,8 @@ first test: |
       .. code-block::
 
          Metadata  xunit2rst content file  ../extra_content.yml
-Test voltage stepping: |
+Test voltage stepping:
+<% params = config['Test voltage stepping'] %>
 % for voltage in range(params['START_VOLTAGE_V'], params['STOP_VOLTAGE_V'] + 1, params['VOLTAGE_STEP_V']):
   - Successfully ran the motor ${params['ITERATIONS']} times at ${voltage} V
 % endfor

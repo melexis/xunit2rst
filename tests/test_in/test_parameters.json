@@ -1,7 +1,9 @@
 {
-    "START_VOLTAGE_V": 6,
-    "VOLTAGE_STEP_V": 1,
-    "STOP_VOLTAGE_V": 14,
-    "ITERATIONS": 5,
-    "START_TOLERANCE_PERCENT": 5
+    "Test voltage stepping": {
+        "START_VOLTAGE_V": 6,
+        "VOLTAGE_STEP_V": 1,
+        "STOP_VOLTAGE_V": 14,
+        "ITERATIONS": 5,
+        "START_TOLERANCE_PERCENT": 5
+    }
 }

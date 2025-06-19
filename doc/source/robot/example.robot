@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation    Example using the space separated plain text format.
 Library          OperatingSystem
-Metadata         xunit2rst content file    ../extra_content.yml
+Metadata         xunit2rst content file    ../extra_content.yml.mako
 
 *** Variables ***
 ${MESSAGE}       Hello, world!
