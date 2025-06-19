@@ -14,36 +14,50 @@ class TestPrefix(unittest.TestCase):
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_no_prefix_report.xml')
         self.assertEqual(initial_prefix_set, dut.UTEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
         self.assertEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix, 'UTEST-')
+        self.assertEqual(prefix_tc, 'UTEST-')
 
     def test_build_prefix_and_set_itest_default(self):
         ''' Use default prefix for integration test reports '''
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
         self.assertEqual(initial_prefix_set, dut.ITEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
         self.assertEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix, 'ITEST-')
+        self.assertEqual(prefix_tc, 'ITEST-')
 
     def test_build_prefix_and_set_from_name(self):
         ''' Get prefix from element name '''
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, dut.UTEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, '', True, '', None)
         self.assertEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix, 'UTEST_MY_LIB-')
+        self.assertEqual(prefix_tc, 'UTEST_MY_LIB-')
 
     def test_build_prefix_and_set_from_arg(self):
         ''' Get prefix from input argument `--prefix` and trim suffix of prefix '''
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, dut.UTEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'TEST_MY_LIB_-', True, '', None)
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'TEST_MY_LIB_-', True, '', None)
         self.assertEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix, 'TEST_MY_LIB-')
+        self.assertEqual(prefix_tc, 'TEST_MY_LIB-')
+
+    def test_build_prefixes_and_set_from_args(self):
+        ''' Get prefix from input argument `--prefix` and trim suffix of prefix '''
+        test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
+        self.assertEqual(initial_prefix_set, dut.UTEST)
+
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'TEST_MY_LIB_-', True, '_5V', None)
+        self.assertEqual(prefix_set, initial_prefix_set)
+        self.assertEqual(prefix, 'TEST_MY_LIB_5V-')
+        self.assertEqual(prefix_tc, 'TEST_MY_LIB-')
 
     def test_build_prefix_and_set_from_arg_swap_set(self):
         '''
@@ -53,20 +67,22 @@ class TestPrefix(unittest.TestCase):
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
         self.assertEqual(initial_prefix_set, dut.ITEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_MY_LIB_-', False, '', None)
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_MY_LIB_-', False, '', None)
         self.assertNotEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix_set, dut.UTEST)
         self.assertEqual(prefix, 'UTEST_MY_LIB_-')
+        self.assertEqual(prefix_tc, 'UTEST_MY_LIB_-')
 
     def test_build_prefix_and_set_priority(self):
         ''' Argument --type must have the highest priority for determining the correct prefix_set. '''
         test_suites, initial_prefix_set, _ = dut.parse_xunit_root(TEST_IN_DIR / 'utest_my_lib_report.xml')
         self.assertEqual(initial_prefix_set, dut.UTEST)
 
-        prefix_set, prefix, suffix = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_HOWDY-', False, '', 'i')
+        prefix_set, prefix, prefix_tc = dut.build_prefix_and_set(test_suites, initial_prefix_set, 'UTEST_HOWDY-', False, '', 'i')
         self.assertNotEqual(prefix_set, initial_prefix_set)
         self.assertEqual(prefix_set, dut.ITEST)
         self.assertEqual(prefix, 'UTEST_HOWDY-')
+        self.assertEqual(prefix_tc, 'UTEST_HOWDY-')
 
     def test_content_files(self):
         ''' Test the extraction of the content file path '''
