@@ -17,8 +17,8 @@ first test: |
       .. code-block::
 
          Metadata  xunit2rst content file  ../extra_content.yml
-Test voltage stepping:
-<% params = config['Test voltage stepping'] %>
+Test voltage stepping: |
+<% params = config['Test voltage stepping'] %>\
 % for voltage in range(params['START_VOLTAGE_V'], params['STOP_VOLTAGE_V'] + 1, params['VOLTAGE_STEP_V']):
   - Successfully ran the motor ${params['ITERATIONS']} times at ${voltage} V
 % endfor
