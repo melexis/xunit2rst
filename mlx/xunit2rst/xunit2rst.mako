@@ -133,7 +133,7 @@ test_name_no_prefix = _convert_name(element_name)
 extra_content = extra_content_map.get(test_name_no_prefix, "")
 if test_name_no_prefix.startswith(prefix_for_test_case):
     test_name = test_name_no_prefix
-    report_name = prefix + test_name_no_prefix[len(prefix_for_test_case):]
+    report_name = test_name_no_prefix.replace(prefix_for_test_case, prefix, 1)
 else:
     test_name = prefix_for_test_case + test_name_no_prefix
     report_name = prefix + test_name_no_prefix
