@@ -139,6 +139,10 @@ input argument lets you configure this prefix. It will be prepended to the item 
 the item ID. By default, the script adds *ITEST-* or *UTEST-* for integration or unit test reports, unless the prefixes
 already exist in the input file.
 
+By default, the test case report items get the same prefix as the test case items. You can extend the prefix of the
+test case report items by means of the ``--suffix`` input argument, which simply appends its value to the prefix
+(in front of the ``-`` character).
+
 Distinction Between Unit and Integration Test Reports
 =====================================================
 
