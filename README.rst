@@ -56,12 +56,12 @@ Usage
 
     mlx.xunit2rst --help
 
-    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s] [-p PREFIX]
-                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f]
-                     [-l LOG] [--links] [-v]
+    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s]
+                     [-p PREFIX] [--suffix SUFFIX] [--trim-suffix]
+                     [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f] [-l LOG]
+                     [--links] [-v]
 
-
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       -i INPUT_FILE, --input INPUT_FILE
                             The input XML file
@@ -69,25 +69,24 @@ Usage
                             The output RST file
       --only EXPRESSION     Expression of tags for Sphinx' `only` directive that surrounds all
                             RST content. By default, no `only` directive is generated.
-      -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase
-                            elements.
+      -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase elements.
       -p PREFIX, --prefix PREFIX
                             Optional prefix to add to item IDs
+      --suffix SUFFIX       Optional suffix to add to the prefix for the item IDs, except for
+                            the test cases
       --trim-suffix         If the suffix of the --prefix argument ends with '_-' it gets
                             trimmed to '-'
       --unit-or-integration UNIT_OR_INTEGRATION
-                            Deprecated alternative to --type; to be removed in version
-                            2.0.0.
-      -t TYPE, --type TYPE  Optional: give value starting with 'u', 'i' or 'q' to
-                            explicitly define the type of test:
-                            unit/integration/qualification test
+                            Deprecated alternative to --type; to be removed in version 2.0.0.
+      -t TYPE, --type TYPE  Optional: give value starting with 'u', 'i' or 'q' to explicitly
+                            define the type of test: unit/integration/qualification test
       -f, --failure-message
                             Include the error message in case of test failure in the item's
                             body.
-      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx
-                            will put the --output, to create a link to.
-      --links               Optional: inserts a link to the RobotFramework HTML log file
-                            for each test case as ext_robotframeworklog link id.
+      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx will
+                            put the --output, to create a link to.
+      --links               Optional: inserts a link to the RobotFramework HTML log file for
+                            each test case as ext_robotframeworklog link id.
       -v, --version         show program's version number and exit
 
 If you use the ``--only`` input argument, you should also add |sphinx_selective_exclude.eager_only|_ to the
