@@ -189,7 +189,7 @@ For even greater flexibility, you can use Mako_ templates to generate YAML conte
 ends with ``.yml.mako`` or ``.yaml.mako``, it will be treated as a Mako template and rendered before parsing as YAML.
 This allows you to generate content based on test parameters that are stored in another file, for example.
 
-Inside your Mako template, you have access to the following variables:
+Inside your Mako template, you have access to the following variables, in addition to your environment variables:
 
 input_file:
     The path to the input XML file.
