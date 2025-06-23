@@ -31,7 +31,7 @@ Test Reports
 
         .. code-block::
 
-           Metadata         Report Info File    ../extra_content.yml
+           Metadata  xunit2rst content file  ../extra_content.yml
 
 
 .. item:: REPORT_ITEST-AN_UNLINKED_TEST Test report for ITEST-AN_UNLINKED_TEST
@@ -49,6 +49,23 @@ Test Reports
     Extra content defined in `this YAML file`_, thanks to the feature :ref:`content`.
 
     .. _this YAML file: https://github.com/melexis/xunit2rst/blob/master/doc/source/extra_content.yml
+
+
+.. item:: REPORT_ITEST-TEST_VOLTAGE_STEPPING Test report for ITEST-TEST_VOLTAGE_STEPPING
+    :passes: ITEST-TEST_VOLTAGE_STEPPING
+
+    Test result: :xunit2rst-pass:`Pass`
+
+
+    - Successfully ran the motor 5 times at 6 V
+    - Successfully ran the motor 5 times at 7 V
+    - Successfully ran the motor 5 times at 8 V
+    - Successfully ran the motor 5 times at 9 V
+    - Successfully ran the motor 5 times at 10 V
+    - Successfully ran the motor 5 times at 11 V
+    - Successfully ran the motor 5 times at 12 V
+    - Successfully ran the motor 5 times at 13 V
+    - Successfully ran the motor 5 times at 14 V
 
 
 Traceability Matrix

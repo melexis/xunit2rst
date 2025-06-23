@@ -119,7 +119,7 @@ The below table traces the test report to test cases.
 
 .. item-matrix:: Linking these ${info.type} test reports to ${info.type} test cases
     :source: REPORT_${prefix}
-    :target: ${prefix}
+    :target: ${prefix_for_test_case}
     :sourcetitle: ${info.type.capitalize()} test report
     :targettitle: ${info.type.capitalize()} test specification
     :type: fails passes skipped
@@ -131,12 +131,14 @@ The below table traces the test report to test cases.
 <%
 test_name_no_prefix = _convert_name(element_name)
 extra_content = extra_content_map.get(test_name_no_prefix, "")
-if test_name_no_prefix.startswith(prefix):
+if test_name_no_prefix.startswith(prefix_for_test_case):
     test_name = test_name_no_prefix
+    report_name = test_name_no_prefix.replace(prefix_for_test_case, prefix, 1)
 else:
-    test_name = prefix + test_name_no_prefix
+    test_name = prefix_for_test_case + test_name_no_prefix
+    report_name = prefix + test_name_no_prefix
 %>\
-.. item:: REPORT_${test_name} Test report for ${test_name}
+.. item:: REPORT_${report_name} Test report for ${test_name}
     :${relationship}: ${test_name}
 % if add_links:
     :ext_robotframeworklog: ${log_file}:${"s1-" if indexes[0] else ""}s${indexes[0] if indexes[0] else 1}-t${indexes[1]}

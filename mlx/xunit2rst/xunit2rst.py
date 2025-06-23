@@ -18,20 +18,22 @@ QTEST = TraceableInfo('QTEST_', 'qualification', '_qualification_test_report_')
 TEMPLATE_FILE = Path(__file__).parent.joinpath('xunit2rst.mako')
 
 
-def render_template(destination, only="", **kwargs):
-    """ Renders the Mako template, and writes output file to the specified destination.
+def render_template(template_path, only="", **kwargs):
+    """ Renders the Mako template, and returns the result.
 
     Args:
-        destination (Path): Location of the output file.
+        template_path (Path): Path to the Mako template file.
         only (str): Expression for 'only' directive, which will only be added when this string is not empty.
         **kwargs (dict): Variables to be used in the Mako template.
+
+    Returns:
+        str: The rendered result of the Mako template.
 
     Raises:
         ERROR: Error log containing information about the line where the exception occurred.
         Exception: Re-raised Exception coming from Mako template.
     """
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    template = Template(filename=str(TEMPLATE_FILE))
+    template = Template(filename=str(template_path))
     try:
         rst_content = template.render(**kwargs)
     except Exception as exc:
@@ -41,8 +43,7 @@ def render_template(destination, only="", **kwargs):
         raise exc
     if only:
         rst_content = f".. only:: {only}\n\n{indent(rst_content, ' ' * 4)}"
-    with open(str(destination), 'w', encoding='utf-8', newline='\n') as rst_file:
-        rst_file.write(rst_content)
+    return rst_content
 
 
 def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message, log_file, add_links, *prefix_args,
@@ -59,7 +60,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
     """
     test_suites, prefix_set, report_info_files = parse_xunit_root(input_file)
 
-    prefix_set, prefix = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
+    prefix_set, prefix, prefix_for_test_case = build_prefix_and_set(test_suites, prefix_set, *prefix_args)
 
     report_name = rst_file.stem
     if report_name.endswith('_report'):
@@ -71,16 +72,25 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         yaml = YAML(typ='safe', pure=True)
         if not file.is_absolute():
             file = input_file.parent / file
-        extra_content_map = {name: content
-                             for name, content in yaml.load(file).items()}
+
+        if file.suffix == '.mako' and file.stem.endswith(('.yml', '.yaml')):
+            yaml_content = render_template(file, input_file=input_file)
+        else:
+            yaml_content = file
+        for name, content in yaml.load(yaml_content).items():
+            if not isinstance(content, str):
+                raise ValueError(f"The extra content for the test report for {name!r} is not a string; "
+                                 f"got {content.__class__.__name__} instead.")
+            extra_content_map[name] = content
         indexed_extra_content_map[i] = extra_content_map
 
-    render_template(
-        rst_file,
+    rst_content = render_template(
+        TEMPLATE_FILE,
         test_suites=test_suites,
         report_name=report_name,
         info=prefix_set,
         prefix=prefix,
+        prefix_for_test_case=prefix_for_test_case,
         itemize_suites=itemize_suites,
         failure_message=failure_message,
         log_file=log_file,
@@ -88,6 +98,9 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         indexed_extra_content_map=indexed_extra_content_map,
         **kwargs,
     )
+    rst_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(str(rst_file), 'w', encoding='utf-8', newline='\n') as rst_file:
+        rst_file.write(rst_content)
 
 
 def look_for_content_file(element):
@@ -151,7 +164,7 @@ def parse_xunit_root(input_file):
     return test_suites, prefix_set, report_info_files
 
 
-def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
+def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, suffix, type_):
     """ Builds the prefix and prefix_set variables based on the input parameters.
 
     Args:
@@ -161,12 +174,14 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
         prefix (str): Prefix to add to item IDs. In case of an empty string, the prefix from the element's name will be
             used, or the default prefix otherwise.
         trim_suffix (bool): Whether to trim the suffix of the prefix or not.
+        suffix (str): Suffix to append to the prefix, for test case report items only.
         type_ (None/str): None if the script's discernment shall be used, otherwise a string starting
             with 'u'/'i'/'q', indicating that the input contains unit/integration/qualification tests respectively.
 
     Returns:
         prefix_set (TraceableInfo): Namedtuple holding the prefixes to use for building traceability output.
-        prefix (str): Prefix to add to item IDs.
+        prefix (str): Prefix to add to item IDs, including the optional --suffix.
+        prefix_for_test_case (str): Prefix to add to item IDs of test cases only
     """
     if prefix.endswith('_-') and trim_suffix:
         prefix = prefix.rstrip('_-') + '-'
@@ -185,10 +200,13 @@ def build_prefix_and_set(test_suites, prefix_set, prefix, trim_suffix, type_):
     prefix_set = verify_prefix_set(prefix_set, prefix, type_)
     if base_prefix_on_set:
         prefix = prefix_set.matrix_prefix
+    if suffix:
+        prefix = prefix.rstrip('-') + suffix
     prefix = prefix.rstrip('_')
     if not prefix.endswith('-'):
         prefix += '-'
-    return prefix_set, prefix
+    prefix_for_test_case = prefix.replace(suffix, '').rstrip('_-') + '-' if suffix else prefix
+    return prefix_set, prefix, prefix_for_test_case
 
 
 def verify_prefix_set(prefix_set, prefix, type_):
@@ -255,6 +273,10 @@ def create_parser():
                             action='store',
                             default="",
                             help='Optional prefix to add to item IDs')
+    arg_parser.add_argument('--suffix',
+                            action='store',
+                            default="",
+                            help='Optional suffix to add to the prefix for the item IDs, except for the test cases')
     arg_parser.add_argument("--trim-suffix", action='store_true',
                             help="If the suffix of the --prefix argument ends with '_-' it gets trimmed to '-'")
     arg_parser.add_argument("--unit-or-integration", action='store',
@@ -292,6 +314,7 @@ def main():
         args.links,
         args.prefix,
         args.trim_suffix,
+        args.suffix,
         args.type,
         only=args.expression,
     )

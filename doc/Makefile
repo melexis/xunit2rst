@@ -10,9 +10,9 @@ ROBOTDIR      = $(SOURCEDIR)/robot
 OUTDIR        = $(SOURCEDIR)/generated
 BUILDDIR      = _build
 PYTHON        = python3
-XUNIT2RST     = $(PYTHON) -m mlx.xunit2rst
-ROBOT2RST     = $(PYTHON) -m mlx.robot2rst
-ROBOT         = $(PYTHON) -m robot
+XUNIT2RST     = xunit2rst
+ROBOT2RST     = mlx.robot2rst
+ROBOT         = robot
 RM            := rm -rf
 ECHO          := echo
 CP            := cp
@@ -22,6 +22,8 @@ ITEST_PLAN    = $(OUTDIR)/itest_plan.rst
 LOG_FILE      = log.html
 LAYER         ?= ""
 PREFIX        ?= ITEST_-  # becomes ITEST-
+
+TEST_IN_DIR   = $(CURDIR)/../tests/test_in
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -39,7 +41,7 @@ html: Makefile
 	@$(RM) $(ITEST_PLAN)
 	-@$(ROBOT) --xunit report.xml -d $(ROBOTDIR) $(ROBOTDIR)/example.robot
 	@$(XUNIT2RST) -v
-	@$(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p $(PREFIX) --trim-suffix -l ../$(LOG_FILE) --only $(LAYER) --links --failure-message
+	@TEST_IN_DIR=$(TEST_IN_DIR) $(XUNIT2RST) -i $(ROBOT_XUNIT) -o $(OUTDIR)/itest_report.rst -p $(PREFIX) --trim-suffix -l ../$(LOG_FILE) --only $(LAYER) --links --failure-message
 	@$(ROBOT2RST) --robot $(ROBOTDIR)/example.robot --rst $(ITEST_PLAN) -p $(PREFIX) --trim-suffix --type $(PREFIX) --tags ^RQT-$
 	@$(ECHO) -n $(LOG_FILE) | xargs -d ' ' -n 1 -I {} $(CP) $(ROBOTDIR)/{} $(OUTDIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)

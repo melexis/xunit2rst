@@ -56,12 +56,12 @@ Usage
 
     mlx.xunit2rst --help
 
-    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s] [-p PREFIX]
-                     [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f]
-                     [-l LOG] [--links] [-v]
+    usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s]
+                     [-p PREFIX] [--suffix SUFFIX] [--trim-suffix]
+                     [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f] [-l LOG]
+                     [--links] [-v]
 
-
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       -i INPUT_FILE, --input INPUT_FILE
                             The input XML file
@@ -69,25 +69,24 @@ Usage
                             The output RST file
       --only EXPRESSION     Expression of tags for Sphinx' `only` directive that surrounds all
                             RST content. By default, no `only` directive is generated.
-      -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase
-                            elements.
+      -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase elements.
       -p PREFIX, --prefix PREFIX
                             Optional prefix to add to item IDs
+      --suffix SUFFIX       Optional suffix to add to the prefix for the item IDs, except for
+                            the test cases
       --trim-suffix         If the suffix of the --prefix argument ends with '_-' it gets
                             trimmed to '-'
       --unit-or-integration UNIT_OR_INTEGRATION
-                            Deprecated alternative to --type; to be removed in version
-                            2.0.0.
-      -t TYPE, --type TYPE  Optional: give value starting with 'u', 'i' or 'q' to
-                            explicitly define the type of test:
-                            unit/integration/qualification test
+                            Deprecated alternative to --type; to be removed in version 2.0.0.
+      -t TYPE, --type TYPE  Optional: give value starting with 'u', 'i' or 'q' to explicitly
+                            define the type of test: unit/integration/qualification test
       -f, --failure-message
                             Include the error message in case of test failure in the item's
                             body.
-      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx
-                            will put the --output, to create a link to.
-      --links               Optional: inserts a link to the RobotFramework HTML log file
-                            for each test case as ext_robotframeworklog link id.
+      -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx will
+                            put the --output, to create a link to.
+      --links               Optional: inserts a link to the RobotFramework HTML log file for
+                            each test case as ext_robotframeworklog link id.
       -v, --version         show program's version number and exit
 
 If you use the ``--only`` input argument, you should also add |sphinx_selective_exclude.eager_only|_ to the
@@ -140,6 +139,10 @@ input argument lets you configure this prefix. It will be prepended to the item 
 the item ID. By default, the script adds *ITEST-* or *UTEST-* for integration or unit test reports, unless the prefixes
 already exist in the input file.
 
+By default, the test case report items get the same prefix as the test case items. You can extend the prefix of the
+test case report items by means of the ``--suffix`` input argument, which simply appends its value to the prefix
+(in front of the ``-`` character).
+
 Distinction Between Unit and Integration Test Reports
 =====================================================
 
@@ -182,6 +185,18 @@ Examples of valid metadata in XML:
 
 When using Robot Framework v5 or greater, this path can be provided as `Free test suite metadata`_.
 
+Using Mako Templates for Dynamic Content
+-----------------------------------------
+
+For even greater flexibility, you can use Mako_ templates to generate YAML content dynamically. If the content filename
+ends with ``.yml.mako`` or ``.yaml.mako``, it will be treated as a Mako template and rendered before parsing as YAML.
+This allows you to generate content based on test parameters that are stored in another file, for example.
+
+Inside your Mako template, you have access to the following variables, in addition to your environment variables:
+
+input_file:
+    The path to the input XML file.
+
 Links to Log File
 =================
 
@@ -212,6 +227,7 @@ This requires you to configure the relationship `ext_robotframeworklog` in your 
 .. _Free test suite metadata: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata
 .. _html_extra_path: https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path
 .. _external relationship: https://melexis.github.io/sphinx-traceability-extension/configuration.html#external-relationship-to-url-translation
+.. _Mako: https://www.makotemplates.org/
 
 Color Test Results
 ==================

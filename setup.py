@@ -8,7 +8,7 @@ requires = [
 setup(
     name='mlx.xunit2rst',
     url='https://github.com/melexis/xunit2rst',
-    license='Apache License Version 2.0',
+    license='Apache-2.0',
     author='JasperCraeghs',
     author_email='jce@melexis.com',
     description='Python script for converting xUnit/JUnit XML format to reStructuredText (.rst) with traceable items',
@@ -19,7 +19,6 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
