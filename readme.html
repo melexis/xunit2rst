@@ -1,27 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation xunit2rst &mdash; mlx.xunit2rst 2.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <title>Documentation xunit2rst &mdash; mlx.xunit2rst 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.css" />
-      <link rel="stylesheet" type="text/css" href="_static/xunit2rst.css?v=e5abfeb1" />
+      <link rel="stylesheet" type="text/css" href="_static/xunit2rst.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=51b770b3"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
-        <script src="_static/traceability.js?v=123e02eb"></script>
+      <script src="_static/jquery.js"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/sphinx_highlight.js"></script>
+      <script src="https://cdn.rawgit.com/aexmachina/jquery-bonsai/master/jquery.bonsai.js"></script>
+      <script src="_static/traceability-11.7.0.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,9 +38,6 @@
           <a href="index.html" class="icon icon-home">
             mlx.xunit2rst
           </a>
-              <div class="version">
-                2.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -65,7 +60,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#prefix">Prefix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#distinction-between-unit-and-integration-test-reports">Distinction Between Unit and Integration Test Reports</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#include-message-of-failure-s">Include Message of Failure(s)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-content-to-test-reports">Add Content to Test Reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-content-to-test-reports">Add Content to Test Reports</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-mako-templates-for-dynamic-content">Using Mako Templates for Dynamic Content</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#links-to-log-file">Links to Log File</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#color-test-results">Color Test Results</a></li>
 </ul>
@@ -106,7 +104,7 @@
 <a class="reference external image-reference" href="https://codecov.io/gh/melexis/xunit2rst"><img alt="Code Coverage" src="https://codecov.io/gh/melexis/xunit2rst/coverage.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/melexis/xunit2rst/issues"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg" /></a>
 <section id="documentation-xunit2rst">
-<h1>Documentation xunit2rst<a class="headerlink" href="#documentation-xunit2rst" title="Link to this heading"></a></h1>
+<h1>Documentation xunit2rst<a class="headerlink" href="#documentation-xunit2rst" title="Permalink to this heading"></a></h1>
 <p>This script can convert a JUnit/xUnit (.xml) file to a reStructuredText (.rst) file with traceable items.</p>
 <nav class="contents local" id="contents">
 <p class="topic-title"><cite>Contents</cite></p>
@@ -129,27 +127,27 @@
 </ul>
 </nav>
 <section id="goal">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Goal</a><a class="headerlink" href="#goal" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Goal</a><a class="headerlink" href="#goal" title="Permalink to this heading"></a></h2>
 <p>This script allows you to connect your test reports to your test cases via the <a class="reference external" href="https://pypi.org/project/mlx.traceability/">mlx.traceability</a> Sphinx extension.</p>
 </section>
 <section id="installation">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip3 install mlx.xunit2rst</span>
 </pre></div>
 </div>
 </section>
 <section id="usage">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mlx.xunit2rst -i itest_report.xml -o my_lib_report.rst --prefix ITEST_MY_LIB-</span>
 
 <span class="go">mlx.xunit2rst --help</span>
 
-<span class="go">usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s] [-p PREFIX]</span>
-<span class="go">                 [--trim-suffix] [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f]</span>
-<span class="go">                 [-l LOG] [--links] [-v]</span>
+<span class="go">usage: xunit2rst [-h] -i INPUT_FILE -o RST_OUTPUT_FILE [--only EXPRESSION] [-s]</span>
+<span class="go">                 [-p PREFIX] [--suffix SUFFIX] [--trim-suffix]</span>
+<span class="go">                 [--unit-or-integration UNIT_OR_INTEGRATION] [-t TYPE] [-f] [-l LOG]</span>
+<span class="go">                 [--links] [-v]</span>
 
-
-<span class="go">optional arguments:</span>
+<span class="go">options:</span>
 <span class="go">  -h, --help            show this help message and exit</span>
 <span class="go">  -i INPUT_FILE, --input INPUT_FILE</span>
 <span class="go">                        The input XML file</span>
@@ -157,25 +155,24 @@
 <span class="go">                        The output RST file</span>
 <span class="go">  --only EXPRESSION     Expression of tags for Sphinx&#39; `only` directive that surrounds all</span>
 <span class="go">                        RST content. By default, no `only` directive is generated.</span>
-<span class="go">  -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase</span>
-<span class="go">                        elements.</span>
+<span class="go">  -s, --itemize-suites  Flag to itemize testsuite elements instead of testcase elements.</span>
 <span class="go">  -p PREFIX, --prefix PREFIX</span>
 <span class="go">                        Optional prefix to add to item IDs</span>
+<span class="go">  --suffix SUFFIX       Optional suffix to add to the prefix for the item IDs, except for</span>
+<span class="go">                        the test cases</span>
 <span class="go">  --trim-suffix         If the suffix of the --prefix argument ends with &#39;_-&#39; it gets</span>
 <span class="go">                        trimmed to &#39;-&#39;</span>
 <span class="go">  --unit-or-integration UNIT_OR_INTEGRATION</span>
-<span class="go">                        Deprecated alternative to --type; to be removed in version</span>
-<span class="go">                        2.0.0.</span>
-<span class="go">  -t TYPE, --type TYPE  Optional: give value starting with &#39;u&#39;, &#39;i&#39; or &#39;q&#39; to</span>
-<span class="go">                        explicitly define the type of test:</span>
-<span class="go">                        unit/integration/qualification test</span>
+<span class="go">                        Deprecated alternative to --type; to be removed in version 2.0.0.</span>
+<span class="go">  -t TYPE, --type TYPE  Optional: give value starting with &#39;u&#39;, &#39;i&#39; or &#39;q&#39; to explicitly</span>
+<span class="go">                        define the type of test: unit/integration/qualification test</span>
 <span class="go">  -f, --failure-message</span>
 <span class="go">                        Include the error message in case of test failure in the item&#39;s</span>
 <span class="go">                        body.</span>
-<span class="go">  -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx</span>
-<span class="go">                        will put the --output, to create a link to.</span>
-<span class="go">  --links               Optional: inserts a link to the RobotFramework HTML log file</span>
-<span class="go">                        for each test case as ext_robotframeworklog link id.</span>
+<span class="go">  -l LOG, --log LOG     Optional: path to the HTML log file, relative to where Sphinx will</span>
+<span class="go">                        put the --output, to create a link to.</span>
+<span class="go">  --links               Optional: inserts a link to the RobotFramework HTML log file for</span>
+<span class="go">                        each test case as ext_robotframeworklog link id.</span>
 <span class="go">  -v, --version         show program&#39;s version number and exit</span>
 </pre></div>
 </div>
@@ -184,14 +181,14 @@
 <code class="docutils literal notranslate"><span class="pre">only</span></code> directive.</p>
 </section>
 <section id="behavior">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Behavior</a><a class="headerlink" href="#behavior" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Behavior</a><a class="headerlink" href="#behavior" title="Permalink to this heading"></a></h2>
 <section id="itemization">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">Itemization</a><a class="headerlink" href="#itemization" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Itemization</a><a class="headerlink" href="#itemization" title="Permalink to this heading"></a></h3>
 <p>By default, all <em>testcase</em> elements from the input file are used to created treaceability items. This may not always be
 desired. The <code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--itemize-suites</span></code> flag lets the script itemize <em>testsuite</em> elements instead. In this case, the
 <em>testcase</em> elements will still be parsed to determine whether the testsuite passed or failed or skipped.</p>
 <section id="test-result-of-itemized-suites">
-<h4>Test Result of Itemized Suites<a class="headerlink" href="#test-result-of-itemized-suites" title="Link to this heading"></a></h4>
+<h4>Test Result of Itemized Suites<a class="headerlink" href="#test-result-of-itemized-suites" title="Permalink to this heading"></a></h4>
 <dl class="simple">
 <dt>Pass (passes)</dt><dd><p>No test cases have failed. Some might be skipped.</p>
 </dd>
@@ -203,7 +200,7 @@ desired. The <code class="docutils literal notranslate"><span class="pre">-s,</s
 </section>
 </section>
 <section id="item-ids">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Item IDs</a><a class="headerlink" href="#item-ids" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Item IDs</a><a class="headerlink" href="#item-ids" title="Permalink to this heading"></a></h3>
 <p>The <em>name</em> attribute of the element to be itemized is used to build the item ID. Lower case letters get converted to
 upper case, whitespaces get converted to underscores, and <em>&amp;</em> characters get converted to <em>AND</em>. A valid prefix must
 end with a hyphen to be recognized by the script. If there is an additional string prepended to this name by means of a
@@ -212,14 +209,17 @@ dot, this string won’t be taken into account. Example below:</p>
 <code class="docutils literal notranslate"><span class="pre">ITEST_MY_LIB-MY_FUNCTION_AND_KEYWORD</span></code></p>
 </section>
 <section id="prefix">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Prefix</a><a class="headerlink" href="#prefix" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Prefix</a><a class="headerlink" href="#prefix" title="Permalink to this heading"></a></h3>
 <p>Traceability item IDs have a prefix that is unique for the group they belong to, e.g. <em>ITEST_MY_LIB-</em>. The <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
 input argument lets you configure this prefix. It will be prepended to the item names found in the input file to build
 the item ID. By default, the script adds <em>ITEST-</em> or <em>UTEST-</em> for integration or unit test reports, unless the prefixes
 already exist in the input file.</p>
+<p>By default, the test case report items get the same prefix as the test case items. You can extend the prefix of the
+test case report items by means of the <code class="docutils literal notranslate"><span class="pre">--suffix</span></code> input argument, which simply appends its value to the prefix
+(in front of the <code class="docutils literal notranslate"><span class="pre">-</span></code> character).</p>
 </section>
 <section id="distinction-between-unit-and-integration-test-reports">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Distinction Between Unit and Integration Test Reports</a><a class="headerlink" href="#distinction-between-unit-and-integration-test-reports" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Distinction Between Unit and Integration Test Reports</a><a class="headerlink" href="#distinction-between-unit-and-integration-test-reports" title="Permalink to this heading"></a></h3>
 <p>Test reports that have a <em>testsuites</em> element as root in XML are treated as unit test reports. Otherwise the script
 treats the input file as an integration test report. This discerning behavior gets overridden when prefixes are found in
 the input file or the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> input argument is used. The script looks for a <em>U</em> or <em>I</em> as the first letter of the
@@ -227,12 +227,12 @@ prefix. Lastly, you can explicitly define the type by using the <code class="doc
 Its value should start with <em>u</em> or <em>i</em> and gets parsed case-insensitively.</p>
 </section>
 <section id="include-message-of-failure-s">
-<h3><a class="toc-backref" href="#id9" role="doc-backlink">Include Message of Failure(s)</a><a class="headerlink" href="#include-message-of-failure-s" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Include Message of Failure(s)</a><a class="headerlink" href="#include-message-of-failure-s" title="Permalink to this heading"></a></h3>
 <p>When the <code class="docutils literal notranslate"><span class="pre">-f,</span> <span class="pre">--failure-message</span></code> flag is set, the tool includes the messages of all failures and reasons for skipping
 of the item’s test cases in its body.</p>
 </section>
 <section id="add-content-to-test-reports">
-<span id="content"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Add Content to Test Reports</a><a class="headerlink" href="#add-content-to-test-reports" title="Link to this heading"></a></h3>
+<span id="content"></span><h3><a class="toc-backref" href="#id10" role="doc-backlink">Add Content to Test Reports</a><a class="headerlink" href="#add-content-to-test-reports" title="Permalink to this heading"></a></h3>
 <p>Extra reStructuredText content for the generated test reports can be defined in a <a class="reference external" href="https://yaml.org/spec/1.2.2/">YAML</a> file that contains a
 mapping, aka <a class="reference external" href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html#yaml-basics">dictionary</a>, of case insensitive test case names (or test suite names for <code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--itemize-suites</span></code>) as
 keys and reStructuredText strings as values. <a class="reference external" href="https://yaml-multiline.info/">Multiline strings</a> are supported. This feature is used in the <a class="reference external" href="https://melexis.github.io/xunit2rst/generated/itest_report.html#REPORT_ITEST-ANOTHER_TEST">example
@@ -250,9 +250,20 @@ the XML content, with the string <code class="docutils literal notranslate"><spa
 </pre></div>
 </div>
 <p>When using Robot Framework v5 or greater, this path can be provided as <a class="reference external" href="http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#free-test-suite-metadata">Free test suite metadata</a>.</p>
+<section id="using-mako-templates-for-dynamic-content">
+<h4>Using Mako Templates for Dynamic Content<a class="headerlink" href="#using-mako-templates-for-dynamic-content" title="Permalink to this heading"></a></h4>
+<p>For even greater flexibility, you can use <a class="reference external" href="https://www.makotemplates.org/">Mako</a> templates to generate YAML content dynamically. If the content filename
+ends with <code class="docutils literal notranslate"><span class="pre">.yml.mako</span></code> or <code class="docutils literal notranslate"><span class="pre">.yaml.mako</span></code>, it will be treated as a Mako template and rendered before parsing as YAML.
+This allows you to generate content based on test parameters that are stored in another file, for example.</p>
+<p>Inside your Mako template, you have access to the following variables, in addition to your environment variables:</p>
+<dl class="simple">
+<dt>input_file:</dt><dd><p>The path to the input XML file.</p>
+</dd>
+</dl>
+</section>
 </section>
 <section id="links-to-log-file">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">Links to Log File</a><a class="headerlink" href="#links-to-log-file" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Links to Log File</a><a class="headerlink" href="#links-to-log-file" title="Permalink to this heading"></a></h3>
 <p>Use input parameter <code class="docutils literal notranslate"><span class="pre">-l,</span> <span class="pre">--log</span> <span class="pre">PATH_TO_FILE</span></code> to add a link to the HTML log file. This path should be relative to the
 location where Sphinx outputs the HTML version of the RST file generated by this tool. Be sure to put this log file
 in Sphinx’ source directory and add it to <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_extra_path">html_extra_path</a> in your <em>conf.py</em>. This way, the log file will end up in
@@ -272,7 +283,7 @@ This requires you to configure the relationship <cite>ext_robotframeworklog</cit
 </div>
 </section>
 <section id="color-test-results">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">Color Test Results</a><a class="headerlink" href="#color-test-results" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Color Test Results</a><a class="headerlink" href="#color-test-results" title="Permalink to this heading"></a></h3>
 <p>You can highlight each test result (pass, fail and skip) in a different color so that they stand out
 more from the rest of the report.
 The element with the test result text contains two classes: <cite>xunit2rst</cite> and the test result itself.

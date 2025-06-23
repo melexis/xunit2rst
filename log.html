@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 7.0 (Python 3.9.18 on linux)" name="Generator">
+<meta content="Robot Framework 7.3.1 (Python 3.9.23 on linux)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all">
 :root {
@@ -724,10 +724,13 @@ function toggleSuite(suiteId) {
     toggleElement(suiteId, ['keyword', 'suite', 'test']);
 }
 function toggleTest(testId) {
-    toggleElement(testId, ['keyword']);
     var test = window.testdata.findLoaded(testId);
-    if (test.status == "FAIL" || test.status == "SKIP")
+    var autoExpand = test.status == "FAIL" || test.status == "SKIP";
+    var closed = $('#' + testId).children('.element-header').hasClass('closed');
+    if (autoExpand && closed)
         expandFailed(test);
+    else
+        toggleElement(testId, ['keyword']);
 }
 function toggleKeyword(kwId) {
     toggleElement(kwId, ['keyword']);
@@ -1252,58 +1255,48 @@ window.stats = (function () {
             });
     }
     function calculatePercents(total, passed, failed, skipped) {
-        if (total == 0) {
+        if (total == 0)
             return [0.0, 0.0, 0.0];
-        }
         var pass = 100.0 * passed / total;
         var skip = 100.0 * skipped / total;
         var fail = 100.0 * failed / total;
         if (pass > 0 && pass < 0.1)
-            pass = 0.1
+            pass = 0.1;
         if (fail > 0 && fail < 0.1)
-            fail = 0.1
+            fail = 0.1;
         if (skip > 0 && skip < 0.1)
-            skip = 0.1
+            skip = 0.1;
         if (pass > 99.95 && pass < 100)
-            pass = 99.9
+            pass = 99.9;
         if (fail > 99.95 && fail < 100)
-            fail = 99.9
+            fail = 99.9;
         if (skip > 99.95 && skip < 100)
-            skip = 99.9
-        return [Math.round(pass*10)/10, Math.round(skip*10)/10, Math.round(fail*10)/10];
+            skip = 99.9;
+        return [round1(pass), round1(skip), round1(fail)];
     }
     function calculateWidths(num1, num2, num3) {
         if (num1 + num2 + num3 === 0)
             return [0.0, 0.0, 0.0];
         // Make small percentages better visible
         if (num1 > 0 && num1 < 1)
-            num1 = 1
+            num1 = 1.0;
         if (num2 > 0 && num2 < 1)
-            num2 = 1
+            num2 = 1.0;
         if (num3 > 0 && num3 < 1)
-            num3 = 1
+            num3 = 1.0;
         // Handle situation where some are rounded up
         while (num1 + num2 + num3 > 100) {
-            if (num1 > num2 && num1 > num3)
-                num1 -= 0.1;
-            else if (num2 > num1 && num2 > num3)
-                num2 -= 0.1;
-            else if (num3 > num1 && num3 > num2)
-                num3 -= 0.1;
-            else if (num1 > num3 && num1 == num2) {
-                num1 -= 0.1;
-                num2 -= 0.1;
-            }
-            else if (num1 > num2 && num1 == num3) {
-                num1 -= 0.1;
-                num3 -= 0.1;
-            }
-            else if (num2 > num1 && num2 == num3) {
-                num2 -= 0.1;
-                num3 -= 0.1;
-            }
+            if (num1 >= num2 && num1 >= num3)
+                num1 = round1(num1 - 0.1);
+            else if (num2 >= num1 && num2 >= num3)
+                num2 = round1(num2 - 0.1);
+            else
+                num3 = round1(num3 - 0.1);
         }
-        return [Math.ceil(num1*10)/10, Math.ceil(num2*10)/10, Math.ceil(num3*10)/10];
+        return [num1, num2, num3];
+    }
+    function round1(num) {
+        return Math.round(num*10) / 10;
     }
     return {
         Statistics: Statistics
@@ -1522,7 +1515,7 @@ window.testdata = function () {
     var STATUSES = ['FAIL', 'PASS', 'SKIP', 'NOT RUN'];
     var KEYWORD_TYPES = ['KEYWORD', 'SETUP', 'TEARDOWN', 'FOR', 'ITERATION', 'IF',
                          'ELSE IF', 'ELSE', 'RETURN', 'VAR', 'TRY', 'EXCEPT', 'FINALLY',
-                         'WHILE', 'CONTINUE', 'BREAK', 'ERROR'];
+                         'WHILE', 'GROUP', 'CONTINUE', 'BREAK', 'ERROR'];
     function addElement(elem) {
         if (!elem.id)
             elem.id = uniqueId();
@@ -2081,13 +2074,13 @@ storage = function () {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,4,[5,6],[0,0,32],[],[[7,0,8,[9,10],[0,26,2,11],[[0,12,13,0,14,15,0,0,[1,26,0],[[26,2,16]]],[0,17,0,0,0,18,0,0,[0,27,1],[[0,19,20,0,21,22,0,0,[0,27,0],[[27,5,11]]]]]]],[23,0,0,[24],[1,28,1],[[0,25,13,0,26,27,0,0,[1,28,0],[]]]],[28,0,29,[30],[1,29,2],[[0,31,13,0,32,33,34,0,[1,29,1],[[29,2,35]]],[0,25,13,0,26,36,0,0,[1,30,0],[]]]],[37,0,38,[10],[2,30,1,39],[[0,40,13,0,41,39,0,0,[2,30,0],[[31,6,39]]]]],[42,0,43,[],[1,31,1],[[0,12,13,0,14,44,0,0,[1,31,0],[[32,2,44]]]]]],[],[5,3,1,1]];
+window.output["suite"] = [1,2,3,4,[5,6],[0,0,33],[],[[7,0,8,[9,10],[0,26,2,11],[[0,12,13,0,14,15,0,0,[1,27,0],[[27,2,16]]],[0,17,0,0,0,18,0,0,[0,27,1],[[0,19,20,0,21,22,0,0,[0,27,0],[[28,5,11]]]]]]],[23,0,0,[24],[1,28,1],[[0,25,13,0,26,27,0,0,[1,28,0],[]]]],[28,0,29,[30],[1,29,2],[[0,31,13,0,32,33,34,0,[1,29,1],[[30,2,35]]],[0,25,13,0,26,36,0,0,[1,30,0],[]]]],[37,0,38,[10],[2,31,1,39],[[0,40,13,0,41,39,0,0,[2,31,0],[[31,6,39]]]]],[42,0,43,[],[1,31,1],[[0,12,13,0,14,44,0,0,[1,32,0],[[32,2,44]]]]]],[],[5,3,1,1]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Example","*/home/runner/work/xunit2rst/xunit2rst/doc/source/robot/example.robot","*example.robot","*<p>Example using the space separated plain text format.\x3c/p>","*xunit2rst content file","*<p>../extra_content.yml\x3c/p>","*First Test","*<p>Example of a failing test\x3c/p>","*RQT-DIRECTORY","*RQT-LOGGING","*Directory '/'nonexistent_'' does not exist.","*Log","*BuiltIn","*<p>Logs the given message with the given level.\x3c/p>","*${MESSAGE}","*Hello, world!","*My Keyword","*/'nonexistent_'","*Directory Should Exist","*OperatingSystem","*<p>Fails unless the given path points to an existing directory.\x3c/p>","*${path}","*An Unlinked Test","*FUN","*Should Be Equal","*<p>Fails if the given objects are unequal.\x3c/p>","*${MESSAGE}    Hello, world!","*Another test","*<p>Example of a successful test\x3c/p>","*RQT-SUMMATION","*Evaluate","*<p>Evaluates the given expression in Python and returns the result.\x3c/p>","*${128} + ${128}","*${sum}","*${sum} = 256","*${sum}    ${256}","*A skipped test","*<p>Example of a test that is always skipped\x3c/p>","*This test case is always skipped.","*Skip","*<p>Skips the rest of the current test.\x3c/p>","*Comp1: testing 'Special&quot; characters &amp; prefix","*<p>The item ID will contain COMP1-SPECIAL_CHARACTERS_AND_PREFIX.\x3c/p>","*Special characters in test case names are supported but not recommended."]);
+window.output["strings"] = window.output["strings"].concat(["*","*Example","*/home/runner/work/xunit2rst/xunit2rst/doc/source/robot/example.robot","*example.robot","*<p>Example using the space separated plain text format.\x3c/p>","*xunit2rst content file","*<p>../extra_content.yml.mako\x3c/p>","*First Test","*<p>Example of a failing test\x3c/p>","*RQT-DIRECTORY","*RQT-LOGGING","*Directory '/'nonexistent_'' does not exist.","*Log","*BuiltIn","*<p>Logs the given message with the given level.\x3c/p>","*${MESSAGE}","*Hello, world!","*My Keyword","*/'nonexistent_'","*Directory Should Exist","*OperatingSystem","*<p>Fails unless the given path points to an existing directory.\x3c/p>","*${path}","*An Unlinked Test","*FUN","*Should Be Equal","*<p>Fails if the given objects are unequal.\x3c/p>","*${MESSAGE}    Hello, world!","*Another test","*<p>Example of a successful test\x3c/p>","*RQT-SUMMATION","*Evaluate","*<p>Evaluates the given expression in Python and returns the result.\x3c/p>","*${128} + ${128}","*${sum}","*${sum} = 256","*${sum}    ${256}","*A skipped test","*<p>Example of a test that is always skipped\x3c/p>","*This test case is always skipped.","*Skip","*<p>Skips the rest of the current test.\x3c/p>","*Comp1: testing 'Special&quot; characters &amp; prefix","*<p>The item ID will contain COMP1-SPECIAL_CHARACTERS_AND_PREFIX.\x3c/p>","*Special characters in test case names are supported but not recommended."]);
 </script>
 <script type="text/javascript">
 window.output["stats"] = [[{"elapsed":"00:00:00","fail":1,"label":"All Tests","pass":3,"skip":1}],[{"elapsed":"00:00:00","fail":0,"label":"FUN","pass":1,"skip":0},{"elapsed":"00:00:00","fail":1,"label":"RQT-DIRECTORY","pass":0,"skip":0},{"elapsed":"00:00:00","fail":1,"label":"RQT-LOGGING","pass":0,"skip":1},{"elapsed":"00:00:00","fail":0,"label":"RQT-SUMMATION","pass":1,"skip":0}],[{"elapsed":"00:00:00","fail":1,"id":"s1","label":"Example","name":"Example","pass":3,"skip":1}]];
@@ -2096,7 +2089,7 @@ window.output["stats"] = [[{"elapsed":"00:00:00","fail":1,"label":"All Tests","p
 window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1705097853416;
+window.output["baseMillis"] = 1750679753402;
 </script>
 <script type="text/javascript">
 window.output["generated"] = 36;
@@ -2214,7 +2207,7 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="tagStatisticsRowTemplate">
   <tr class="row-${$item.index}">
-    <td class="stats-col-name" title="{{html doc}}">
+    <td class="stats-col-name" title="${doc}">
       <div class="stat-name">
         <span>{{html label}}</span>
         {{if info}}(${info}){{/if}}
