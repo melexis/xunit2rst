@@ -47,6 +47,26 @@ ${"=" * len(title)}
 % if log_file:
 The log file that contains details about the executed test cases can be found `here <${log_file}>`_.
 % endif
+<%
+# Add suite-level content when not itemizing suites
+suite_header_content = ""
+if not itemize_suites:
+    # Collect content from all available content files
+    for suite_idx in indexed_extra_content_map:
+        extra_content_map = indexed_extra_content_map.get(suite_idx, {})
+        extra_content_map = {_convert_name(key): value for key, value in extra_content_map.items()}
+
+        # Look for parent suite content first, then individual suite content
+        for suite in test_suites:
+            suite_name_converted = _convert_name(suite.attrib.get('name', ''))
+            suite_content = extra_content_map.get(suite_name_converted, "")
+            if suite_content:
+                suite_header_content += suite_content + "\n\n"
+%>\
+% if suite_header_content.strip():
+
+${suite_header_content.rstrip()}
+% endif
 
 .. contents:: `Contents`
     :depth: 2
@@ -61,8 +81,14 @@ test_idx = 0
 %>
 % for suite_idx, suite in enumerate(test_suites):
 <%
-extra_content_map = indexed_extra_content_map.get(suite_idx, {})
-extra_content_map = {_convert_name(key): value for key, value in extra_content_map.items()}
+# Collect content from all available content files, not just the current suite's index
+# This allows child suites to access content from parent suite content files
+all_extra_content = {}
+for content_idx in indexed_extra_content_map:
+    content_map = indexed_extra_content_map.get(content_idx, {})
+    content_map = {_convert_name(key): value for key, value in content_map.items()}
+    all_extra_content.update(content_map)
+extra_content_map = all_extra_content
 %>\
     % if not itemize_suites:  # create traceable item per testcase element
         % for test in suite:
@@ -131,6 +157,7 @@ The below table traces the test report to test cases.
 <%
 test_name_no_prefix = _convert_name(element_name)
 extra_content = extra_content_map.get(test_name_no_prefix, "")
+
 if test_name_no_prefix.startswith(prefix_for_test_case):
     test_name = test_name_no_prefix
     report_name = test_name_no_prefix.replace(prefix_for_test_case, prefix, 1)

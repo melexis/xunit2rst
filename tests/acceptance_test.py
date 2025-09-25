@@ -325,6 +325,31 @@ class TestAcceptance(unittest.TestCase):
         reference_rst = str(TEST_IN_DIR / rst_file_name)
         assert filecmp.cmp(output_rst, reference_rst)
 
+    def test_suite_content_with_mako_template(self):
+        '''Tests extra content for test suites using .yml.mako templates when itemizing suites'''
+        file_name = 'utest_suite_content'
+        rst_file_name = '{}_report.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, itemize_suites=True, prefix='UTEST_MY_LIB-')
+
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
+    def test_suite_header_content_with_mako_template(self):
+        '''Tests extra content for test suites added as header content when NOT itemizing suites'''
+        file_name = 'utest_suite_header_content'
+        rst_file_name = '{}_report.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='UTEST_MY_LIB-')
+
+        reference_rst = str(TEST_IN_DIR / rst_file_name)
+        assert filecmp.cmp(output_rst, reference_rst)
+
+
 
 if __name__ == '__main__':
     unittest.main()

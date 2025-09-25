@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites>
+    <testsuite errors="0" failures="0" name="MY_LIB" skipped="0" tests="0" timestamp="2019-11-29T09:58:22" />
+    <testsuite errors="0" failures="0" name="MY_LIB.UTEST_MY_LIB-SUITE_WITH_HEADER_CONTENT" skipped="0" tests="2" time="0.0" timestamp="2019-11-29T09:58:22">
+        <testcase classname="MY_LIB.UTEST_MY_LIB-SUITE_WITH_HEADER_CONTENT" name="UTEST_MY_LIB-test_function_a" time="0.0" />
+        <testcase classname="MY_LIB.UTEST_MY_LIB-SUITE_WITH_HEADER_CONTENT" name="UTEST_MY_LIB-test_function_b" time="0.0" />
+        <properties>
+            <property name="xunit2rst content file" value="utest_suite_header_content.yml.mako"/>
+        </properties>
+    </testsuite>
+    <testsuite errors="0" failures="1" name="MY_LIB.UTEST_MY_LIB-ANOTHER_SUITE" skipped="0" tests="1" time="0.0" timestamp="2019-11-29T09:59:30">
+        <testcase classname="MY_LIB.UTEST_MY_LIB-ANOTHER_SUITE" name="UTEST_MY_LIB-test_function_c" time="0.0">
+            <failure message="Test failed" />
+        </testcase>
+        <properties>
+            <property name="xunit2rst content file" value="utest_suite_header_content.yml.mako"/>
+        </properties>
+    </testsuite>
+</testsuites>
+
