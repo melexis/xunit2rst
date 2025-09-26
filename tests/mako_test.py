@@ -27,7 +27,7 @@ class TestMako(unittest.TestCase):
                            log_cm.output[0])
         test_case.assertIn('File ', log_cm.output[-1])
         test_case.assertIn('line ', log_cm.output[-1])
-        test_case.assertIn("in render_body: '% for suite_idx, suite in enumerate(test_suites):'",
+        test_case.assertIn("for suite_idx in indexed_extra_content_map:",
                            log_cm.output[-1])
 
 

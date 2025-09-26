@@ -164,9 +164,13 @@ Add Content to Test Reports
 ===========================
 
 Extra reStructuredText content for the generated test reports can be defined in a YAML_ file that contains a
-mapping, aka `dictionary`_, of case insensitive test case names (or test suite names for ``-s, --itemize-suites``) as
+mapping, aka `dictionary`_, of case insensitive test case names or (parent) test suite names as
 keys and reStructuredText strings as values. `Multiline strings`_ are supported. This feature is used in the `example
 documentation`_.
+
+When using the ``-s, --itemize-suites`` flag, the YAML keys should match the converted test suite names instead of
+individual test case names. The suite name conversion follows the same rules as test case names: the name is converted
+to uppercase, special characters are replaced with underscores, and any prefix before a dot is removed.
 
 The path to the YAML file, an absolute path or relative to the input XML file, must be added as a metadata element to
 the XML content, with the string ``xunit2rst content file`` as name and the path as value.
@@ -196,6 +200,63 @@ Inside your Mako template, you have access to the following variables, in additi
 
 input_file:
     The path to the input XML file.
+
+
+Suite Header Content Example
+-----------------------------
+
+(Parent) suite content appears as header documentation above the table of contents:
+
+XML file with test suites:
+
+.. code:: xml
+
+    <testsuites>
+        <testsuite name="MY_LIB.UTEST_MY_LIB-CORE_FUNCTIONS" tests="3">
+            <testcase name="test_function_a"/>
+            <testcase name="test_function_b"/>
+            <testcase name="test_function_c"/>
+            <properties>
+                <property name="xunit2rst content file" value="header_content.yml"/>
+            </properties>
+        </testsuite>
+    </testsuites>
+
+Content file (``header_content.yml``):
+
+.. code:: yaml
+
+    UTEST_MY_LIB-CORE_FUNCTIONS: |
+      .. note::
+          **Test Suite Overview**
+
+          This suite tests the core functionality of MY_LIB.
+          All functions are critical for system operation.
+
+Generated RST output structure:
+
+.. code:: rst
+
+    Unit Test Report for my_project
+    ===============================
+
+    .. note::
+        **Test Suite Overview**
+
+        This suite tests the core functionality of MY_LIB.
+        All functions are critical for system operation.
+
+    .. contents:: `Contents`
+        :depth: 2
+        :local:
+
+    Test Reports
+    ============
+
+    .. item:: REPORT_UTEST_MY_LIB-TEST_FUNCTION_A ...
+        (individual test case items follow)
+
+This approach allows you to provide overview documentation for test suites without creating separate traceability items.
 
 Links to Log File
 =================
