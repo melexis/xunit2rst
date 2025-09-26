@@ -164,24 +164,13 @@ Add Content to Test Reports
 ===========================
 
 Extra reStructuredText content for the generated test reports can be defined in a YAML_ file that contains a
-mapping, aka `dictionary`_, of case insensitive test case names (or test suite names for ``-s, --itemize-suites``) as
+mapping, aka `dictionary`_, of case insensitive test case names or (parent) test suite names as
 keys and reStructuredText strings as values. `Multiline strings`_ are supported. This feature is used in the `example
 documentation`_.
-
-The content file is typically defined in a parent test suite's metadata, making it available to all child suites in the hierarchy.
 
 When using the ``-s, --itemize-suites`` flag, the YAML keys should match the converted test suite names instead of
 individual test case names. The suite name conversion follows the same rules as test case names: the name is converted
 to uppercase, special characters are replaced with underscores, and any prefix before a dot is removed.
-
-**Suite Content Behavior:**
-
-- **With** ``--itemize-suites``: Suite content is added to individual traceability items for each itemized test suite
-- **Without** ``--itemize-suites``: Suite content is added as header content above the ``.. contents::`` section
-
-**Parent-Child Suite Relationships:**
-
-When test suites have a hierarchical structure (parent suites containing child suites), only child suites with actual test cases get itemized when using ``--itemize-suites``. Parent suites (typically with ``tests="0"``) are not itemized, but their content files are still processed. Child suites can access content defined for both parent and child suite names in the same content file.
 
 The path to the YAML file, an absolute path or relative to the input XML file, must be added as a metadata element to
 the XML content, with the string ``xunit2rst content file`` as name and the path as value.
@@ -212,41 +201,11 @@ Inside your Mako template, you have access to the following variables, in additi
 input_file:
     The path to the input XML file.
 
-Test Suite Content Example
----------------------------
-
-When using the ``-s, --itemize-suites`` option, you can add content to entire test suites. Here's an example:
-
-XML file with test suite:
-
-.. code:: xml
-
-    <testsuite name="MY_LIB.UTEST_MY_LIB-SUITE_WITH_CONTENT" tests="2">
-        <testcase name="test_function_a"/>
-        <testcase name="test_function_b"/>
-        <properties>
-            <property name="xunit2rst content file" value="suite_content.yml"/>
-        </properties>
-    </testsuite>
-
-Content file (``suite_content.yml``):
-
-.. code:: yaml
-
-    UTEST_MY_LIB-SUITE_WITH_CONTENT: |
-      .. note::
-          This content applies to the entire test suite.
-
-          All test cases in this suite are related to testing
-          the core functionality of MY_LIB.
-
-When processed with ``mlx.xunit2rst -i input.xml -o output.rst -s``, this will generate a traceability item
-for the test suite that includes the extra content.
 
 Suite Header Content Example
 -----------------------------
 
-When **not** using the ``-s, --itemize-suites`` option, suite content appears as header documentation above the table of contents:
+(Parent) suite content appears as header documentation above the table of contents:
 
 XML file with test suites:
 
@@ -298,60 +257,6 @@ Generated RST output structure:
         (individual test case items follow)
 
 This approach allows you to provide overview documentation for test suites without creating separate traceability items.
-
-Parent-Child Suite Content Example
------------------------------------
-
-When working with hierarchical test suites, content files can provide content for both parent and child suites:
-
-XML file with parent-child suite structure:
-
-.. code:: xml
-
-    <testsuites>
-        <testsuite name="MY_LIB" tests="0">
-            <properties>
-                <property name="xunit2rst content file" value="suite_hierarchy.yml"/>
-            </properties>
-        </testsuite>
-        <testsuite name="MY_LIB.UTEST_MY_LIB-CORE_FUNCTIONS" tests="2">
-            <testcase name="test_basic_function"/>
-            <testcase name="test_advanced_function"/>
-        </testsuite>
-        <testsuite name="MY_LIB.UTEST_MY_LIB-EDGE_CASES" tests="1">
-            <testcase name="test_edge_case"/>
-        </testsuite>
-    </testsuites>
-
-Content file (``suite_hierarchy.yml``):
-
-.. code:: yaml
-
-    MY_LIB: |
-      .. note::
-          **Parent Suite Documentation**
-
-          This content is defined for the parent suite and provides
-          overview information for all child suites.
-
-    UTEST_MY_LIB-CORE_FUNCTIONS: |
-      **Core Functions Suite**
-
-      Tests fundamental operations of MY_LIB.
-
-    UTEST_MY_LIB-EDGE_CASES: |
-      **Edge Cases Suite**
-
-      Tests boundary conditions and error scenarios.
-
-**With** ``--itemize-suites``:
-- Only child suites (``UTEST_MY_LIB-CORE_FUNCTIONS``, ``UTEST_MY_LIB-EDGE_CASES``) get itemized
-- Each child suite item includes its specific content
-- Parent suite (``MY_LIB``) is not itemized but its content file is processed
-
-**Without** ``--itemize-suites``:
-- All available content appears as header documentation
-- Individual test cases get itemized
 
 Links to Log File
 =================
