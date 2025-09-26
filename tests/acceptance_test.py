@@ -331,6 +331,5 @@ class TestAcceptance(unittest.TestCase):
         assert_output_matches_reference(output_rst, rst_file_name)
 
 
-
 if __name__ == '__main__':
     unittest.main()
