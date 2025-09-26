@@ -30,5 +30,6 @@ class TestMako(unittest.TestCase):
         test_case.assertIn("for suite_idx in indexed_extra_content_map:",
                            log_cm.output[-1])
 
+
 if __name__ == '__main__':
     unittest.main()
