@@ -1,0 +1,67 @@
+verify master and slave synchronization: |
+  The plot below displays the time difference (lag) between channel A (PWM Master).
+  and channel B and C (PWM Slaves).
+
+  .. figure:: skew_analysis.png
+    :height: 600px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  The plot below displays pulse duration difference between channel A (PWM Master) and channel B and C (PWM Slaves)
+
+  .. figure:: pulse_width_analysis.png
+    :height: 600px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+pwm sync in pin to slave timing: |
+  The plots below display the captured SYNC IN and slave PWM output signals for different external PWM frequencies.
+
+  .. figure:: sync_in_signal_800.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  .. figure:: sync_in_signal_1000.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  .. figure:: sync_in_signal_1200.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  The plots below display the time difference (gap) between the rising edge of the SYNC IN signal and the falling edge of the slave PWM output signal.
+
+  .. figure:: sync_in_timing_800.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  .. figure:: sync_in_timing_1000.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+  .. figure:: sync_in_timing_1200.png
+    :height: 300px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center
+
+pwm master to sync pin timing: |
+  The plot below displays the captured PWM master and PWM SYNC output signal.
+
+  .. figure:: sync_out_signal.png
+    :height: 600px
+    :align: center
+    :alt: PWM signals
+    :figclass: align-center

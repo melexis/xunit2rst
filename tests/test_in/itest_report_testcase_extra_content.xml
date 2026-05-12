@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Pwm" tests="2" errors="0" failures="0" skipped="2" time="2.348" timestamp="2026-05-12T16:07:49.090805">
+<testsuite name="Pwm" tests="2" errors="0" failures="0" skipped="2" time="2.240" timestamp="2026-05-12T16:07:49.195621">
+<testcase classname="Pwm.Pwm" name="pwm sync in pin to slave timing" time="0.003">
+</testcase>
+<testcase classname="Pwm.Pwm" name="pwm master to sync pin timing" time="0.002">
+</testcase>
+<properties>
+<property name="Documentation" value="PWM test suite&#10;&#10;In all test cases, where is validated, that measured frequency and duty cycle are within a given tolerance, are used&#10;+/- 0.4 Hz for frequency and +/- 0.02 % for duty cycle. These values are determined empirically. This is the smallest tolerance&#10;(plus some safety margin), where all tests are still reliably passing. See variables 0.5 and 0.02."/>
+<property name="xunit2rst content file" value="itest_report_testcase_extra_content.yml"/>
+</properties>
+</testsuite>
+<properties>
+<property name="Randomized" value="Tests (seed 1452234136)"/>
+</properties>
+</testsuite>
