@@ -91,17 +91,12 @@ class TestPrefix(unittest.TestCase):
     def test_content_files(self):
         ''' Test the extraction of the content file path '''
         _, _, content_files = dut.parse_xunit_root(TEST_IN_DIR / 'qtest_my_lib_report.xml')
-        self.assertIn(3, content_files)
-        suite, path = content_files[3]
-        self.assertEqual(suite.tag, 'testsuite')
-        self.assertEqual(path, Path("../../doc/source/extra_content.yml.mako"))
+        self.assertEqual(content_files, {3: Path("../../doc/source/extra_content.yml.mako")})
+
     def test_content_files_no_root(self):
         ''' Test the extraction of the content file path when the XML has no valid root element '''
         _, _, content_files = dut.parse_xunit_root(TEST_IN_DIR / 'itest_report.xml')
-        self.assertIn(0, content_files)
-        suite, path = content_files[0]
-        self.assertEqual(suite.tag, 'testsuite')
-        self.assertEqual(path, Path('./extra_content1.yml'))
+        self.assertEqual(content_files, {0: Path('./extra_content1.yml')})
 
     def test_verify_prefix_set(self):
         '''
