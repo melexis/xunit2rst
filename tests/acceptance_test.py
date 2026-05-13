@@ -355,8 +355,7 @@ class TestAcceptance(unittest.TestCase):
         xml_file_name = '{}.xml'.format(file_name)
         input_xml = str(TEST_IN_DIR / xml_file_name)
         output_rst = str(TEST_OUT_DIR / 'edge_case.rst')
-        with self.assertRaises(KeyError):
-            xunit2rst_check(input_xml, output_rst)
+        xunit2rst_check(input_xml, output_rst)
 
 
 if __name__ == '__main__':
