@@ -97,7 +97,7 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
 
     indexed_extra_content_map = {}
     all_suites = list(test_suites)
-    for i, file in report_info_files.items():
+    for i, (suite, file) in report_info_files.items():
         suite = all_suites[i]
         extra_content_map = {}
         yaml = YAML(typ='safe', pure=True)
@@ -181,21 +181,21 @@ def parse_xunit_root(input_file):
         prefix_set = UTEST
 
     report_info_files = {}
-    for i, suite in enumerate(test_suites):
+    for i, suite in enumerate(list(test_suites)):
         if suite.tag != 'testsuite':
             test_suites.remove(suite)
             continue
-        for element in reversed(suite):
+        for element in reversed(list(suite)):
             if element.tag == 'testsuite':
                 for sub in element:
                     suite.append(sub)
                 # remove parent testsuite to only have a single layer of testsuite in the tree
                 suite.remove(element)
-        for element in suite:
+        for element in list(suite):
             if element.tag != 'testcase':
                 value = look_for_content_file(element)
                 if value:
-                    report_info_files[i] = value
+                    rreport_info_files[i] = (suite, value)
                 suite.remove(element)
     return test_suites, prefix_set, report_info_files
 
