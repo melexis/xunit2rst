@@ -113,3 +113,6 @@ doc/source/generated/*.rst
 doc/source/generated/*.html
 doc/_build/
 tests/test_out/
+
+# vscode
+.vscode/

@@ -18,6 +18,35 @@ QTEST = TraceableInfo('QTEST_', 'qualification', '_qualification_test_report_')
 TEMPLATE_FILE = Path(__file__).parent.joinpath('xunit2rst.mako')
 
 
+def is_testcase_skipped(testcase):
+    """
+    Checks if the test case is skipped.
+
+    Args:
+        testcase (xml.etree.ElementTree.Element): The testcase XML element.
+
+    Returns:
+        bool: True if the testcase is skipped; False otherwise.
+    """
+    return testcase.find('skipped') is not None
+
+
+def _is_testcase_in_suite_skipped(suite, testcase_name):
+    """Checks if a testcase within a suite is skipped.
+
+    Args:
+        suite (xml.etree.ElementTree.Element): The testsuite XML element.
+        testcase_name (str): The name of the testcase to check.
+
+    Returns:
+        bool: True if the testcase exists in the suite and is skipped, False otherwise.
+    """
+    for testcase in suite.findall('testcase'):
+        if testcase.attrib.get('name') == testcase_name:
+            return is_testcase_skipped(testcase)
+    return False
+
+
 def render_template(template_path, only="", **kwargs):
     """ Renders the Mako template, and returns the result.
 
@@ -67,7 +96,9 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
         report_name = report_name[:-len('_report')]
 
     indexed_extra_content_map = {}
+    all_suites = list(test_suites)
     for i, file in report_info_files.items():
+        suite = all_suites[i]
         extra_content_map = {}
         yaml = YAML(typ='safe', pure=True)
         if not file.is_absolute():
@@ -77,7 +108,12 @@ def generate_xunit_to_rst(input_file, rst_file, itemize_suites, failure_message,
             yaml_content = render_template(file, input_file=input_file)
         else:
             yaml_content = file
-        for name, content in yaml.load(yaml_content).items():
+        loaded_yaml = yaml.load(yaml_content)
+        if not loaded_yaml:
+            continue
+        for name, content in loaded_yaml.items():
+            if _is_testcase_in_suite_skipped(suite, name):
+                continue
             if not isinstance(content, str):
                 raise ValueError(f"The extra content for the test report for {name!r} is not a string; "
                                  f"got {content.__class__.__name__} instead.")
@@ -144,11 +180,12 @@ def parse_xunit_root(input_file):
         test_suites = root_input
         prefix_set = UTEST
 
+    for element in reversed(test_suites):
+        if element.tag != 'testsuite':
+            test_suites.remove(element)
+
     report_info_files = {}
     for i, suite in enumerate(test_suites):
-        if suite.tag != 'testsuite':
-            test_suites.remove(suite)
-            continue
         for element in reversed(suite):
             if element.tag == 'testsuite':
                 for sub in element:

@@ -278,6 +278,26 @@ class TestAcceptance(unittest.TestCase):
 
         assert_output_matches_reference(output_rst, rst_file_name)
 
+    def test_extra_testcase_content(self):
+        file_name = 'itest_report_testcase_extra_content'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, prefix='ITEST-')
+
+        assert_output_matches_reference(output_rst, rst_file_name)
+
+    def test_extra_testcase_content_skipped(self):
+        file_name = 'itest_report_testcase_extra_content_skipped'
+        rst_file_name = '{}.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / rst_file_name)
+        xunit2rst_check(input_xml, output_rst, prefix='ITEST-')
+
+        assert_output_matches_reference(output_rst, rst_file_name)
+
     def test_xunit_rf6(self):
         file_name = 'rf6_report'
         rst_file_name = '{}.rst'.format(file_name)
@@ -327,6 +347,16 @@ class TestAcceptance(unittest.TestCase):
         input_xml = str(TEST_IN_DIR / xml_file_name)
         output_rst = str(TEST_OUT_DIR / rst_file_name)
         xunit2rst_check(input_xml, output_rst, itemize_suites=False, prefix='UTEST_MY_LIB-')
+
+        assert_output_matches_reference(output_rst, rst_file_name)
+
+    def test_nontestsuite_element(self):
+        file_name = 'itest_nontestsuite_element'
+        rst_file_name = '{}_report.rst'.format(file_name)
+        xml_file_name = '{}.xml'.format(file_name)
+        input_xml = str(TEST_IN_DIR / xml_file_name)
+        output_rst = str(TEST_OUT_DIR / 'itest_nontestsuite_element.rst')
+        xunit2rst_check(input_xml, output_rst)
 
         assert_output_matches_reference(output_rst, rst_file_name)
 
