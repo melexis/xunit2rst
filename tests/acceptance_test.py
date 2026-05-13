@@ -352,13 +352,13 @@ class TestAcceptance(unittest.TestCase):
 
     def test_nontestsuite_element(self):
         file_name = 'itest_nontestsuite_element'
-        #rst_file_name = '{}_report.rst'.format(file_name)
+        rst_file_name = '{}_report.rst'.format(file_name)
         xml_file_name = '{}.xml'.format(file_name)
         input_xml = str(TEST_IN_DIR / xml_file_name)
         output_rst = str(TEST_OUT_DIR / 'itest_nontestsuite_element.rst')
         xunit2rst_check(input_xml, output_rst)
 
-        #assert_output_matches_reference(output_rst, rst_file_name)
+        assert_output_matches_reference(output_rst, rst_file_name)
 
 if __name__ == '__main__':
     unittest.main()
