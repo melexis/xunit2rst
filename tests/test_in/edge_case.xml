@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="Suite1" tests="1" errors="0" failures="0" skipped="0">
+        <testcase name="case1"/>
+        <properties>
+            <property name="xunit2rst content file" value="edge_case.yml"/>
+        </properties>
+    </testsuite>
+    <foo/>
+    <testsuite name="Suite2" tests="1" errors="0" failures="0" skipped="0">
+        <testcase name="case2"/>
+        <properties>
+            <property name="xunit2rst content file" value="edge_case.yml"/>
+        </properties>
+    </testsuite>
+</testsuites>
